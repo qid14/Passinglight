@@ -1,0 +1,16 @@
+<div class="book-details-container">
+    <h1>Book Details</h1>
+    <div class="row book-details-row" *ngFor="let b of bookInfo">
+        <div class="col-sm-5 book-image">
+            <img src="http://service.techaspect.com:5000{{b.coverImage}}">
+        </div>
+        <div class="col-sm-7 book-desc">
+            <p><span>ISBN: </span>{{b.ISBN}}</p>
+            <p><span>Book Name: </span>{{b.bookName}}</p>
+            <p><span>Description: </span>{{b.description}}</p>
+            <p><span>Book Type: </span>{{b.booktype}}</p>
+            <p><span>Category: </span>{{b.category}}</p>
+            <a href="http://service.techaspect.com:5000/{{b.bookPath}}" target="_blank">Click here to read book online</a>
+        </div>
+    </div>
+</div>

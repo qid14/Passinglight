@@ -1,0 +1,21 @@
+<div class="container"  style="margin-left:20px;margin-top:20px;">
+	<div class="row">
+		<form [formGroup]="questionsForm"  (ngSubmit)="save()">
+			<div class="form-group" formGroupName="quname">
+				<div *ngFor="let qu of questions; let i = index; ">
+					<div class="col-md-10">
+						No.{{i+1}}  {{qu.questiontext}} {{qu.questionid}}
+					</div>
+					<div class="col-md-3">
+						<!-- <input type="radio" formControlName="qu.questionid" value="Yes"> Yes
+						<input type="radio" formControlName="qu.questionid" value="No" > No -->
+						
+					</div>
+				</div>
+				
+			</div>
+			<button type="submit" class="btn btn-default"
+			[disabled]="!questionsForm.valid">Submit</button>
+		</form>
+		
+	</div>

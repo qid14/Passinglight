@@ -1,0 +1,33 @@
+h1 {
+  color: #00BCD4;
+}
+
+#body_wrapper {
+	background: url(bg.jpg) no-repeat center top;
+	min-height:100%;
+}
+a, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, h1, h2, h3, h4, h5, h6 {
+	color: #3d6069;
+}
+#header {
+	height: 189px;
+}
+#header .container {
+	width: 980px;
+}
+#logo {
+	left: 0;
+	width: 950px;
+}
+#logo img {
+	max-height:140px;
+}
+#logo a {
+	color: #fff;
+	font: 40px/48px 'Century Gothic', Arial;
+}
+#logo a span {
+	padding-top: 45px;
+	padding-left: 15px;
+	text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+}

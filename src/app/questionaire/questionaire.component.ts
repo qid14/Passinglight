@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
-// import { ROUTER_DIRECTIVES} from '@angular/router';
 import { LoginService } from '../services/login.service';
 import { GetQuestionsService } from '../services/questionaire.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-// import angular2-data-table
-// import '../src/components/datatable.scss';
-// import '../src/themes/material.scss';
+
 interface QuestionInterface {
 	questionid: number;
 	questiontext: string;
@@ -30,7 +27,7 @@ interface RespInterface {
 	<div class="row">
 		<form [formGroup]="questionsForm"  (ngSubmit)="save()">
 			
-			<!-- <div class="form-group" formGroupName="quname">-->
+			
 				<div *ngFor="let qu of questions; let i = index; ">
 					<div class="col-md-10">
 						No.{{i+1}}  {{qu.questiontext}} 
@@ -45,9 +42,11 @@ interface RespInterface {
 					</div>
 				</div>
 				
-			<!-- </div>-->
+			
+			<div class="col-md-10">
 			<button type="submit" class="btn btn-default"
 			[disabled]="!questionsForm.valid">Submit</button>
+			</div>
 		</form>
 		
 	</div>
@@ -81,35 +80,43 @@ interface RespInterface {
 
 export class getQuestionsComponent {
 	questions: QuestionInterface[];
-	response: RespInterface = {};
-	responses: RespInterface[] = [];
+	// questionans: RespInterface = {};
+	questionans:any[]=[];
+	questionanses: any[] = [];
 
 	questionsForm: FormGroup;
-	favoriteSeason: string;
-	answers = [
-		'Yes',
-		'No'
-	]
 
-	seasons = [
-		'Winter',
-		'Spring',
-		'Summer',
-		'Autumn',
-	];
-	Print() {
-		console.log('ssds:', this.responses)
-	}
+
+	// Print() {
+	// 	console.log('ssds:', this.responses)
+	// }
 	save() {
 		// debugger
+		// let questionans[]:RespInterface[]=[];
+		this.questionanses=[];
 		console.log('save :', this.questionsForm);
+		
 		for (let db in this.questionsForm.controls) {
+
 			if (this.questionsForm.controls[db].value) {
-				console.log(this.questionsForm.controls[db].value);
+				// debugger
+				// console.log(db,this.questionsForm.controls[db].value);
+				
+				// this.questionans.questionid=+db;
+				// this.questionans.readerid=4000001;
+				// this.questionans.answer=this.questionsForm.controls[db].value;
+				this.questionans=[+db,4000001,this.questionsForm.controls[db].value];
+				this.questionanses.push(this.questionans);
+				this.questionans = [];
+		
 			}
 		}
+		console.log('questionanses:    ',this.questionanses);
+		 this.questionsService.sendAnswers(this.questionanses).subscribe((res)=>{
+		 	console.log('res',res);
+		 });
 	}
-	constructor(private getquestionsService: GetQuestionsService, private fb: FormBuilder) { }
+	constructor(private questionsService: GetQuestionsService, private fb: FormBuilder) { }
 
 	ngOnInit() {
 		this.buildForm();
@@ -122,15 +129,15 @@ export class getQuestionsComponent {
 	}
 	buildForm(): void {
 		this.questionsForm = new FormGroup({
-			1001: new FormControl(),
-			1002: new FormControl(),
-			1003: new FormControl(),
-			1004: new FormControl(),
-			1005: new FormControl(),
-			1006: new FormControl(),
-			1007: new FormControl(),
-			1008: new FormControl(),
-			1009: new FormControl(),
+			1001: new FormControl('Yes'),
+			1002: new FormControl('Yes'),
+			1003: new FormControl('Yes'),
+			1004: new FormControl('Yes'),
+			1005: new FormControl('Yes'),
+			1006: new FormControl('Yes'),
+			1007: new FormControl('Yes'),
+			1008: new FormControl('Yes'),
+			1009: new FormControl('Yes'),
 
 		});
 
@@ -153,11 +160,11 @@ export class getQuestionsComponent {
 		// now it's a simple subscription to the observable
 		// console.log('getbooks',this.readBookService);
 		// debugger
-		this.getquestionsService.getQuestions()
+		this.questionsService.getQuestions()
 			.subscribe(
 			data => {
 
-				console.log('temparray:', data)
+				// console.log('temparray:', data)
 				this.questions = data;
 			}
 			, err => alert(err),

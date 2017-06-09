@@ -46,6 +46,7 @@ import { getQuestionsComponent } from './questionaire/questionaire.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdButtonModule, MdCheckboxModule, MdRadioModule } from '@angular/material'
+import { ReadersService } from './services/readers.service';
 
 import '../styles/styles.scss';
 import '../styles/headings.css';
@@ -104,7 +105,8 @@ type StoreType = {
     APP_PROVIDERS,
     ReadBookService,
     LoginService,
-    GetQuestionsService
+    GetQuestionsService,
+    ReadersService
   ]
 })
 export class AppModule {

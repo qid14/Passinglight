@@ -3,6 +3,7 @@ import { Component, OnInit }                  from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Reader }                   from '../shared/reader';
+import {ReadersService} from '../services/readers.service';
 // import { forbiddenNameValidator } from '../shared/forbidden-name.directive';
 
 @Component({
@@ -99,7 +100,7 @@ import { Reader }                   from '../shared/reader';
   `
 })
 export class ReaderRegisterComponent implements OnInit {
-
+  _readerservice:ReadersService;
   // powers = ['Really Smart', 'Super Flexible', 'Weather Changer'];
 
   reader = new Reader('400002', 'Dr. WhatIsHisName', 'Dr. What','test@gmail.com');
@@ -109,6 +110,9 @@ export class ReaderRegisterComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     this.reader = this.readerForm.value;
+    this._readerservice.RegisterReaders(this.reader).subscribe((res)=>{
+      console.log(res);
+    })
   }
 
   // Reset the form with a new hero AND restore 'pristine' class state
@@ -125,7 +129,9 @@ export class ReaderRegisterComponent implements OnInit {
   }
 
   readerForm: FormGroup;
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,readerservice:ReadersService) { 
+    this._readerservice=readerservice;
+  }
 
   ngOnInit(): void {
     this.buildForm();

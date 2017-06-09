@@ -3,23 +3,11 @@ import { Http ,Headers,RequestOptions} from '@angular/http';
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class GetQuestionsService {
+export class ReadersService {
 	constructor(public http: Http) { }
 
 	// ReadBookService getBooksData function
-	getQuestions() {
-		// debugger;
-		// return an observable
-		console.log('get question data service!');
-		return this.http.get('http://localhost:3002/questions')
-			.map((responseData) => {
-				console.log('get questions from mysql:', responseData.json());
-				return responseData.json()
-			});
-
-	}
-
-	sendAnswers(formValues:Object) {
+	RegisterReaders(formValues:Object) {
 		// debugger;
 		// return an observable
 		let body= JSON.stringify(formValues);
@@ -27,13 +15,14 @@ export class GetQuestionsService {
 		let options = new RequestOptions({headers:headers});
 
 		console.log('post reader data service!');
-		return this.http.post('http://localhost:3002/questions',body,options )
+		return this.http.post('http://localhost:3002/readers',body,options )
 			.map((responseData) => {
-				console.log('post question answers to mysql:', responseData);
+				console.log('post new user to mysql:', responseData);
 					// .json());
 				// return responseData.json()
 			});
 
 	}
+
 
 }

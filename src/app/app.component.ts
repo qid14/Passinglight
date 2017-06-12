@@ -20,7 +20,8 @@ import { AppState } from './app.service';
   ],
   template: `
     <nav>
-      <a [routerLink]=" ['./searchborrower'] "
+
+      <a  *ngIf="myVar" [routerLink]="['./searchborrower'] "
         routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
         Borrower
       </a>
@@ -30,7 +31,13 @@ import { AppState } from './app.service';
         Read Book
       </a>
 
-      <a [routerLink]=" ['./questions'] "
+       <a [routerLink]=" ['./login'] "
+        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+         <i class="fa fa-user-o"></i>
+        Login
+      </a>
+
+      <a *ngIf="myVar"  [routerLink]=" ['./questions'] "
         routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
          <i class="fa fa-question"></i>
         Questionaire
@@ -58,14 +65,15 @@ import { AppState } from './app.service';
   
 
     <footer>
-      <span>Passinglight</span>
-     
+      <span>Passing light@http://www.theservantheart.org/</span>
+      <p><a [routerLink]="['/login']">Logout</a></p>
     </footer>
   `
 })
 export class AppComponent implements OnInit {
   public angularclassLogo = 'assets/img/angularclass-avatar.png';
   public name = 'Passing light';
+  public myVar = false;
   // public url = 'https://twitter.com/AngularClass';
 
   constructor(

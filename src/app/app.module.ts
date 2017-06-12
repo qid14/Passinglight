@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule, Http,RequestOptions} from '@angular/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   NgModule,
@@ -47,7 +47,9 @@ import { getQuestionsComponent } from './questionaire/questionaire.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdButtonModule, MdCheckboxModule, MdRadioModule } from '@angular/material'
 import { ReadersService } from './services/readers.service';
-
+import { AuthGuard } from './services/authguard';
+import { DataService } from './services/data.service';
+import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import '../styles/styles.scss';
 import '../styles/headings.css';
 
@@ -106,7 +108,32 @@ type StoreType = {
     ReadBookService,
     LoginService,
     GetQuestionsService,
-    ReadersService
+    ReadersService,
+    AuthGuard,
+    DataService,
+
+// provide(AuthHttp, {
+//         useFactory: (http) => {
+//             return new AuthHttp(new AuthConfig({
+//                 tokenName: "jwtTokenID",
+//             }), http);
+//         },
+//         deps: [Http]
+//     })
+
+
+    {
+      provide: AuthConfig,
+      useFactory: (http) => {
+        return new AuthConfig({
+          tokenName: 'token',
+        //   tokenGetter: (() => localStorage.getItem('token')),
+        //   globalHeaders: [{ 'Content-Type': 'application/json' }],
+        });
+      },
+      deps: [Http]
+    },
+    AuthHttp
   ]
 })
 export class AppModule {

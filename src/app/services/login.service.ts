@@ -7,44 +7,53 @@ import { Router } from '@angular/router';
 @Injectable()
 
 export class LoginService {
- 
+
   private loggedIn = false;
 
-  constructor(private http: Http, private router : Router) {
-    this.loggedIn = !!localStorage.getItem('email');
+  constructor(private http: Http, private router: Router) {
+    console.log('xxxxxx',!!localStorage.getItem('username'))
+    this.loggedIn = !!localStorage.getItem('username');
   }
 
-  login(email, password) {
+  login(username, password) {
 
-    var postData = 'grant_type=password' + '&userName=' + email + '&password=' + password + '';   
+    var postData = { "username": username, "password": password };
 
     var headers = new Headers({
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'ClientId': '8er4lt18-opo4xc7u.apps.techaspect.com'
-      });
+      'Content-Type': 'application/json'
 
-     return this.http.post(
-        'https://hrmmobile.techaspect.com/token', 
-        postData,         
-        { headers }
-      )     
-      .map(responseData  => responseData.json())
+    });
+    console.log('post data when login:', postData);
+    return this.http.post(
+      'http://localhost:3002/readers/login',
+      postData,
+      { headers }
+    )
+      .map(responseData => {
+        console.log('response:', responseData.json())
+        return responseData.json()
+      })
       .subscribe(
-         data => {
-              this.loggedIn = true;
-              localStorage.setItem('email', email);
-              this.router.navigate(['/home']);
-            },
-            err => {
-              this.loggedIn = false;
-              localStorage.removeItem('email');
-            },
-            () => { }
-      );       
+      data => {
+        console.log('data:',data);
+        this.loggedIn = true;
+        debugger
+        localStorage.setItem('username', data.username);
+        localStorage.setItem('token', data.token);
+        this.router.navigate(['/questions']);
+      },
+      err => {
+        this.loggedIn = false;
+        localStorage.removeItem('username');
+        localStorage.removeItem('token');
+      },
+      () => { }
+      );
   }
-  
+
   logout() {
-    localStorage.removeItem('email');
+    localStorage.removeItem('username');
+    localStorage.removeItem('token');
     this.loggedIn = false;
   }
 

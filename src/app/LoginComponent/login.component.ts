@@ -2,67 +2,88 @@ import { Component } from '@angular/core';
 // import { NgForm }  from '@angular/Form';
 import {FormsModule,Validator,FormControl,FormBuilder,FormGroup,FormArray} from '@angular/forms'
 import { LoginService  } from '../services/login.service';
+
 import { Router } from '@angular/router';
 
-// <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-//         <div class="form-group">
-//             <label for="email">Email</label>
-//             <input type="email" class="form-control" id="email" name ="email" required [(ngModel)]="email" #emailState="ngModel">
+
+ // <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+ //        <div class="form-group">
+ //            <label for="username">Username</label>
+ //            <input class="form-control" id="username" name ="username" required [(ngModel)]="username" #username="ngModel">
    
-//         </div>
-//         <div class="form-group">
-//             <label for="password">Password</label>
-//             <input type="password" class="form-control" id="password" name="password" required [(ngModel)]="password" #password="ngModel">
+ //        </div>
+ //        <div class="form-group">
+ //            <label for="password">Password</label>
+ //            <input type="password" class="form-control" id="password" name="password" required [(ngModel)]="password" #password="ngModel">
 
-//         </div>
-//         <button type="submit" class="btn btn-default" >Login</button>
-//     </form>
-
+ //        </div>
+ //        <button type="submit" class="btn btn-default" >Login</button>
+ //    </form>
 @Component({
   // moduleId: module.id,   
   providers: [LoginService ],
   template:
   `
-<div class="login-form-container">
-    <h1>Login Form</h1>
-    
+ <div class="container"  style="margin-left:20px;margin-top:20px;">
 
-</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input [(ngModel)]="username" id="username" 
+                            type="username" class="validate">
+                        <label for="username">username</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input [(ngModel)]="password" id="password" 
+                            type="password" class="validate">
+                        <label for="password">Password</label>
+                    </div>
+                </div>
+                <span>{{errorMsg}}</span>
+                <button (click)="onSubmit()" 
+                    class="btn waves-effect waves-light" 
+                    type="submit" name="action">Login</button>
+            </div>
+        </div>
 
   `,
   styles: [
-  `
 
-.login-form-container .ng-touched.ng-pristine.ng-invalid[required],
-.login-form-container .ng-touched.ng-dirty.ng-invalid[required] {
-    border-left: 5px solid #a94442;
-}
-
-.login-form-container .ng-touched.ng-dirty.ng-valid[required] {
-    border-left: 5px solid #42A948;
-}
-
-.login-form-container .alert {
-    text-transform: capitalize;
-}
-  `
   ]
 })
 
 export class LoginComponent {
-	public email: string;
+	public username: string;
 	public password: string;
 	public postData: string;
-	public userName: string;
+	// public userName: string;
 	public errorTitle: string;
 	public errorDesc: string;
 	public successMsg: boolean = true;
-	public errorMsg: boolean = true;
+	// public errorMsg: boolean = true;
 	public submitting: boolean = false;
 	
 	constructor(private loginService: LoginService , private router: Router) {}
 	onSubmit() {
-	    this.loginService.login(this.email, this.password);
+	     if(!this.loginService.login(this.username, this.password)){
+            this.errorMsg = 'Failed to login';
+          
+        }
+         
 	    
   	}	 
+
+  	 // public user = new User('','');
+    public errorMsg = '';
+
+    // constructor(
+    //     private _service:AuthenticationService) {}
+
+    // login() {
+    //     if(!this._service.login(this.user)){
+    //         this.errorMsg = 'Failed to login';
+    //     }
+    // }
 }

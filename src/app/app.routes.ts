@@ -1,21 +1,7 @@
-// import { Routes } from '@angular/router';
-// import { HomeComponent } from './home';
-// import { AboutComponent } from './about';
 import { NoContentComponent } from './no-content';
+import { Routes ,RouterModule} from '@angular/router';
+import { AuthGuard } from './services/authguard';
 
-// import { DataResolver } from './app.resolver';
-
-// export const ROUTES: Routes = [
-//   { path: '',      component: HomeComponent },
-//   { path: 'home',  component: HomeComponent },
-//   { path: 'about', component: AboutComponent },
-//   { path: 'detail', loadChildren: './+detail#DetailModule'},
-//   { path: 'barrel', loadChildren: './+barrel#BarrelModule'},
-//   { path: '**',    component: NoContentComponent },
-// ];
-
-import { Routes } from '@angular/router';
-// import {AppComponent} from './config/app.component';
 
 import { HomeComponent } from './home';
 import { ContactComponent } from './ContactComponent/contact.component';
@@ -34,7 +20,7 @@ export const ROUTES: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'readbook', component: ReadBookComponent },
-  { path: 'searchborrower', component: SearchBorrowerComponent },
+  { path: 'searchborrower', component: SearchBorrowerComponent, canActivate: [AuthGuard]  },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: ReaderRegisterComponent },
   { path: 'readbook/:isbn', component: BookDetailsComponent },

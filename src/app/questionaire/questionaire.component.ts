@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { LoginService } from '../services/login.service';
 import { GetQuestionsService } from '../services/questionaire.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { DataService } from '../services/data.service';
 
 interface QuestionInterface {
 	questionid: number;
@@ -16,7 +17,7 @@ interface RespInterface {
 }
 
 @Component({
-	providers: [GetQuestionsService],
+	providers: [GetQuestionsService, DataService],
 	// moduleId:module.id,
 	// templateUrl: 'app/modules/ReadBookComponent/readbook.component.html',
 
@@ -81,7 +82,7 @@ interface RespInterface {
 export class getQuestionsComponent {
 	questions: QuestionInterface[];
 	// questionans: RespInterface = {};
-	questionans:any[]=[];
+	questionans: any[] = [];
 	questionanses: any[] = [];
 
 	questionsForm: FormGroup;
@@ -93,30 +94,36 @@ export class getQuestionsComponent {
 	save() {
 		// debugger
 		// let questionans[]:RespInterface[]=[];
-		this.questionanses=[];
+
+		this.dataService.getSecretQuote().subscribe((d) =>
+			console.log('zzzzzzz', d),
+			err => console.log(err),
+			() => console.log('Completed!'));
+
+		this.questionanses = [];
 		console.log('save :', this.questionsForm);
-		
+
 		for (let db in this.questionsForm.controls) {
 
 			if (this.questionsForm.controls[db].value) {
 				// debugger
 				// console.log(db,this.questionsForm.controls[db].value);
-				
+
 				// this.questionans.questionid=+db;
 				// this.questionans.readerid=4000001;
 				// this.questionans.answer=this.questionsForm.controls[db].value;
-				this.questionans=[+db,4000001,this.questionsForm.controls[db].value];
+				this.questionans = [+db, 4000001, this.questionsForm.controls[db].value];
 				this.questionanses.push(this.questionans);
 				this.questionans = [];
-		
+
 			}
 		}
-		console.log('questionanses:    ',this.questionanses);
-		 this.questionsService.sendAnswers(this.questionanses).subscribe((res)=>{
-		 	console.log('res',res);
-		 });
+		console.log('questionanses:    ', this.questionanses);
+		this.questionsService.sendAnswers(this.questionanses).subscribe((res) => {
+			console.log('res', res);
+		});
 	}
-	constructor(private questionsService: GetQuestionsService, private fb: FormBuilder) { }
+	constructor(private questionsService: GetQuestionsService, private fb: FormBuilder, private dataService: DataService) { }
 
 	ngOnInit() {
 		this.buildForm();

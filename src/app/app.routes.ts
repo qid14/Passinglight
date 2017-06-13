@@ -19,7 +19,7 @@ export const ROUTES: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'contact', component: ContactComponent },
-  { path: 'readbook', component: ReadBookComponent },
+  { path: 'readbook', component: ReadBookComponent,canActivate: [AuthGuard]  },
   { path: 'searchborrower', component: SearchBorrowerComponent, canActivate: [AuthGuard]  },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: ReaderRegisterComponent },

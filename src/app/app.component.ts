@@ -7,7 +7,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { AppState } from './app.service';
-
+import { LoginService } from './services/login.service';
 /**
  * App Component
  * Top Level Component
@@ -66,7 +66,7 @@ import { AppState } from './app.service';
 
     <footer>
       <span>Passing light@http://www.theservantheart.org/</span>
-      <p><a [routerLink]="['/login']">Logout</a></p>
+      <button (click)="logout()">Logout</button>
     </footer>
   `
 })
@@ -74,14 +74,21 @@ export class AppComponent implements OnInit {
   public angularclassLogo = 'assets/img/angularclass-avatar.png';
   public name = 'Passing light';
   public myVar = false;
+  loginService: LoginService
   // public url = 'https://twitter.com/AngularClass';
 
   constructor(
-    public appState: AppState
-  ) {}
+    public appState: AppState,
+    _loginService: LoginService
+  ) {
+    this.loginService = _loginService;
+  }
 
   public ngOnInit() {
     console.log('Initial App State', this.appState.state);
+  }
+  public logout() {
+    this.loginService.logout()
   }
 
 }

@@ -42,7 +42,7 @@ import { MessageService } from './services/message.service';
           </li>
       
 
-          <li class="menu-item menu-item-type-custom menu-item-object-custom">
+          <li  *ngIf="message" class="menu-item menu-item-type-custom menu-item-object-custom">
           <h4>Welcome,{{message.text}}</h4>            
           </li>
         </ul>
@@ -72,10 +72,10 @@ export class AppComponent implements OnInit {
   public angularclassLogo = 'assets/img/angularclass-avatar.png';
   public name = 'Passing light';
   public myVar = false;
-  public username=localStorage.getItem("username");
+  public username = localStorage.getItem("username");
   loginService: LoginService;
-   message: any;
-    subscription: Subscription;
+  message: any;
+  subscription: Subscription;
   // public url = 'https://twitter.com/AngularClass';
 
   constructor(
@@ -84,19 +84,21 @@ export class AppComponent implements OnInit {
     private messageService: MessageService
   ) {
     this.loginService = _loginService;
-     this.subscription = this.messageService.getMessage().subscribe(message => { this.message = message; });
+    debugger
+    this.subscription = this.messageService.getMessage().subscribe(message => { this.message = message; });
   }
 
   public ngOnInit() {
     console.log('Initial App State', this.appState.state);
   }
   public logout() {
-    this.loginService.logout()
+    this.loginService.logout();
+    this.message=null;
   }
-   ngOnDestroy() {
-        // unsubscribe to ensure no memory leaks
-        this.subscription.unsubscribe();
-    }
+  ngOnDestroy() {
+    // unsubscribe to ensure no memory leaks
+    this.subscription.unsubscribe();
+  }
 
 }
 

@@ -75,7 +75,8 @@ export class LoginComponent {
             this.errorMsg = 'Failed to login';
           
         }
-        let msg=localStorage.getItem("username");
+        // debugger
+               let msg = localStorage.getItem("username")||this.username;
         this.messageService.sendMessage(msg);
          
 	    

@@ -4,11 +4,11 @@ import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Router } from '@angular/router';
 import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
-
+// import { MessageService } from './message.service';
 @Injectable()
 
 export class LoginService {
-
+  // messageService: MessageService;
   private loggedIn = false;
   jwtHelper: JwtHelper = new JwtHelper();
   constructor(private http: Http, private router: Router) {
@@ -46,6 +46,8 @@ export class LoginService {
           // this.jwtHelper.getTokenExpirationDate(data.token),
           // this.jwtHelper.isTokenExpired(data.token)
         );
+
+        // alert(msg)
         let role = this.jwtHelper.decodeToken(data.token).role;
         console.log('mmmmmmmmmm', role, typeof role);
         //默认role 为 null

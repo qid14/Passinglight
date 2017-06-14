@@ -1,13 +1,15 @@
-/**
- * Angular 2 decorators and services
- */
 import {
   Component,
   OnInit,
-  ViewEncapsulation
+  ViewEncapsulation,
+  OnDestroy
 } from '@angular/core';
 import { AppState } from './app.service';
 import { LoginService } from './services/login.service';
+import { Subscription } from 'rxjs/Subscription';
+
+import { MessageService } from './services/message.service';
+
 /**
  * App Component
  * Top Level Component
@@ -19,44 +21,40 @@ import { LoginService } from './services/login.service';
     './app.component.css'
   ],
   template: `
-    <nav>
+<div class="site-container">
+    <aside class="before-header">
+      <nav class="nav-secondary">
+        <ul class="nav genesis-nav-menu">
+          <li class="menu-item menu-item-type-custom menu-item-object-custom">
+            <a [routerLink]="['./login'] "
+              routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+               <i class="fa fa-user-o"></i>
+              LOG IN
+            </a>
+            
+          </li>
+          <li class="menu-item menu-item-type-custom menu-item-object-custom">
+           <a [routerLink]="['./register'] "
+              routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+              REGISTER
+            </a>
+            
+          </li>
+      
 
-      <a  *ngIf="myVar" [routerLink]="['./searchborrower'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-        Borrower
-      </a>
-      <a [routerLink]=" ['./readbook'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-         <i class="fa fa-book"></i>
-        Read Book
-      </a>
+          <li class="menu-item menu-item-type-custom menu-item-object-custom">
+          <h4>Welcome,{{message.text}}</h4>            
+          </li>
+        </ul>
+      </nav>
+    </aside>
+    
+  </div>
 
-       <a [routerLink]=" ['./login'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-         <i class="fa fa-user-o"></i>
-        Login
-      </a>
 
-      <a *ngIf="myVar"  [routerLink]=" ['./questions'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-         <i class="fa fa-question"></i>
-        Questionaire
-      </a>
+
 
    
-      <a [routerLink]=" ['./contact'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-        <i class="fa fa-info"></i>
-        About
-      </a>
-      <a [routerLink]=" ['./register'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-         <i class="fa fa-address-card "></i>
-        Register
-      </a>
-       
-
-    </nav>
 
     <main>
       <router-outlet></router-outlet>
@@ -64,7 +62,7 @@ import { LoginService } from './services/login.service';
 
   
 
-    <footer>
+    <footer style="margin-top:20px;">
       <span>Passing light@http://www.theservantheart.org/</span>
       <button (click)="logout()">Logout</button>
     </footer>
@@ -74,14 +72,19 @@ export class AppComponent implements OnInit {
   public angularclassLogo = 'assets/img/angularclass-avatar.png';
   public name = 'Passing light';
   public myVar = false;
-  loginService: LoginService
+  public username=localStorage.getItem("username");
+  loginService: LoginService;
+   message: any;
+    subscription: Subscription;
   // public url = 'https://twitter.com/AngularClass';
 
   constructor(
     public appState: AppState,
-    _loginService: LoginService
+    _loginService: LoginService,
+    private messageService: MessageService
   ) {
     this.loginService = _loginService;
+     this.subscription = this.messageService.getMessage().subscribe(message => { this.message = message; });
   }
 
   public ngOnInit() {
@@ -90,6 +93,10 @@ export class AppComponent implements OnInit {
   public logout() {
     this.loginService.logout()
   }
+   ngOnDestroy() {
+        // unsubscribe to ensure no memory leaks
+        this.subscription.unsubscribe();
+    }
 
 }
 

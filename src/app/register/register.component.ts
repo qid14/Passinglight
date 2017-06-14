@@ -1,91 +1,54 @@
- 
-import { Component, OnInit }                  from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { Reader }                   from '../shared/reader';
-import {ReadersService} from '../services/readers.service';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Reader } from '../shared/reader';
+import { ReadersService } from '../services/readers.service';
+import { matchOtherValidator } from '../shared/match-other-validators';
 // import { forbiddenNameValidator } from '../shared/forbidden-name.directive';
+import { MessageService } from '../services/message.service';
 
 @Component({
+
   selector: 'reader-form',
-  template:`
+  // providers:[MessageService],
+  template: `
   <div class="container">
   <div [hidden]="submitted">
     <h1>Register</h1>
     <form [formGroup]="readerForm"  *ngIf="active"  (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label for="firstname">First Name</label>
+        <label for="username">User Name</label>
 
-        <input type="text" id="firstname" class="form-control"
-               formControlName="firstname" required >
+        <input type="text" id="username" class="form-control" placeholder="Username"
+               formControlName="username" required >
 
-        <div *ngIf="formErrors.name" class="alert alert-danger">
-          {{ formErrors.firstname }}
+        <div *ngIf="formErrors.username" class="alert alert-danger">
+          {{ formErrors.username }}
         </div>
       </div>
 
       <div class="form-group">
-        <label for="lastname">Last Name</label>
+        <label for="password">Password</label>
 
-        <input type="text" id="lastname" class="form-control"
-               formControlName="lastname" required >
+        <input type="password" id="password" class="form-control"  minlength='6' placeholder="Password"
+               formControlName="password"  >
 
-        <div *ngIf="formErrors.lastname" class="alert alert-danger">
-          {{ formErrors.lastname }}
+        <div *ngIf="formErrors.password" class="alert alert-danger">
+          {{ formErrors.password }}
         </div>
       </div>
 
       <div class="form-group">
-        <label for="middlename">Middle Name</label>
+        <label for="confirmPassword">Retype Password</label>
 
-        <input type="text" id="middlename" class="form-control"
-               formControlName="middlename"  >
-       
-      </div>
-
-        <div class="form-group">
-        <label for="email">Email</label>
-
-        <input type="text" id="email" class="form-control"
-               formControlName="email"  >
-        <div *ngIf="formErrors.email" class="alert alert-danger">
-          {{ formErrors.email }}
+        <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm Password"
+        formControlName="confirmPassword"  >
+       <div class='form-text error' *ngIf="readerForm.controls.confirmPassword.touched">
+          <div *ngIf="readerForm.hasError('mismatchedPasswords')">Passwords do not match.</div>
         </div>
+      </div>
        
-      </div>
-
-       <div class="form-group">
-        <label for="phonenumber">Phone Number</label>
-
-        <input type="text" id="phonenumber" class="form-control"
-               formControlName="phonenumber"  >
-       
-      </div>
-
-      <div class="form-group">
-        <label for="church">Church</label>
-
-        <input type="text" id="church" class="form-control"
-               formControlName="church"  >
-       
-      </div>
-
-      <div class="form-group">
-        <label for="groups">Groups</label>
-
-        <input type="text" id="groups" class="form-control"
-               formControlName="groups"  >
-       
-      </div>
-
-
-
-      <div class="form-group">
-        <label for="memo">Memo</label>
-        <input type="text" id="memo" class="form-control"
-            formControlName="memo"  >
-      </div>
-
 
       <button type="submit" class="btn btn-default"
              [disabled]="!readerForm.valid">Submit</button>
@@ -93,26 +56,60 @@ import {ReadersService} from '../services/readers.service';
              (click)="addReader()">New Reader</button>
     </form>
   </div>
-
-  <reader-submitted [reader]="reader" [(submitted)]="submitted"></reader-submitted>
+    {{ formErrors1}}
 </div>
  
   `
 })
+// <pre>{{readerForm.value | json}}</pre>
+
+
+// res.send('Insert new user ok!');
+//  <div class="form-group">
+//   <label for="gender">Gender</label>
+
+//   <input type="text" id="gender" class="form-control"
+//          formControlName="gender"  >
+
+// </div>
+
+//  <div class="form-group">
+//   <label for="birth">Birthday</label>
+
+//   <input type="text" id="birth" class="form-control"
+//          formControlName="birth"  >
+
+// </div>
+
 export class ReaderRegisterComponent implements OnInit {
-  _readerservice:ReadersService;
+  _readerservice: ReadersService;
+  formErrors1: string = "";
+  messageService:MessageService;
   // powers = ['Really Smart', 'Super Flexible', 'Weather Changer'];
 
-  reader = new Reader('400002', 'Dr. WhatIsHisName', 'Dr. What','test@gmail.com');
+  reader = new Reader();
+  // ('400002', 'Dr. WhatIsHisName', 'Dr. What','test@gmail.com');//for test
 
   submitted = false;
 
   onSubmit() {
     this.submitted = true;
     this.reader = this.readerForm.value;
-    this._readerservice.RegisterReaders(this.reader).subscribe((res)=>{
-      console.log(res);
-    })
+    this._readerservice.RegisterReaders(this.reader).subscribe(
+      (res) => {
+        console.log('response from backend', res);
+        if (res.status == 500) {
+          this.formErrors1 = "Duplicate username";
+          this.router.navigate(['/home']);
+        }
+      },
+
+      (err) => {
+        console.log(err);
+        this.router.navigate(['/register']);
+      }
+    )
+    // )
   }
 
   // Reset the form with a new hero AND restore 'pristine' class state
@@ -121,7 +118,7 @@ export class ReaderRegisterComponent implements OnInit {
   // TODO: Workaround until NgForm has a reset method (#6822)
   active = true;
   addReader() {
-    this.reader = new Reader('','','','');
+    this.reader = new Reader();
     this.buildForm();
 
     this.active = false;
@@ -129,40 +126,33 @@ export class ReaderRegisterComponent implements OnInit {
   }
 
   readerForm: FormGroup;
-  constructor(private fb: FormBuilder,readerservice:ReadersService) { 
-    this._readerservice=readerservice;
+  constructor(private fb: FormBuilder, readerservice: ReadersService, private router: Router,
+    _messageService: MessageService) {
+    this._readerservice = readerservice;
+    this.messageService = _messageService;
   }
 
   ngOnInit(): void {
     this.buildForm();
   }
-
+  sendMessage(): void {
+    // send message to subscribers via observable subject
+    let msg= localStorage.getItem('username');
+    this.messageService.sendMessage(msg);
+  }
   buildForm(): void {
     this.readerForm = this.fb.group({
-      'firstname': [this.reader.firstname, [
-          Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(20)
-        ]
+      'username': [this.reader.username, [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(20)
+      ]
       ],
-       'lastname': [this.reader.lastname, [
-          Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(20)
-        ]
-      ],
-       'email': [this.reader.email, [
-          Validators.required,
-          Validators.minLength(5 ),
-          Validators.pattern(/^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i)
-        ]
-      ],
-      'middlename': [this.reader.middlename],
-      'phonenumber':    [this.reader.phonenumber],
-      'church': [this.reader.church],
-      'groups': [this.reader.groups],
-      'memo': [this.reader.memo]
-    });
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
+
+
+    }, { validator: this.matchingPasswords('password', 'confirmPassword') });
 
     this.readerForm.valueChanges
       .subscribe(data => this.onValueChanged(data));
@@ -170,6 +160,46 @@ export class ReaderRegisterComponent implements OnInit {
     this.onValueChanged(); // (re)set validation messages now
   }
 
+  // FORM GROUP VALIDATORS
+  matchingPasswords(passwordKey: string, confirmPasswordKey: string) {
+    return (group: FormGroup): { [key: string]: any } => {
+      let password = group.controls[passwordKey];
+      let confirmPassword = group.controls[confirmPasswordKey];
+
+      if (password.value !== confirmPassword.value) {
+        return {
+          mismatchedPasswords: true
+        };
+      }
+    }
+
+  }
+
+  // areEqual(group: FormGroup) {
+  //   let valid = false;
+  //   let i=0;
+  //   let val[]=[];
+  //   for (let name in group.controls) {
+  //     val[i] = group.controls[name].value;
+  //     i++;
+
+
+  //   }
+  //   for (j=0;j<val.length;j++){
+  //     if (val[j]!=val[j+1]) {
+  //       valid =false;
+  //     }
+  //     else valid=true; 
+  //   }
+
+  //   if (valid) {
+  //     return null;
+  //   }
+
+  //   return {
+  //     areEqual: true
+  //   };
+  // }
 
   onValueChanged(data?: any) {
     if (!this.readerForm) { return; }
@@ -190,29 +220,30 @@ export class ReaderRegisterComponent implements OnInit {
   }
 
   formErrors = {
-    'firstname': '',
-    'lastname': '',
-    'email':''
+    'username': '',
+    'password': '',
+    'confirmPassword': ''
   };
 
   validationMessages = {
-    'firstname': {
-      'required':      'First name is required.',
-      'minlength':     'First name must be at least 2 characters long.',
-      'maxlength':     'First Name cannot be more than 20 characters long.',
-      // 'forbiddenName': 'Someone named "Bob" cannot be a hero.'
+    'username': {
+      'required': 'User name is required.',
+      'minlength': 'User name must be at least 2 characters long.',
+      'maxlength': 'User Name cannot be more than 20 characters long.',
+      'duplicateName': 'Someone has already register this named, Please choose another one.'
     },
-    'lastname': {
-      'required':      'Last name is required.',
-      'minlength':     'Last name must be at least 2 characters long.',
-      'maxlength':     'Last Name cannot be more than 20 characters long.',
+    'password': {
+      'required': 'Password is required.',
+      'minlength': 'Password must be at least 6 characters long.',
+      'maxlength': 'Password cannot be more than 20 characters long.',
       // 'forbiddenName': 'Someone named "Bob" cannot be a hero.'
-    },
-    'email': {
-      'required': 'Email is required.',
-      'minlength': 'Email must be at least 5 characters long.',
-      'pattern': 'Invalid Email format'
     }
+    // ,
+    // 'confirmPassword': {
+    //   'required': 'confirmPassword is required.',
+    //   'minlength': 'confirmPassword must be at least 5 characters long.',
+    //   'pattern': 'Invalid confirmPassword format'
+    // }
   };
 }
 

@@ -1,37 +1,36 @@
-<div class="bgimg">
-  <h1 class="sample-content">Your Content Here</h1>
+<div >
+   <nav>
 
-  <hr>
+      <a  *ngIf="myVar" [routerLink]="['./searchborrower'] "
+        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+        Borrower
+      </a>
+      <a [routerLink]=" ['./readbook'] "
+        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+         <i class="fa fa-book"></i>
+        Read Book
+      </a>
 
-  <div>
-    For hot module reloading run
-    <pre>npm run start:hmr</pre>
-  </div>
+       <a [routerLink]=" ['./login'] "
+        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+         <i class="fa fa-user-o"></i>
+        Login
+      </a>
 
-  <hr>
+      <a *ngIf="myVar"  [routerLink]=" ['./questions'] "
+        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+         <i class="fa fa-question"></i>
+        Questionaire
+      </a>
 
-  <div>
-    <h4>Local State</h4>
+   
+      <a [routerLink]=" ['./contact'] "
+        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+        <i class="fa fa-info"></i>
+        About
+      </a>
 
-    <form (ngSubmit)="submitState(localState.value)" autocomplete="off">
+       
 
-      <input
-        [value]="localState.value"
-        (input)="localState.value = $event.target.value"
-        placeholder="Submit Local State to App State"
-        autofocus>
-
-      <button>Submit Value</button>
-    </form>
-    <!--
-        <input type="text" [value]="localState.value" (input)="localState.value = $event.target.value" autofocus>
-        Rather than wiring up two-way data-binding ourselves with [value] and (input)
-        we can use Angular's [(ngModel)] syntax
-        <input type="text" name="textInput" [(ngModel)]="localState.value" autofocus>
-      -->
-
-    <pre>this.localState = {{ localState | json }}</pre>
-
-  </div>
-
+    </nav>
 </div>

@@ -43,12 +43,14 @@ import { LoginService } from './services/login.service';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { Ng2CompleterModule } from "ng2-completer";
 import { getQuestionsComponent } from './questionaire/questionaire.component';
-
+import { MessageService } from './services/message.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdButtonModule, MdCheckboxModule, MdRadioModule } from '@angular/material'
 import { ReadersService } from './services/readers.service';
 import { AuthGuard } from './services/authguard';
 import { DataService } from './services/data.service';
+import { EqualValidator } from './shared/equalvalidator';
+
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import '../styles/styles.scss';
 import '../styles/headings.css';
@@ -83,7 +85,8 @@ type StoreType = {
     BookDetailsComponent,
     SubmittedComponent,
     ReaderRegisterComponent,
-    getQuestionsComponent
+    getQuestionsComponent,
+    EqualValidator
   ],
   /**
    * Import Angular's modules.
@@ -111,6 +114,7 @@ type StoreType = {
     ReadersService,
     AuthGuard,
     DataService,
+    MessageService,
 
 // provide(AuthHttp, {
 //         useFactory: (http) => {

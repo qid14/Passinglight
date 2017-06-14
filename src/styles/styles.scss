@@ -24,6 +24,45 @@ nav a {
   border-radius: 4px;
 }
 
+.site-container:before{
+    content: " ";
+    display: table;
+}
+
+.nav-secondary{
+     display: block;
+}
+.site-container:after {
+    clear: both;
+    content: " ";
+    display: table;
+}
+.genesis-nav-menu {
+    clear: both;
+    font-size: 0;
+    line-height: 1;
+    width: 100%;
+}
+
+.before-header {
+    background-color: #20221d;
+    color: #fff;
+    text-align: right;
+}
+
+.nav-secondary .genesis-nav-menu .menu-item {
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.nav-secondary .genesis-nav-menu a {
+    padding: 5px 18px
+}
+
+// .nav-secondary .genesis-nav-menu .menu-item>a {
+//     background: url(images/xsubmenu-border.png.pagespeed.ic.disg2VZqTT.webp) no-repeat right center;
+//     line-height: 1;
+// }
 .bgimg {
     background:rgb(209,208,208) url(http://www.theservantheart.org/hp_wordpress/wp-content/uploads/2016/06/a53fea743429.jpg) no-repeat 50% 50% fixed;
 }
@@ -32,3 +71,26 @@ nav a {
       -o-background-size: cover;
       background-size: cover;}#header { background: transparent }</style>
 */
+.genesis-nav-menu {
+      padding-right:20px;
+}
+.genesis-nav-menu .menu-item {
+    display: inline-block;
+    font-family: 'Roboto Slab',serif;
+    font-size: 17px;
+    font-weight: 300;
+    text-align: left;
+
+}
+
+menu-item-type-custom
+
+.nav-secondary .genesis-nav-menu .sub-menu a {
+    background-image: none;
+    color: #333;
+    padding: 8px 0
+}
+
+.nav-secondary .genesis-nav-menu>.search {
+    padding-top: 0
+}

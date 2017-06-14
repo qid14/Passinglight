@@ -5,7 +5,7 @@ import { LoginService  } from '../services/login.service';
 
 import { Router } from '@angular/router';
 
-
+import { MessageService } from '../services/message.service';
  // <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
  //        <div class="form-group">
  //            <label for="username">Username</label>
@@ -64,13 +64,19 @@ export class LoginComponent {
 	public successMsg: boolean = true;
 	// public errorMsg: boolean = true;
 	public submitting: boolean = false;
+  messageService: MessageService;
 	
-	constructor(private loginService: LoginService , private router: Router) {}
+	constructor(private loginService: LoginService , private router: Router,
+    _messageService: MessageService) {
+    this.messageService=_messageService;
+  }
 	onSubmit() {
 	     if(!this.loginService.login(this.username, this.password)){
             this.errorMsg = 'Failed to login';
           
         }
+        let msg=localStorage.getItem("username");
+        this.messageService.sendMessage(msg);
          
 	    
   	}	 

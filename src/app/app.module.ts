@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, Http,RequestOptions} from '@angular/http';
+import { HomeModule } from './home/home.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   NgModule,
@@ -15,6 +16,8 @@ import {
   RouterModule,
   PreloadAllModules
 } from '@angular/router';
+import {Router} from'@angular/router';
+
 // import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 /*
@@ -26,16 +29,16 @@ import { ROUTES } from './app.routes';
 import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
-import { HomeComponent } from './home';
+// import { HomeComponent } from './home';
 import { AboutComponent } from './about';
 import { NoContentComponent } from './no-content';
 import { XLargeDirective } from './home/x-large';
-import { ContactComponent } from './ContactComponent/contact.component';
+// import { ContactComponent } from './ContactComponent/contact.component';
 import { ReadBookComponent } from './ReadBookComponent/readbook.component';
 import { SearchBorrowerComponent } from './SearchBorrowerComponent/searchborrower.component';
 import { LoginComponent } from './LoginComponent/login.component';
 import { BookDetailsComponent } from './BookDetailsComponent/bookdetails.component';
-import { SubmittedComponent } from './shared/submitted.component';
+// import { SubmittedComponent } from './shared/submitted.component';
 import { ReaderRegisterComponent } from './register/register.component';
 import { ReadBookService } from './services/readbook.service';
 import { GetQuestionsService } from './services/questionaire.service';
@@ -75,15 +78,15 @@ type StoreType = {
   declarations: [
     AppComponent,
     AboutComponent,
-    HomeComponent,
+    // HomeComponent,
     NoContentComponent,
     XLargeDirective,
-    ContactComponent,
+    // ContactComponent,
     ReadBookComponent,
     SearchBorrowerComponent,
     LoginComponent,
     BookDetailsComponent,
-    SubmittedComponent,
+    // SubmittedComponent,
     ReaderRegisterComponent,
     getQuestionsComponent,
     EqualValidator
@@ -100,6 +103,7 @@ type StoreType = {
     NgxDatatableModule,
     MdButtonModule,
     MdRadioModule,
+    HomeModule,
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
   ],
   /**
@@ -144,8 +148,9 @@ export class AppModule {
 
   constructor(
     public appRef: ApplicationRef,
-    public appState: AppState
-  ) { }
+    public appState: AppState,
+    router:Router
+  ) {console.log("routes:",JSON.stringify(router.config,undefined,2)) }
 
   public hmrOnInit(store: StoreType) {
     if (!store || !store.state) {

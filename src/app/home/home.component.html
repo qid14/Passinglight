@@ -1,36 +1,23 @@
 <div >
    <nav>
 
-      <a  *ngIf="myVar" [routerLink]="['./searchborrower'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-        Borrower
-      </a>
-      <a [routerLink]=" ['./readbook'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-         <i class="fa fa-book"></i>
-        Read Book
-      </a>
 
-       <a [routerLink]=" ['./login'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-         <i class="fa fa-user-o"></i>
-        Login
-      </a>
-
-      <a *ngIf="myVar"  [routerLink]=" ['./questions'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-         <i class="fa fa-question"></i>
-        Questionaire
-      </a>
 
    
-      <a [routerLink]=" ['./contact'] "
+      <a [routerLink]=" ['contact'] "
         routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
         <i class="fa fa-info"></i>
         About
       </a>
-
-       
+      <a [routerLink]=" ['updateprofile'] "
+        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+        <i class="fa fa-user"></i>
+        Update Profile
+      </a>
+     
 
     </nav>
+    <div>
+     <router-outlet></router-outlet> 
+    </div>
 </div>

@@ -1,17 +1,27 @@
  
 import { Component, OnInit }                  from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators,FormControl } from '@angular/forms';
 
 import { Reader }                   from '../shared/reader';
 import {ReadersService} from '../services/readers.service';
 // import { forbiddenNameValidator } from '../shared/forbidden-name.directive';
 
+// import { Component, OnInit } from '@angular/core';
+// import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+// import { Reader } from '../shared/reader';
+// import { ReadersService } from '../services/readers.service';
+import { matchOtherValidator } from '../shared/match-other-validators';
+import {SubmittedComponent} from '../shared/submitted.component';
+// import { forbiddenNameValidator } from '../shared/forbidden-name.directive';
+import { MessageService } from '../services/message.service';
+
 @Component({
-  selector: 'reader-form',
+  selector: 'update-profile',
   template:`
   <div class="container">
   <div [hidden]="submitted">
-    <h1>Register</h1>
+    <h1>Update your profile</h1>
     <form [formGroup]="readerForm"  *ngIf="active"  (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="firstname">First Name</label>
@@ -43,21 +53,7 @@ import {ReadersService} from '../services/readers.service';
        
       </div>
        
-       <div class="form-group">
-        <label for="gender">Gender</label>
-
-        <input type="text" id="gender" class="form-control"
-               formControlName="gender"  >
-       
-      </div>
-
-       <div class="form-group">
-        <label for="birth">Birthday</label>
-
-        <input type="text" id="birth" class="form-control"
-               formControlName="birth"  >
-       
-      </div>
+     
 
         <div class="form-group">
         <label for="email">Email</label>
@@ -106,8 +102,7 @@ import {ReadersService} from '../services/readers.service';
 
       <button type="submit" class="btn btn-default"
              [disabled]="!readerForm.valid">Submit</button>
-      <button type="button" class="btn btn-default"
-             (click)="addReader()">New Reader</button>
+    
     </form>
   </div>
 <reader-submitted [reader]="reader" [(submitted)]="submitted"></reader-submitted>
@@ -116,7 +111,27 @@ import {ReadersService} from '../services/readers.service';
  
   `
 })
-export class ReaderRegisterComponent implements OnInit {
+  // <button type="button" class="btn btn-default"
+  //            (click)="addReader()">New Reader</button>
+
+  // <div class="form-group">
+  //       <label for="gender">Gender</label>
+
+  //       <input type="text" id="gender" class="form-control"
+  //              formControlName="gender"  >
+       
+  //     </div>
+
+  //      <div class="form-group">
+  //       <label for="birth">Birthday</label>
+
+  //       <input type="text" id="birth" class="form-control"
+  //              formControlName="birth"  >
+       
+  //     </div>
+
+
+export class UpdateProfileComponent implements OnInit {
   _readerservice:ReadersService;
   // powers = ['Really Smart', 'Super Flexible', 'Weather Changer'];
 
@@ -127,8 +142,14 @@ export class ReaderRegisterComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    this.reader = this.readerForm.value;
-    this._readerservice.RegisterReaders(this.reader).subscribe((res)=>{
+    
+    let username= localStorage.getItem('username');
+    let un={"username":username};
+    console.log("this.readerForm.value:",this.readerForm.value,un);
+    let rr=Object.assign(un,this.readerForm.value);
+    console.log('reader:',rr);
+    this.reader = rr;
+    this._readerservice.UpdateReaders(this.reader).subscribe((res)=>{
       console.log(res);
     })
   }
@@ -138,13 +159,13 @@ export class ReaderRegisterComponent implements OnInit {
   // to be removed/re-added in a tick via NgIf
   // TODO: Workaround until NgForm has a reset method (#6822)
   active = true;
-  addReader() {
-    this.reader = new Reader();
-    this.buildForm();
+  // addReader() {
+  //   this.reader = new Reader();
+  //   this.buildForm();
 
-    this.active = false;
-    setTimeout(() => this.active = true, 0);
-  }
+  //   this.active = false;
+  //   setTimeout(() => this.active = true, 0);
+  // }
 
   readerForm: FormGroup;
   constructor(private fb: FormBuilder,readerservice:ReadersService) { 

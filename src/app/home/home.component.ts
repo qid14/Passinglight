@@ -3,6 +3,13 @@ import {
   OnInit
 } from '@angular/core';
 
+import {
+  // Component,
+  // OnInit,
+  ViewEncapsulation,
+  // OnDestroy
+} from '@angular/core';
+
 import { AppState } from '../app.service';
 import { Title } from './title';
 import { XLargeDirective } from './x-large';
@@ -14,6 +21,7 @@ import { XLargeDirective } from './x-large';
    * where, in this case, selector is the string 'home'.
    */
   selector: 'home',  // <home></home>
+   // encapsulation: ViewEncapsulation.None,
   /**
    * We need to tell Angular's Dependency Injection which providers are in our app.
    */

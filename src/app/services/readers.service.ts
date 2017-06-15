@@ -35,5 +35,33 @@ export class ReadersService {
 
 	}
 
+	UpdateReaders(formValues: Object) {
+		// debugger;
+		// return an observable
+		let body = JSON.stringify(formValues);
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({ headers: headers });
+
+		console.log('update reader data service!');
+		try {
+			debugger
+			return this.http.put('http://localhost:3002/readers', body, options)
+				.map((responseData) => {
+					console.log('post new user to mysql:', responseData);
+
+					// .json());
+					return responseData;
+				});
+		}
+		catch(error){
+			debugger
+			console.log('No14:',error);
+			return error;
+			// this.router.navigate(['/home']);
+		}
+
+	}
+
+
 
 }

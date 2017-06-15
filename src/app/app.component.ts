@@ -84,7 +84,7 @@ export class AppComponent implements OnInit {
     private messageService: MessageService
   ) {
     this.loginService = _loginService;
-    debugger
+    // debugger
     this.subscription = this.messageService.getMessage().subscribe(message => { this.message = message; });
   }
 

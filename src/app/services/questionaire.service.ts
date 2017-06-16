@@ -23,6 +23,10 @@ export class GetQuestionsService {
 		// debugger;
 		// return an observable
 		let body= JSON.stringify(formValues);
+		console.log('body:',body);
+		// let rid = 
+
+
 		let headers= new Headers({'Content-Type':'application/json'});
 		let options = new RequestOptions({headers:headers});
 

@@ -17,7 +17,7 @@ import { UpdateProfileComponent } from './updateprofile';
 // import { Reader }                   from '../shared/reader';
 import {ReadersService} from '../services/readers.service';
 import {SubmittedComponent} from '../shared/submitted.component';
-
+import { PassbookComponent } from '../PassbookComponent/passbook.component';
 @NgModule({
 	imports: [
 		HomeRoutingModule,
@@ -26,7 +26,8 @@ import {SubmittedComponent} from '../shared/submitted.component';
 		CommonModule
 		// ContactRoutingModule 
 	],
-	declarations: [ContactComponent, HomeComponent,UpdateProfileComponent,SubmittedComponent],
+	declarations: [ContactComponent, HomeComponent,UpdateProfileComponent,SubmittedComponent,
+	PassbookComponent],
 	providers: [
 		// ContactService 
 		ReadersService

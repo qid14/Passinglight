@@ -133,8 +133,7 @@ import { MessageService } from '../services/message.service';
 
 export class UpdateProfileComponent implements OnInit {
   _readerservice:ReadersService;
-  // powers = ['Really Smart', 'Super Flexible', 'Weather Changer'];
-
+  
   reader = new Reader();
   // ('400002', 'Dr. WhatIsHisName', 'Dr. What','test@gmail.com');//for test
 

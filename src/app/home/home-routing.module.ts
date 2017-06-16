@@ -4,6 +4,7 @@ import { UpdateProfileComponent } from './updateprofile';
 import { ContactComponent } from '../ContactComponent/contact.component';
 import { HomeComponent } from './home.component';
 import { AuthGuard } from '../services/authguard';
+import { PassbookComponent } from '../PassbookComponent/passbook.component';
 
 const HomeRoutes: Routes = [
 	{
@@ -12,6 +13,7 @@ const HomeRoutes: Routes = [
 		children: [
 			{ path: 'contact', component: ContactComponent, canActivate: [AuthGuard]},
 			{ path: 'updateprofile', component: UpdateProfileComponent, canActivate: [AuthGuard]},
+			{ path: 'passbook', component: PassbookComponent},
 			// { path: '', component: HomeComponent }
 		]
 	}, {

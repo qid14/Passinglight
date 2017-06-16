@@ -10,20 +10,20 @@ import { MessageService } from '../services/message.service';
 
 
 @Component({
-	 selector: 'contact',
+	selector: 'contact',
 	template: `
 <div class="container">
   <div [hidden]="submitted">
-    <h1>Register</h1>
+    <h1>Change Password</h1>
     <form [formGroup]="readerForm"  *ngIf="active"  (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label for="username">User Name</label>
+        <label for="oldpassword">Old Password</label>
 
-        <input type="text" id="username" class="form-control" placeholder="Username"
-               formControlName="username" required >
+        <input type="password" id="oldpassword" class="form-control" 
+               formControlName="oldpassword" required >
 
-        <div *ngIf="formErrors.username" class="alert alert-danger">
-          {{ formErrors.username }}
+        <div *ngIf="formErrors.oldpassword" class="alert alert-danger">
+          {{ formErrors.oldpassword }}
         </div>
       </div>
 
@@ -51,8 +51,7 @@ import { MessageService } from '../services/message.service';
 
       <button type="submit" class="btn btn-default"
              [disabled]="!readerForm.valid">Submit</button>
-      <button type="button" class="btn btn-default"
-             (click)="addReader()">New Reader</button>
+     
     </form>
   </div>
     {{ formErrors1}}
@@ -61,7 +60,7 @@ import { MessageService } from '../services/message.service';
 })
 
 
-export class ContactComponent implements OnInit{
+export class ContactComponent implements OnInit {
 	_readerservice: ReadersService;
 	formErrors1: string = "";
 	messageService: MessageService;
@@ -74,12 +73,18 @@ export class ContactComponent implements OnInit{
 
 	onSubmit() {
 		this.submitted = true;
-		this.reader = this.readerForm.value;
-		this._readerservice.RegisterReaders(this.reader).subscribe(
+		let username = localStorage.getItem('username');
+		let un = { "username": username };
+		console.log("this.readerForm.value:", this.readerForm.value, un);
+		let rr = Object.assign(un, this.readerForm.value);
+		console.log('reader:', rr);
+		this.reader = rr;
+		// this.reader = this.readerForm.value;
+		this._readerservice.UpdateReaders(this.reader).subscribe(
 			(res) => {
 				console.log('response from backend', res);
 				if (res.status == 500) {
-					this.formErrors1 = "Duplicate username";
+					this.formErrors1 = "Old password is not match our record!";
 					this.router.navigate(['/home']);
 				}
 			},
@@ -97,13 +102,13 @@ export class ContactComponent implements OnInit{
 	// to be removed/re-added in a tick via NgIf
 	// TODO: Workaround until NgForm has a reset method (#6822)
 	active = true;
-	addReader() {
-		this.reader = new Reader();
-		this.buildForm();
+	// addReader() {
+	// 	this.reader = new Reader();
+	// 	this.buildForm();
 
-		this.active = false;
-		setTimeout(() => this.active = true, 0);
-	}
+	// 	this.active = false;
+	// 	setTimeout(() => this.active = true, 0);
+	// }
 
 	readerForm: FormGroup;
 	constructor(private fb: FormBuilder, readerservice: ReadersService, private router: Router,
@@ -115,19 +120,14 @@ export class ContactComponent implements OnInit{
 	ngOnInit(): void {
 		this.buildForm();
 	}
-	sendMessage(): void {
-		// send message to subscribers via observable subject
-		let msg = localStorage.getItem('username');
-		this.messageService.sendMessage(msg);
-	}
+	// sendMessage(): void {
+	// 	// send message to subscribers via observable subject
+	// 	let msg = localStorage.getItem('username');
+	// 	this.messageService.sendMessage(msg);
+	// }
 	buildForm(): void {
 		this.readerForm = this.fb.group({
-			'username': [this.reader.username, [
-				Validators.required,
-				Validators.minLength(2),
-				Validators.maxLength(20)
-			]
-			],
+			oldpassword: ['', Validators.required],
 			password: ['', Validators.required],
 			confirmPassword: ['', Validators.required],
 
@@ -175,16 +175,16 @@ export class ContactComponent implements OnInit{
 	}
 
 	formErrors = {
-		'username': '',
+		'oldpassword': '',
 		'password': '',
 		'confirmPassword': ''
 	};
 
 	validationMessages = {
-		'username': {
-			'required': 'User name is required.',
-			'minlength': 'User name must be at least 2 characters long.',
-			'maxlength': 'User Name cannot be more than 20 characters long.',
+		'oldpassword': {
+			'required': 'Old Password is required.',
+			'minlength': 'Password must be at least 6 characters long.',
+			'maxlength': 'Password cannot be more than 20 characters long.',
 			'duplicateName': 'Someone has already register this named, Please choose another one.'
 		},
 		'password': {

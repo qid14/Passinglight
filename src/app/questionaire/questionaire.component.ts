@@ -3,6 +3,7 @@ import { LoginService } from '../services/login.service';
 import { GetQuestionsService } from '../services/questionaire.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { DataService } from '../services/data.service';
+import { ReadersService } from '../services/readers.service';
 
 interface QuestionInterface {
 	questionid: number;
@@ -80,13 +81,14 @@ interface RespInterface {
 // </div>
 
 export class getQuestionsComponent {
+	readerid: number = 1;
 	questions: QuestionInterface[];
 	// questionans: RespInterface = {};
 	questionans: any[] = [];
 	questionanses: any[] = [];
 
 	questionsForm: FormGroup;
-
+	_readerservice: ReadersService;
 
 	// Print() {
 	// 	console.log('ssds:', this.responses)
@@ -101,7 +103,7 @@ export class getQuestionsComponent {
 			() => console.log('Completed!'));
 
 		this.questionanses = [];
-		console.log('save :', this.questionsForm);
+		console.log('save : and this.readerid:', this.questionsForm, this.readerid);
 
 		for (let db in this.questionsForm.controls) {
 
@@ -112,7 +114,7 @@ export class getQuestionsComponent {
 				// this.questionans.questionid=+db;
 				// this.questionans.readerid=4000001;
 				// this.questionans.answer=this.questionsForm.controls[db].value;
-				this.questionans = [+db, 4000001, this.questionsForm.controls[db].value];
+				this.questionans = [+db, this.readerid, this.questionsForm.controls[db].value];
 				this.questionanses.push(this.questionans);
 				this.questionans = [];
 
@@ -123,12 +125,27 @@ export class getQuestionsComponent {
 			console.log('res', res);
 		});
 	}
-	constructor(private questionsService: GetQuestionsService, private fb: FormBuilder, private dataService: DataService) { }
+	constructor(readerservice: ReadersService, private questionsService: GetQuestionsService, private fb: FormBuilder, private dataService: DataService) {
+		this._readerservice = readerservice;
+	}
 
 	ngOnInit() {
 		this.buildForm();
 		this.getQuestions();
 		console.log('get questions------ ')
+		this._readerservice.GetReaders().subscribe((res) => {
+			console.log('reader service in questions:', res);
+			let userinfo = res.json();
+			console.log('reader in questions:--', userinfo[0]);
+			let result = userinfo[0];
+			if (result.readerid) {
+				console.log('Already finished questions', result.readerid);
+				this.readerid = +result.readerid;
+			}
+			else {
+				console.log('bad')
+			}
+		})
 
 		// for(let i=0;i<this.questions.length-1;i++){
 		// 	console.log(this.questions[i].questiontext);

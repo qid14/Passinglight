@@ -20,7 +20,11 @@
         <i class="fa fa-book"></i>
        Pass book
       </a>
-     
+      <a [routerLink]=" ['comment'] "
+        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+        <i class="fa fa-commenting"></i>
+       Comment
+      </a>
 
     </nav>
     <div>

@@ -5,6 +5,7 @@ import { ContactComponent } from '../ContactComponent/contact.component';
 import { HomeComponent } from './home.component';
 import { AuthGuard } from '../services/authguard';
 import { PassbookComponent } from '../PassbookComponent/passbook.component';
+import { CommentComponent } from './comment';
 
 const HomeRoutes: Routes = [
 	{
@@ -14,6 +15,7 @@ const HomeRoutes: Routes = [
 			{ path: 'contact', component: ContactComponent, canActivate: [AuthGuard]},
 			{ path: 'updateprofile', component: UpdateProfileComponent, canActivate: [AuthGuard]},
 			{ path: 'passbook', component: PassbookComponent},
+			{ path: 'comment', component: CommentComponent},
 			// { path: '', component: HomeComponent }
 		]
 	}, {

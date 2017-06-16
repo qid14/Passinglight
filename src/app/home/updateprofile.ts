@@ -105,12 +105,14 @@ import { MessageService } from '../services/message.service';
     
     </form>
   </div>
-<reader-submitted [reader]="reader" [(submitted)]="submitted"></reader-submitted>
+
 
 </div>
  
   `
 })
+
+// <reader-submitted [reader]="reader" [(submitted)]="submitted"></reader-submitted>
   // <button type="button" class="btn btn-default"
   //            (click)="addReader()">New Reader</button>
 

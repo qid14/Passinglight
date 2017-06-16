@@ -13,7 +13,7 @@ import { Routes, RouterModule } from '@angular/router';
 	selector: 'passbook',
 	template: `
 <div class="container" style="margin-top:20px;">
-<p>pass book</p>
+<p>pass book{{pass}}</p>
 </div>
   `
 })
@@ -21,7 +21,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 export class PassbookComponent implements OnInit {
 	_readerservice: ReadersService;
-
+	pass:string="san";
 
 	reader = new Reader();
 	constructor(readerservice: ReadersService,private router: Router ) {
@@ -35,7 +35,7 @@ export class PassbookComponent implements OnInit {
 			let result= res.json();
 			console.log('result:   ..................',result)
 			if (result[0].finishquestion){
-				this.router.navigate(['/updateprofile']);
+				this.pass="true";
 			}
 			else {
 				this.router.navigate(['/questions']);

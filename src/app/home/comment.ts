@@ -1,9 +1,9 @@
- 
-import { Component, OnInit }                  from '@angular/core';
-import { FormGroup, FormBuilder, Validators,FormControl } from '@angular/forms';
 
-import { Reader }                   from '../shared/reader';
-import {ReadersService} from '../services/readers.service';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+
+import { Reader } from '../shared/reader';
+import { ReadersService } from '../services/readers.service';
 // import { forbiddenNameValidator } from '../shared/forbidden-name.directive';
 
 // import { Component, OnInit } from '@angular/core';
@@ -12,13 +12,13 @@ import { Router } from '@angular/router';
 // import { Reader } from '../shared/reader';
 // import { ReadersService } from '../services/readers.service';
 import { matchOtherValidator } from '../shared/match-other-validators';
-import {SubmittedComponent} from '../shared/submitted.component';
+import { SubmittedComponent } from '../shared/submitted.component';
 // import { forbiddenNameValidator } from '../shared/forbidden-name.directive';
 import { MessageService } from '../services/message.service';
 
 @Component({
   selector: 'comment',
-  template:`
+  template: `
   <div class="container">
   <div [hidden]="submitted">
     <h1>Please write your comment:</h1>
@@ -46,8 +46,8 @@ import { MessageService } from '../services/message.service';
 // <reader-submitted [reader]="reader" [(submitted)]="submitted"></reader-submitted>
 
 export class CommentComponent implements OnInit {
-  _readerservice:ReadersService;
-  
+  _readerservice: ReadersService;
+
   reader = new Reader();
   // ('400002', 'Dr. WhatIsHisName', 'Dr. What','test@gmail.com');//for test
 
@@ -55,15 +55,17 @@ export class CommentComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    
-    let username= localStorage.getItem('username');
-    let un={"username":username};
-    console.log("this.readerForm.value:",this.readerForm.value,un);
-    let rr=Object.assign(un,this.readerForm.value);
-    console.log('reader:',rr);
+
+    let username = localStorage.getItem('username');
+    let un = { "username": username };
+    console.log("this.readerForm.value:", this.readerForm.value, un);
+    let rr = Object.assign(un, this.readerForm.value);
+    console.log('reader:', rr);
     this.reader = rr;
-    this._readerservice.UpdateReaders(this.reader).subscribe((res)=>{
+    this._readerservice.UpdateReaders(this.reader).subscribe((res) => {
       console.log(res);
+      alert('Thank you for your feedback! You will see your comment shown on the website.')
+      this.router.navigate(['/homepage']);
     })
   }
 
@@ -81,8 +83,8 @@ export class CommentComponent implements OnInit {
   // }
 
   readerForm: FormGroup;
-  constructor(private fb: FormBuilder,readerservice:ReadersService) { 
-    this._readerservice=readerservice;
+  constructor(private fb: FormBuilder, readerservice: ReadersService, private router:Router) {
+    this._readerservice = readerservice;
   }
 
   ngOnInit(): void {

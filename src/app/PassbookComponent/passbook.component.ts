@@ -6,41 +6,124 @@ import { Reader } from '../shared/reader';
 import { ReadersService } from '../services/readers.service';
 import { matchOtherValidator } from '../shared/match-other-validators';
 // import { forbiddenNameValidator } from '../shared/forbidden-name.directive';
+
 import { MessageService } from '../services/message.service';
+import { BookReaderService} from '../services/passbook.service';
+import { Observable } from 'rxjs/Observable';
 import { Routes, RouterModule } from '@angular/router';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+
+const now = new Date();
 
 @Component({
 	selector: 'passbook',
 	template: `
 <div class="container" style="margin-top:20px;">
-<p>pass book{{pass}}</p>
+<p>Pass this book </p><b> {{bookname}} {{bookid}} </b>
+
+ <div class = "row justify-content-md-center">
+      <div class = "col col-md-5">
+<ngb-datepicker #dp [(ngModel)]="model" (navigate)="date = $event.next"></ngb-datepicker>
+
+<hr/>
+
+<button class="btn btn-sm btn-outline-primary" (click)="selectToday()">Select Today</button>
+ </div>
+ <div class = "col col-md-7">
+	 <div class="panel-body">
+                <div class="row">
+                    <div class="input-field col s12">
+                     <label for="username">username</label>
+                        <input [(ngModel)]="username" id="username" 
+                            type="username" class="validate">
+                       
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                    <label for="email">Email</label>
+                        <input [(ngModel)]="email" id="email" 
+                            type="email" class="validate">
+                        
+                    </div>
+                </div>
+                <span>{{errorMsg}}</span>
+                <button (click)="onSubmit()" 
+                    class="btn waves-effect waves-light" 
+                    type="submit" name="action">Pass</button>
+            </div>
+</div>
+</div>	
+
+
 </div>
   `
 })
 
 
 export class PassbookComponent implements OnInit {
-	_readerservice: ReadersService;
-	pass:string="san";
+	// public username: string;
+	// public password: string;
+	public postData: string;
+	public errorTitle: string;
+	public errorDesc: string;
+	public successMsg: boolean = true;
+	public submitting: boolean = false;
+	public errorMsg = '';
+	public readerid =1;
+	bookreadersrecord:any={};
 
+
+	_readerservice: ReadersService;
+	_brservice:BookReaderService
+	bookname: string = "Queen of Dark Chamber"
+	bookid = 100002;
+	model: NgbDateStruct;
+	date: { year: number, month: number };
 	reader = new Reader();
-	constructor(readerservice: ReadersService,private router: Router ) {
+	constructor(readerservice: ReadersService, private router: Router,brservice:BookReaderService) {
 		this._readerservice = readerservice;
+		this._brservice = brservice;
+	}
+	selectToday() {
+		this.model = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
+		console.log('date model:',this.model);
+	}
+
+		onSubmit() {
+		// if(!this.loginService.login(this.username, this.password)){
+		//       this.errorMsg = 'Failed to login';
+		let startdate= this.model.month+'/'+this.model.day+'/'+this.model.year;
+		console.log('startdate:',startdate)
+		this.bookreadersrecord=Object.assign({"bookid":this.bookid,"readerid":this.readerid},{"startdate":startdate});
+		console.log('No.99 :bookreaderrecord',this.bookreadersrecord);
+		this._brservice.postBookreaders(this.bookreadersrecord).subscribe((res) => {
+			console.log('bookreader record:', res);
+			alert('Pass book successfully!')
+			this.router.navigate(['/home/comment']);
+		});
+
 	}
 	ngOnInit() {
-		let un=localStorage.getItem('username');
-		let usernameObj= {username:un};
+		this.selectToday();
+		let un = localStorage.getItem('username');
+		let usernameObj = { username: un };
 		this._readerservice.GetReaders(usernameObj).subscribe((res) => {
 			// console.log(res);
-			let result= res.json();
-			console.log('result:   ..................',result)
-			if (result[0].finishquestion){
-				this.pass="true";
+			let result = res.json();
+			console.log('result:   ..................', result)
+
+			if (result.length > 0) {
+				this.readerid = result[0].readerid;
+				if (result[0].finishquestion) {
+					console.log('readerid is .....INIT:',this.readerid);
+					// this.bookid = "true";
+				}
+				else {
+					this.router.navigate(['/questions']);
+				}
+
 			}
-			else {
-				this.router.navigate(['/questions']);
-			} 
-				 
 		})
 	}
 }

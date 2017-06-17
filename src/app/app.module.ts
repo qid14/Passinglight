@@ -1,8 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpModule, Http,RequestOptions} from '@angular/http';
-import { HomeModule } from './home/home.module';
+import { HttpModule, Http, RequestOptions } from '@angular/http';
+// import { HomeModule } from './home/home.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+// import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+
 import {
   NgModule,
   ApplicationRef
@@ -16,8 +19,8 @@ import {
   RouterModule,
   PreloadAllModules
 } from '@angular/router';
-import {Router} from'@angular/router';
-
+import { Router } from '@angular/router';
+import {HomepageModule} from './homepage/homepage.module';
 // import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 /*
@@ -32,6 +35,7 @@ import { AppState, InternalStateType } from './app.service';
 // import { HomeComponent } from './home';
 import { AboutComponent } from './about';
 import { NoContentComponent } from './no-content';
+// import { HomepageComponent} from './homepage/homepage.component';
 import { XLargeDirective } from './home/x-large';
 // import { ContactComponent } from './ContactComponent/contact.component';
 import { ReadBookComponent } from './ReadBookComponent/readbook.component';
@@ -53,6 +57,7 @@ import { ReadersService } from './services/readers.service';
 import { AuthGuard } from './services/authguard';
 import { DataService } from './services/data.service';
 import { EqualValidator } from './shared/equalvalidator';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import '../styles/styles.scss';
@@ -89,12 +94,14 @@ type StoreType = {
     // SubmittedComponent,
     ReaderRegisterComponent,
     getQuestionsComponent,
-    EqualValidator
+    EqualValidator,
+    // HomepageComponent
   ],
   /**
    * Import Angular's modules.
    */
   imports: [
+  HomepageModule,
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
@@ -103,7 +110,10 @@ type StoreType = {
     NgxDatatableModule,
     MdButtonModule,
     MdRadioModule,
-    HomeModule,
+    DashboardModule,
+    // HomeModule,
+    NgbModule.forRoot(),
+    // CarouselModule.forRoot(),
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
   ],
   /**
@@ -119,15 +129,16 @@ type StoreType = {
     AuthGuard,
     DataService,
     MessageService,
+    // NgbCarouselConfig,
 
-// provide(AuthHttp, {
-//         useFactory: (http) => {
-//             return new AuthHttp(new AuthConfig({
-//                 tokenName: "jwtTokenID",
-//             }), http);
-//         },
-//         deps: [Http]
-//     })
+    // provide(AuthHttp, {
+    //         useFactory: (http) => {
+    //             return new AuthHttp(new AuthConfig({
+    //                 tokenName: "jwtTokenID",
+    //             }), http);
+    //         },
+    //         deps: [Http]
+    //     })
 
 
     {
@@ -135,8 +146,8 @@ type StoreType = {
       useFactory: (http) => {
         return new AuthConfig({
           tokenName: 'token',
-        //   tokenGetter: (() => localStorage.getItem('token')),
-        //   globalHeaders: [{ 'Content-Type': 'application/json' }],
+          //   tokenGetter: (() => localStorage.getItem('token')),
+          //   globalHeaders: [{ 'Content-Type': 'application/json' }],
         });
       },
       deps: [Http]
@@ -149,8 +160,8 @@ export class AppModule {
   constructor(
     public appRef: ApplicationRef,
     public appState: AppState,
-    router:Router
-  ) {console.log("routes:",JSON.stringify(router.config,undefined,2)) }
+    router: Router
+  ) { console.log("routes:", JSON.stringify(router.config, undefined, 2)) }
 
   public hmrOnInit(store: StoreType) {
     if (!store || !store.state) {

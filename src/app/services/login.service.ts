@@ -52,7 +52,7 @@ export class LoginService {
         console.log('mmmmmmmmmm', role, typeof role);
         //默认role 为 null
         if (role == 'admin') {
-          this.router.navigate(['/questions']);
+          this.router.navigate(['/dashboard']);
         }
         else if (role == 'initiator') {
           this.router.navigate(['/about']);
@@ -74,7 +74,7 @@ export class LoginService {
     localStorage.removeItem('username');
     localStorage.removeItem('token');
     this.loggedIn = false;
-    this.router.navigate(['/home']);
+    this.router.navigate(['/homepage']);
   }
 
   isLoggedIn() {

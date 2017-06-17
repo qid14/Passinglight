@@ -1,33 +1,26 @@
 <div >
-   <nav>
-
-
-
-   
-      <a [routerLink]=" ['contact'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-        <i class="fa fa-info"></i>
-        Change Password
-      </a>
-      <a [routerLink]=" ['updateprofile'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-        <i class="fa fa-user"></i>
-        Update Profile
-      </a>
-
-        <a [routerLink]=" ['passbook'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-        <i class="fa fa-book"></i>
-       Pass book
-      </a>
-      <a [routerLink]=" ['comment'] "
-        routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-        <i class="fa fa-commenting"></i>
-       Comment
-      </a>
-
-    </nav>
-    <div>
-     <router-outlet></router-outlet> 
-    </div>
+  <nav>
+    
+    <a [routerLink]=" ['contact'] "
+      routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+      <i class="fa fa-info"></i>
+      Change Password
+    </a>
+    <a [routerLink]=" ['updateprofile'] "
+      routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+      <i class="fa fa-user"></i>
+      Update Profile
+    </a>
+    <a [routerLink]=" ['passbook'] "
+      routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+      <i class="fa fa-book"></i>
+      Pass book
+    </a>
+    <a [routerLink]=" ['comment'] "
+      routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+      <i class="fa fa-commenting"></i>
+      Comment
+    </a>
+  </nav>
+  <router-outlet></router-outlet>
 </div>

@@ -85,7 +85,7 @@ export class ContactComponent implements OnInit {
 				console.log('response from backend', res);
 				if (res.status == 500) {
 					this.formErrors1 = "Old password is not match our record!";
-					this.router.navigate(['/home']);
+					this.router.navigate(['/homepage']);
 				}
 			},
 

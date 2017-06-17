@@ -12,17 +12,18 @@ const HomeRoutes: Routes = [
 		path: '', component: HomeComponent,
 		// { path: 'home', component: HomeComponent },
 		children: [
-			{ path: 'contact', component: ContactComponent, canActivate: [AuthGuard]},
-			{ path: 'updateprofile', component: UpdateProfileComponent, canActivate: [AuthGuard]},
+			{ path: 'contact', component: ContactComponent},
+			{ path: 'updateprofile', component: UpdateProfileComponent },
 			{ path: 'passbook', component: PassbookComponent},
 			{ path: 'comment', component: CommentComponent},
 			// { path: '', component: HomeComponent }
 		]
-	}, {
-		path: '',
-		redirectTo: '/home',
-		pathMatch: 'full'
 	}
+	// , {
+	// 	path: '',
+	// 	redirectTo: '/home',
+	// 	pathMatch: 'full'
+	// }
 ]
 @NgModule({
 	imports: [RouterModule.forChild(HomeRoutes)],

@@ -11,10 +11,11 @@ import { LoginComponent } from './LoginComponent/login.component';
 import { BookDetailsComponent } from './BookDetailsComponent/bookdetails.component';
 import { ReaderRegisterComponent } from './register/register.component';
 import { getQuestionsComponent } from './questionaire/questionaire.component';
+import { HomepageComponent } from './homepage/homepage.component';
 export const ROUTES: Routes = [
-  { path: 'home', loadChildren: './home/home.module#HomeModule', data: { preload: true } },
+    
+  // { path: 'homepage', component: HomepageComponent },
 
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
   // { path: 'home', loadChildren: './home/home.module#HomeModule' },
 
   { path: 'readbook', component: ReadBookComponent, canActivate: [AuthGuard] },
@@ -23,6 +24,10 @@ export const ROUTES: Routes = [
   { path: 'register', component: ReaderRegisterComponent },
   { path: 'readbook/:isbn', component: BookDetailsComponent },
   { path: 'questions', component: getQuestionsComponent },
+  { path: 'home', loadChildren: './home/home.module#HomeModule'},
+  { path: '', redirectTo: '/homepage', pathMatch: 'full' },
+
+  // { path: '**', redirectTo: '/homepage' },
   { path: '**', component: NoContentComponent },
 ]
   ;

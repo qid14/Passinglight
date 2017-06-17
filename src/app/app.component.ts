@@ -24,7 +24,7 @@ import { MessageService } from './services/message.service';
 <div class="site-container">
     <aside class="before-header">
       <nav class="nav-secondary">
-        <ul class="nav genesis-nav-menu">
+        <ul class="genesis-nav-menu">
           <li class="menu-item menu-item-type-custom menu-item-object-custom">
             <a [routerLink]="['./login'] "
               routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
@@ -43,8 +43,13 @@ import { MessageService } from './services/message.service';
       
 
           <li  *ngIf="message" class="menu-item menu-item-type-custom menu-item-object-custom">
-          <h4>Welcome,{{message.text}}</h4>            
+          <h5>Welcome,{{message.text}}</h5>
+         
           </li>
+           <li  *ngIf="message" class="menu-item menu-item-type-custom menu-item-object-custom">
+          <a (click)="logout()">Logout</a>
+          </li>
+
         </ul>
       </nav>
     </aside>
@@ -63,11 +68,13 @@ import { MessageService } from './services/message.service';
   
 
     <footer style="margin-top:20px;">
+
       <span>Passing light@http://www.theservantheart.org/</span>
-      <button (click)="logout()">Logout</button>
+   
     </footer>
   `
 })
+   // <button (click)="logout()">Logout</button>
 export class AppComponent implements OnInit {
   public angularclassLogo = 'assets/img/angularclass-avatar.png';
   public name = 'Passing light';

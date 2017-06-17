@@ -19,11 +19,14 @@ import { CommentComponent } from './comment';
 import {ReadersService} from '../services/readers.service';
 import {SubmittedComponent} from '../shared/submitted.component';
 import { PassbookComponent } from '../PassbookComponent/passbook.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { BookReaderService} from '../services/passbook.service';
 @NgModule({
 	imports: [
 		HomeRoutingModule,
 		ReactiveFormsModule,
 		FormsModule,
+		NgbModule,
 		CommonModule
 		// ContactRoutingModule 
 	],
@@ -33,7 +36,8 @@ import { PassbookComponent } from '../PassbookComponent/passbook.component';
 	PassbookComponent],
 	providers: [
 		// ContactService 
-		ReadersService
+		ReadersService,
+		BookReaderService
 	]
 })
 export class HomeModule { }

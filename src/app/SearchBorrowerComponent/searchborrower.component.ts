@@ -78,15 +78,15 @@ export class SearchBorrowerComponent {
   public getBooksList;
   rows = [];
   columns = [
-  { name: "bookname" },
-  { name: "firstname" },
-  { name: "lastname" },
-  { name: "email" },  
-  { name: "church" },
-  { name: "groups" },
-  { name: "startdate" },
-  { name: "enddate" },
-  { name: "duration" }
+    { name: "bookname" },
+    { name: "firstname" },
+    { name: "lastname" },
+    { name: "email" },
+    { name: "church" },
+    { name: "groups" },
+    { name: "startdate" },
+    { name: "enddate" },
+    { name: "duration" }
 
   ]
 
@@ -95,8 +95,8 @@ export class SearchBorrowerComponent {
   ngOnInit() {
     this.getBorrows();
     console.log(moment.now());
-    let xx= moment.now();
-    console.log('getbooks------ ',moment().format('YYYY-MM-DD'));
+    let xx = moment.now();
+    console.log('getbooks------ ', moment().format('YYYY-MM-DD'));
   }
 
 
@@ -108,22 +108,18 @@ export class SearchBorrowerComponent {
     this.readBookService.SearchBorrows()
       .subscribe(
       data => {
-        // debugger;
-        // var tempArray =[];
-        // tempArray.push(data);
-        // this.getBooksList=tempArray;
-        console.log('temparray:', data.length)
-        for(let i=0;i<data.length;i++){
-          let sd=moment(data[i].startdate);
-          let ed= moment(data[i].enddate);
-          console.log('tt',ed.diff(sd,'days'));
-          data[i].duration = ed.diff(sd,'days');
-          // let yy=ed-sd;
-          //ed.from(sd)会显示 a month，diff会算出天数
-          data[i].startdate=moment(data[i].startdate).format('YYYY-MM-DD');
-          data[i].enddate=moment(data[i].enddate).format('YYYY-MM-DD');
-          // data[i].duration=data[i].enddate-data[i].startdate;
-          console.log('nn',data[i].startdate,data[i].enddate, ed.from(sd),data[i].duration)
+
+        // console.log('temparray:', data.length)
+        for (let i = 0; i < data.length; i++) {
+          //   let sd=moment(data[i].startdate);
+          //   let ed= moment(data[i].enddate);
+          //   console.log('tt',ed.diff(sd,'days'));
+          //   data[i].duration = ed.diff(sd,'days');
+
+          data[i].startdate = moment(data[i].startdate).format('YYYY-MM-DD');
+          data[i].enddate = moment(data[i].enddate).format('YYYY-MM-DD');
+
+          //   console.log('nn',data[i].startdate,data[i].enddate, ed.from(sd),data[i].duration)
         }
         this.rows = data;
       },

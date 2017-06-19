@@ -32,7 +32,7 @@ import { MessageService } from '../services/message.service';
         <label for="password">Password</label>
 
         <input type="password" id="password" class="form-control"  minlength='6' placeholder="Password"
-               formControlName="password"  >
+               formControlName="password"  required>
 
         <div *ngIf="formErrors.password" class="alert alert-danger">
           {{ formErrors.password }}
@@ -43,7 +43,7 @@ import { MessageService } from '../services/message.service';
         <label for="confirmPassword">Retype Password</label>
 
         <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm Password"
-        formControlName="confirmPassword"  >
+        formControlName="confirmPassword"  required>
        <div class='form-text error' *ngIf="readerForm.controls.confirmPassword.touched">
           <div *ngIf="readerForm.hasError('mismatchedPasswords')">Passwords do not match.</div>
         </div>
@@ -117,13 +117,13 @@ export class ReaderRegisterComponent implements OnInit {
   // to be removed/re-added in a tick via NgIf
   // TODO: Workaround until NgForm has a reset method (#6822)
   active = true;
-  addReader() {
-    this.reader = new Reader();
-    this.buildForm();
+  // addReader() {
+  //   this.reader = new Reader();
+  //   this.buildForm();
 
-    this.active = false;
-    setTimeout(() => this.active = true, 0);
-  }
+  //   this.active = false;
+  //   setTimeout(() => this.active = true, 0);
+  // }
 
   readerForm: FormGroup;
   constructor(private fb: FormBuilder, readerservice: ReadersService, private router: Router,
@@ -175,31 +175,7 @@ export class ReaderRegisterComponent implements OnInit {
 
   }
 
-  // areEqual(group: FormGroup) {
-  //   let valid = false;
-  //   let i=0;
-  //   let val[]=[];
-  //   for (let name in group.controls) {
-  //     val[i] = group.controls[name].value;
-  //     i++;
 
-
-  //   }
-  //   for (j=0;j<val.length;j++){
-  //     if (val[j]!=val[j+1]) {
-  //       valid =false;
-  //     }
-  //     else valid=true; 
-  //   }
-
-  //   if (valid) {
-  //     return null;
-  //   }
-
-  //   return {
-  //     areEqual: true
-  //   };
-  // }
 
   onValueChanged(data?: any) {
     if (!this.readerForm) { return; }

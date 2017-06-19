@@ -1,20 +1,30 @@
-import { NgModule }             from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-import { DashboardComponent }    from './dashboard.component';
-
-
+import { AuthGuard } from '../services/authguard';
+import { ReadBookComponent } from '../ReadBookComponent/readbook.component';
+import { DashboardComponent } from './dashboard.component';
+import { SearchBorrowerComponent } from '../SearchBorrowerComponent/searchborrower.component';
 const dashboardRoutes: Routes = [
-  { path: 'dashboard',  component: DashboardComponent },
-  // { path: 'hero/:id', component: HeroDetailComponent }
+	{ path: '', component: DashboardComponent },
+	{
+		path: 'dashboard', component: DashboardComponent,
+		children: [
+			{ path: 'books', component: ReadBookComponent, canActivate: [AuthGuard] },
+			{ path: 'record', component: SearchBorrowerComponent, canActivate: [AuthGuard] },
+		]
+	}
+
+
 ];
 
+
+
 @NgModule({
-  imports: [
-    RouterModule.forChild(dashboardRoutes)
-  ],
-  exports: [
-    RouterModule
-  ]
+	imports: [
+		RouterModule.forChild(dashboardRoutes)
+	],
+	exports: [
+		RouterModule
+	]
 })
 export class DashboardRoutingModule { }

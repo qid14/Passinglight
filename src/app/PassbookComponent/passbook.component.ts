@@ -31,6 +31,14 @@ const now = new Date();
  </div>
  <div class = "col col-md-7">
 	 <div class="panel-body">
+	  <div class="row">
+                    <div class="input-field col s12">
+                     <label for="bookid">BookId</label>
+                        <input [(ngModel)]="bookid" id="bookid" 
+                            type="bookid" class="validate">
+                       	{{bookname}}
+                    </div>
+                </div>
                 <div class="row">
                     <div class="input-field col s12">
                      <label for="username">username</label>
@@ -62,8 +70,8 @@ const now = new Date();
 
 
 export class PassbookComponent implements OnInit {
-	// public username: string;
-	// public password: string;
+	public username: string;
+	public email: string;
 	public postData: string;
 	public errorTitle: string;
 	public errorDesc: string;
@@ -95,7 +103,7 @@ export class PassbookComponent implements OnInit {
 		//       this.errorMsg = 'Failed to login';
 		let startdate= this.model.month+'/'+this.model.day+'/'+this.model.year;
 		console.log('startdate:',startdate)
-		this.bookreadersrecord=Object.assign({"bookid":this.bookid,"readerid":this.readerid},{"startdate":startdate});
+		this.bookreadersrecord=Object.assign({"bookid":this.bookid,"username":this.username,"email":this.email},{"startdate":startdate});
 		console.log('No.99 :bookreaderrecord',this.bookreadersrecord);
 		this._brservice.postBookreaders(this.bookreadersrecord).subscribe((res) => {
 			console.log('bookreader record:', res);

@@ -38,13 +38,13 @@ import { NoContentComponent } from './no-content';
 // import { HomepageComponent} from './homepage/homepage.component';
 import { XLargeDirective } from './home/x-large';
 // import { ContactComponent } from './ContactComponent/contact.component';
-import { ReadBookComponent } from './ReadBookComponent/readbook.component';
-import { SearchBorrowerComponent } from './SearchBorrowerComponent/searchborrower.component';
+
+
 import { LoginComponent } from './LoginComponent/login.component';
 import { BookDetailsComponent } from './BookDetailsComponent/bookdetails.component';
 // import { SubmittedComponent } from './shared/submitted.component';
 import { ReaderRegisterComponent } from './register/register.component';
-import { ReadBookService } from './services/readbook.service';
+
 import { GetQuestionsService } from './services/questionaire.service';
 import { LoginService } from './services/login.service';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -87,8 +87,8 @@ type StoreType = {
     NoContentComponent,
     XLargeDirective,
     // ContactComponent,
-    ReadBookComponent,
-    SearchBorrowerComponent,
+    // ReadBookComponent,
+    
     LoginComponent,
     BookDetailsComponent,
     // SubmittedComponent,
@@ -122,7 +122,7 @@ type StoreType = {
   providers: [
     ENV_PROVIDERS,
     APP_PROVIDERS,
-    ReadBookService,
+    // ReadBookService,
     LoginService,
     GetQuestionsService,
     ReadersService,

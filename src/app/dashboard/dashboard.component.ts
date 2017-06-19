@@ -7,7 +7,7 @@ import { Reader } from '../shared/reader';
 // import { matchOtherValidator } from '../shared/match-other-validators';
 // import { forbiddenNameValidator } from '../shared/forbidden-name.directive';
 import { MessageService } from '../services/message.service';
-// import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
+// import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap'; 
 @Component({
 
   selector: 'dashboard',
@@ -17,10 +17,26 @@ import { MessageService } from '../services/message.service';
   template: `
   <div class="container">
    <div style="margin-top: 20px;">
-    <div class = "row justify-content-md-center">
-      <div class = "col col-md-7">
-        <p>dashboard</p>
-        
+    <div class = "row justify-content-lg-center" style="width:1500px">
+      <div class = "col col-md-12 col-lg-12">
+          <div >
+  <nav>
+    
+    <a [routerLink]=" ['books'] "
+      routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+      <i class="fa fa-book"></i>
+        Books
+    </a>
+
+    <a [routerLink]=" ['record'] "
+      routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+      <i class="fa fa-book"></i>
+        Record
+    </a>
+   
+  </nav>
+  <router-outlet></router-outlet>
+</div>
       </div>
     </div>
 </div>

@@ -1,9 +1,9 @@
- 
-import { Component, OnInit }                  from '@angular/core';
-import { FormGroup, FormBuilder, Validators,FormControl } from '@angular/forms';
 
-import { Reader }                   from '../shared/reader';
-import {ReadersService} from '../services/readers.service';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+
+import { Reader } from '../shared/reader';
+import { ReadersService } from '../services/readers.service';
 // import { forbiddenNameValidator } from '../shared/forbidden-name.directive';
 
 // import { Component, OnInit } from '@angular/core';
@@ -12,13 +12,13 @@ import { Router } from '@angular/router';
 // import { Reader } from '../shared/reader';
 // import { ReadersService } from '../services/readers.service';
 import { matchOtherValidator } from '../shared/match-other-validators';
-import {SubmittedComponent} from '../shared/submitted.component';
+import { SubmittedComponent } from '../shared/submitted.component';
 // import { forbiddenNameValidator } from '../shared/forbidden-name.directive';
 import { MessageService } from '../services/message.service';
 
 @Component({
   selector: 'update-profile',
-  template:`
+  template: `
   <div class="container">
   <div [hidden]="submitted">
     <h1>Update your profile</h1>
@@ -93,11 +93,7 @@ import { MessageService } from '../services/message.service';
 
 
 
-      <div class="form-group">
-        <label for="memo">Memo</label>
-        <input type="text" id="memo" class="form-control"
-            formControlName="memo"  >
-      </div>
+
 
 
       <button type="submit" class="btn btn-default"
@@ -113,44 +109,51 @@ import { MessageService } from '../services/message.service';
 })
 
 // <reader-submitted [reader]="reader" [(submitted)]="submitted"></reader-submitted>
-  // <button type="button" class="btn btn-default"
-  //            (click)="addReader()">New Reader</button>
+// <button type="button" class="btn btn-default"
+//            (click)="addReader()">New Reader</button>
 
-  // <div class="form-group">
-  //       <label for="gender">Gender</label>
+// <div class="form-group">
+//       <label for="gender">Gender</label>
 
-  //       <input type="text" id="gender" class="form-control"
-  //              formControlName="gender"  >
-       
-  //     </div>
+//       <input type="text" id="gender" class="form-control"
+//              formControlName="gender"  >
 
-  //      <div class="form-group">
-  //       <label for="birth">Birthday</label>
+//     </div>
 
-  //       <input type="text" id="birth" class="form-control"
-  //              formControlName="birth"  >
-       
-  //     </div>
+//      <div class="form-group">
+//       <label for="birth">Birthday</label>
+
+//       <input type="text" id="birth" class="form-control"
+//              formControlName="birth"  >
+
+//     </div>
 
 
 export class UpdateProfileComponent implements OnInit {
-  _readerservice:ReadersService;
-  
+  _readerservice: ReadersService;
+  username = localStorage.getItem('username');
   reader = new Reader();
-  // ('400002', 'Dr. WhatIsHisName', 'Dr. What','test@gmail.com');//for test
+
+  firstname: string = "";
+  lastname: string = "";
+  middlename: string = "";
+  email: string = "";
+  phonenumber: string = "";
+  church: string = "";
+  groups: string = "";
 
   submitted = false;
 
   onSubmit() {
     this.submitted = true;
-    
-    let username= localStorage.getItem('username');
-    let un={"username":username};
-    console.log("this.readerForm.value:",this.readerForm.value,un);
-    let rr=Object.assign(un,this.readerForm.value);
-    console.log('reader:',rr);
+
+    // username= localStorage.getItem('username');
+    let un = { "username": this.username };
+    console.log("this.readerForm.value:", this.readerForm.value, un);
+    let rr = Object.assign(un, this.readerForm.value);
+    console.log('reader:', rr);
     this.reader = rr;
-    this._readerservice.UpdateReaders(this.reader).subscribe((res)=>{
+    this._readerservice.UpdateReaders(this.reader).subscribe((res) => {
       console.log(res);
     })
   }
@@ -169,39 +172,64 @@ export class UpdateProfileComponent implements OnInit {
   // }
 
   readerForm: FormGroup;
-  constructor(private fb: FormBuilder,readerservice:ReadersService) { 
-    this._readerservice=readerservice;
+  constructor(private fb: FormBuilder, readerservice: ReadersService) {
+    this._readerservice = readerservice;
   }
 
   ngOnInit(): void {
+    this._readerservice.GetReaders(this.username).subscribe((res) => {
+      // console.log('update profile no 1:',res);
+      let readerinfo = res.json();
+      console.log('update profile no 2:', readerinfo[0]);
+      if (readerinfo.length > 0) {
+        this.firstname = readerinfo[0].firstname;
+        this.lastname = readerinfo[0].lastname;
+        this.middlename = readerinfo[0].middlename;
+        this.email = readerinfo[0].email;
+        this.phonenumber = readerinfo[0].phonenumber;
+        this.church = readerinfo[0].church;
+        this.groups = readerinfo[0].groups;
+        console.log('update profile no 4:', this.firstname);
+        this.reader = new Reader({
+          "username": this.username, "firstname": this.username, "email": this.email,
+          "lastname": this.lastname, "middlename": this.middlename, "phonenumber": this.phonenumber,
+          "church": this.church, "groups": this.groups
+        });//for test
+      }
+      console.log('update profile no 5:', this.reader);
+
+    }
+
+    );
+    // console.log('update profile no 3:', this.reader);
     this.buildForm();
   }
 
   buildForm(): void {
     this.readerForm = this.fb.group({
       'firstname': [this.reader.firstname, [
-          Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(20)
-        ]
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(20)
+      ]
       ],
-       'lastname': [this.reader.lastname, [
-          Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(20)
-        ]
+      'lastname': [this.reader.lastname, [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(20)
+      ]
       ],
-       'email': [this.reader.email, [
-          Validators.required,
-          Validators.minLength(5 ),
-          Validators.pattern(/^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i)
-        ]
+      'email': [this.reader.email, [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.pattern(/^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i)
+      ]
       ],
       'middlename': [this.reader.middlename],
-      'phonenumber':    [this.reader.phonenumber],
+      'phonenumber': [this.reader.phonenumber],
       'church': [this.reader.church],
-      'groups': [this.reader.groups],
-      'memo': [this.reader.memo]
+      'groups': [this.reader.groups]
+
     });
 
     this.readerForm.valueChanges
@@ -212,6 +240,7 @@ export class UpdateProfileComponent implements OnInit {
 
 
   onValueChanged(data?: any) {
+    debugger;
     if (!this.readerForm) { return; }
     const form = this.readerForm;
 
@@ -232,20 +261,20 @@ export class UpdateProfileComponent implements OnInit {
   formErrors = {
     'firstname': '',
     'lastname': '',
-    'email':''
+    'email': ''
   };
 
   validationMessages = {
     'firstname': {
-      'required':      'First name is required.',
-      'minlength':     'First name must be at least 2 characters long.',
-      'maxlength':     'First Name cannot be more than 20 characters long.',
+      'required': 'First name is required.',
+      'minlength': 'First name must be at least 2 characters long.',
+      'maxlength': 'First Name cannot be more than 20 characters long.',
       // 'forbiddenName': 'Someone named "Bob" cannot be a hero.'
     },
     'lastname': {
-      'required':      'Last name is required.',
-      'minlength':     'Last name must be at least 2 characters long.',
-      'maxlength':     'Last Name cannot be more than 20 characters long.',
+      'required': 'Last name is required.',
+      'minlength': 'Last name must be at least 2 characters long.',
+      'maxlength': 'Last Name cannot be more than 20 characters long.',
       // 'forbiddenName': 'Someone named "Bob" cannot be a hero.'
     },
     'email': {

@@ -38,6 +38,12 @@ import * as moment from 'moment';
           </ng-template>
           </ngx-datatable-column>
 
+          <ngx-datatable-column name="Phone" [width]="150">
+          <ng-template let-value="value" ngx-datatable-cell-template>
+            {{value}}
+          </ng-template>
+          </ngx-datatable-column>
+
           <ngx-datatable-column name="Church" [width]="200">
           <ng-template let-value="value" ngx-datatable-cell-template>
             {{value}}
@@ -82,6 +88,7 @@ export class SearchBorrowerComponent {
     { name: "firstname" },
     { name: "lastname" },
     { name: "email" },
+    { name: "phonenumber" },
     { name: "church" },
     { name: "groups" },
     { name: "startdate" },

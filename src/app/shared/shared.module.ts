@@ -2,32 +2,44 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CheckstatusComponent } from './checkstatus.component';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 import { ReadBookComponent } from '../ReadBookComponent/readbook.component';
+
 import { ReadBookService } from '../services/readbook.service';
+
+import { StatisticsComponent } from '../StatisticsComponent/statistics.component';
+import { StatisticsService } from '../services/statistics.service';
+
+import { DashboardService } from '../services/dashboard.service';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
 import { SearchBorrowerComponent } from '../SearchBorrowerComponent/searchborrower.component';
 // import { HeroDetailComponent }  from './hero-detail.component';
 
 // import { HeroService } from './hero.service';
 
-import { CheckstatusRoutingModule } from './Checkstatus-routing.module';
+import { DashboardRoutingModule } from '../dashboard/dashboard-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    CheckstatusRoutingModule,
+    DashboardRoutingModule,
+    NgxChartsModule,
     NgbModule,
     NgxDatatableModule
   ],
   declarations: [
-    CheckstatusComponent,
+    DashboardComponent,
+    
     ReadBookComponent,
-    SearchBorrowerComponent
+    SearchBorrowerComponent,
+    StatisticsComponent
   ],
   providers: [
-    ReadBookService
+    ReadBookService,
+    DashboardService,
+
   ]
 })
-export class CheckstatusModule { }
+export class SharedModule { }

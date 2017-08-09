@@ -18,28 +18,28 @@ import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
     <div class = "row justify-content-md-center">
       <div class = "col col-md-7">
         <ngb-carousel>
-        <ng-template ngbSlide>
-        <img src="https://lorempixel.com/900/500?r=4" alt="Random first slide">
-        <div class="carousel-caption">
-          <h3>10 seconds between slides...</h3>
-          <p>This carousel uses customized default values.</p>
-        </div>
-        </ng-template>
-        <ng-template ngbSlide>
-        <img src="https://lorempixel.com/900/500?r=5"  alt="Random second slide">
-        <div class="carousel-caption">
-          <h3>No keyboard...</h3>
-          <p>This carousel uses customized default values.</p>
-        </div>
-        </ng-template>
-        <ng-template ngbSlide>
-        <img src="https://lorempixel.com/900/500?r=6" alt="Random third slide">
-        <div class="carousel-caption">
-          <h3>And no wrap after last slide.</h3>
-          <p>This carousel uses customized default values.</p>
-        </div>
-        </ng-template>
-        </ngb-carousel>
+  <ng-template ngbSlide>
+    <img src="https://lorempixel.com/900/500?r=1" alt="Random first slide">
+    <div class="carousel-caption">
+      <h3>First slide label</h3>
+      <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+    </div>
+  </ng-template>
+  <ng-template ngbSlide>
+    <img src="https://lorempixel.com/900/500?r=2" alt="Random second slide">
+    <div class="carousel-caption">
+      <h3>Second slide label</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </div>
+  </ng-template>
+  <ng-template ngbSlide>
+    <img src="https://lorempixel.com/900/500?r=3" alt="Random third slide">
+    <div class="carousel-caption">
+      <h3>Third slide label</h3>
+      <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+    </div>
+  </ng-template>
+</ngb-carousel>
         
       </div>
     </div>
@@ -47,25 +47,7 @@ import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
  
   `
 })
-// <pre>{{readerForm.value | json}}</pre>
 
-
-// res.send('Insert new user ok!');
-//  <div class="form-group">
-//   <label for="gender">Gender</label>
-
-//   <input type="text" id="gender" class="form-control"
-//          formControlName="gender"  >
-
-// </div>
-
-//  <div class="form-group">
-//   <label for="birth">Birthday</label>
-
-//   <input type="text" id="birth" class="form-control"
-//          formControlName="birth"  >
-
-// </div>
 
 export class HomepageComponent implements OnInit {
 
@@ -76,6 +58,7 @@ export class HomepageComponent implements OnInit {
     // this.buildForm();
   }
    constructor(config: NgbCarouselConfig){
+     console.log('Homepage init begins:....')
          config.interval = 1000;
     config.wrap = true;
     config.keyboard = true;

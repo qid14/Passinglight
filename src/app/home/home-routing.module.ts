@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UpdateProfileComponent } from './updateprofile';
-import { ContactComponent } from '../ContactComponent/contact.component';
+import { PasswordComponent } from '../PasswordComponent/password.component';
 import { HomeComponent } from './home.component';
 import { AuthGuard } from '../services/authguard';
 import { PassbookComponent } from '../PassbookComponent/passbook.component';
@@ -12,11 +12,11 @@ const HomeRoutes: Routes = [
 		path: '', component: HomeComponent,
 		// { path: 'home', component: HomeComponent },
 		children: [
-			{ path: 'contact', component: ContactComponent},
+			{ path: 'password', component: PasswordComponent},
 			{ path: 'updateprofile', component: UpdateProfileComponent },
 			{ path: 'passbook', component: PassbookComponent},
 			{ path: 'comment', component: CommentComponent},
-			// { path: '', component: HomeComponent }
+			{ path: '',  redirectTo: '/home/updateprofile', pathMatch: 'full'}
 		]
 	}
 	// , {

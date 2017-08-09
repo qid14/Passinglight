@@ -1,26 +1,50 @@
 import { Injectable } from '@angular/core';
-import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Router, Route,CanActivate, CanActivateChild, CanLoad, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
-
+import { AuthService } from './auth.service';
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     jwtHelper: JwtHelper = new JwtHelper();
-    constructor(private router: Router) { }
+    constructor(private router: Router, private authService: AuthService) { }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        let data = localStorage.getItem('token')
-        if (data) {
-            // logged in so return true
-            let role = this.jwtHelper.decodeToken(data).role;
-            console.log('mmmmmmmmmm', role, typeof role);
-            //默认role 为 null
-            if (role == 'admin') {
-                return true;
-            }
-
-            // not logged in so redirect to login page with the return url
-            this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-            return false;
-        }
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+        let url: string = state.url;
+        return this.checkLogin(url);
+        // not logged in so redirect to login page with the return url
+        // this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+        // return false;
     }
+
+    canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+        return this.canActivate(route, state);
+    }
+
+    canLoad(route: Route): boolean {
+        let url = `/${route.path}`;
+
+        return this.checkLogin(url);
+    }
+
+    checkLogin(url: string): boolean {
+        if (this.authService.isLoggedIn) { return true; }
+
+        // Store the attempted URL for redirecting
+        this.authService.redirectUrl = url;
+
+        // Create a dummy session id
+        // let sessionId = 123456789;
+
+        // // Set our navigation extras object
+        // // that contains our global query params and fragment
+        // let navigationExtras: NavigationExtras = {
+        //     queryParams: { 'session_id': sessionId },
+        //     fragment: 'anchor'
+        // };
+
+        // Navigate to the login page with extras
+        this.router.navigate(['/login']);
+        // , navigationExtras);
+        return false;
+    }
+
 }

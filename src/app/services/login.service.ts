@@ -55,7 +55,7 @@ export class LoginService {
           this.router.navigate(['/dashboard']);
         }
         else if (role == 'initiator') {
-          this.router.navigate(['/about']);
+          this.router.navigate(['/initiator']);
         } else {
           this.router.navigate(['/home']);
         }

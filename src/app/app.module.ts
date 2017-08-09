@@ -5,7 +5,7 @@ import { HttpModule, Http, RequestOptions } from '@angular/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
-
+import { AppRoutingModule } from './app-routing.module';
 import {
   NgModule,
   ApplicationRef
@@ -20,31 +20,29 @@ import {
   PreloadAllModules
 } from '@angular/router';
 import { Router } from '@angular/router';
-import {HomepageModule} from './homepage/homepage.module';
+import { HomepageComponent } from './homepage/homepage.component';
+
+import { SharedModule } from './shared/shared.module';
 // import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 /*
  * Platform and Environment providers/directives/pipes
  */
 import { ENV_PROVIDERS } from './environment';
-import { ROUTES } from './app.routes';
-// App is our top level component
 import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
-// import { HomeComponent } from './home';
+
 import { AboutComponent } from './about';
 import { NoContentComponent } from './no-content';
-// import { HomepageComponent} from './homepage/homepage.component';
+
 import { XLargeDirective } from './home/x-large';
-// import { ContactComponent } from './ContactComponent/contact.component';
+
 
 
 import { LoginComponent } from './LoginComponent/login.component';
 import { BookDetailsComponent } from './BookDetailsComponent/bookdetails.component';
-// import { SubmittedComponent } from './shared/submitted.component';
 import { ReaderRegisterComponent } from './register/register.component';
-
 import { GetQuestionsService } from './services/questionaire.service';
 import { LoginService } from './services/login.service';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -54,10 +52,13 @@ import { MessageService } from './services/message.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdButtonModule, MdCheckboxModule, MdRadioModule } from '@angular/material'
 import { ReadersService } from './services/readers.service';
+import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/authguard';
 import { DataService } from './services/data.service';
 import { EqualValidator } from './shared/equalvalidator';
 import { DashboardModule } from './dashboard/dashboard.module';
+
+import { InitiatorModule } from './initiator/initiator.module';
 
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import '../styles/styles.scss';
@@ -81,27 +82,25 @@ type StoreType = {
 @NgModule({
   bootstrap: [AppComponent],
   declarations: [
+    HomepageComponent,
     AppComponent,
     AboutComponent,
-    // HomeComponent,
     NoContentComponent,
     XLargeDirective,
-    // ContactComponent,
-    // ReadBookComponent,
-    
+
     LoginComponent,
     BookDetailsComponent,
-    // SubmittedComponent,
+
     ReaderRegisterComponent,
     getQuestionsComponent,
     EqualValidator,
-    // HomepageComponent
+
   ],
   /**
    * Import Angular's modules.
    */
   imports: [
-  HomepageModule,
+    // HomepageModule,
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
@@ -111,10 +110,15 @@ type StoreType = {
     MdButtonModule,
     MdRadioModule,
     DashboardModule,
-    // HomeModule,
+    // InitiatorModule,
+    SharedModule,
+
     NgbModule.forRoot(),
+    AppRoutingModule
     // CarouselModule.forRoot(),
-    RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
+    // RouterModule.forRoot(ROUTES, { useHash: true, 
+    // enableTracing: true,//debug use only
+    // preloadingStrategy: PreloadAllModules })
   ],
   /**
    * Expose our Services and Providers into Angular's dependency injection.
@@ -126,6 +130,7 @@ type StoreType = {
     LoginService,
     GetQuestionsService,
     ReadersService,
+    AuthService,
     AuthGuard,
     DataService,
     MessageService,

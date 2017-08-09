@@ -240,7 +240,7 @@ export class UpdateProfileComponent implements OnInit {
 
 
   onValueChanged(data?: any) {
-    debugger;
+    // debugger;
     if (!this.readerForm) { return; }
     const form = this.readerForm;
 

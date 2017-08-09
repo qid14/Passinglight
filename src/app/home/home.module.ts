@@ -6,7 +6,7 @@ import { CommonModule }        from '@angular/common';
 //   RouterModule,
 //   // PreloadAllModules
 // } from '@angular/router';
-import { ContactComponent } from '../ContactComponent/contact.component';
+import { PasswordComponent } from '../PasswordComponent/password.component';
 // import { ContactService }       from './contact.service';
 // import { ContactRoutingModule } from './contact-routing.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -30,7 +30,7 @@ import { BookReaderService} from '../services/passbook.service';
 		CommonModule
 		// ContactRoutingModule 
 	],
-	declarations: [ContactComponent, HomeComponent,UpdateProfileComponent,
+	declarations: [PasswordComponent, HomeComponent,UpdateProfileComponent,
 	SubmittedComponent,
 	CommentComponent,
 	PassbookComponent],

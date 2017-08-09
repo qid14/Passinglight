@@ -10,7 +10,7 @@ import { MessageService } from '../services/message.service';
 
 
 @Component({
-	selector: 'contact',
+	selector: 'password',
 	template: `
 <div class="container">
   <div [hidden]="submitted">
@@ -60,7 +60,7 @@ import { MessageService } from '../services/message.service';
 })
 
 
-export class ContactComponent implements OnInit {
+export class PasswordComponent implements OnInit {
 	_readerservice: ReadersService;
 	formErrors1: string = "";
 	messageService: MessageService;

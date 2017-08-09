@@ -56,7 +56,6 @@ const now = new Date();
                     </div>
                 </div>
                 <span>{{errorMsg}}</span>
-                <br>
                 <button (click)="onSubmit()" 
                     class="btn waves-effect waves-light" 
                     type="submit" name="action">Pass</button>
@@ -105,31 +104,12 @@ export class PassbookComponent implements OnInit {
 		let startdate= this.model.month+'/'+this.model.day+'/'+this.model.year;
 		console.log('startdate:',startdate)
 		this.bookreadersrecord=Object.assign({"bookid":this.bookid,"username":this.username,"email":this.email},{"startdate":startdate});
-		console.log('No.2 :bookreaderrecord',this.bookreadersrecord);
-		debugger
-		this._brservice.postBookreaders(this.bookreadersrecord).subscribe((res:any):void => {
+		console.log('No.99 :bookreaderrecord',this.bookreadersrecord);
+		this._brservice.postBookreaders(this.bookreadersrecord).subscribe((res) => {
 			console.log('bookreader record:', res);
-			
-			if(res.status=='404'){
-				console.log('passbook No.1:',res.body);
-				
-				this.errorMsg=res.body;
-			}
-			else
 			alert('Pass book successfully!')
 			this.router.navigate(['/home/comment']);
-		},
-		(err)=>{
-			debugger
-			console.log(err);
-			if(err.status=='404'){
-				console.log('passbook No.1:',err._body);
-				
-				this.errorMsg=err._body;
-			}
-
-		}
-		);
+		});
 
 	}
 	ngOnInit() {

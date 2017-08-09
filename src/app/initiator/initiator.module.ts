@@ -10,11 +10,19 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CommonModule,
     FormsModule,
     SharedModule
+
   ],
   declarations: [
+    // DashboardComponent,
+    
+    // ReadBookComponent,
+    // SearchBorrowerComponent,
+    // StatisticsComponent
   ],
   providers: [
+    // ReadBookService,
+    // DashboardService,
 
   ]
 })
-export class DashboardModule { }
+export class InitiatorModule { }

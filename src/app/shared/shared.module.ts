@@ -6,7 +6,7 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 import { ReadBookComponent } from '../ReadBookComponent/readbook.component';
 
 import { ReadBookService } from '../services/readbook.service';
-
+import { AuthorizeComponent} from '../authorize/authorize.component';
 import { StatisticsComponent } from '../StatisticsComponent/statistics.component';
 import { StatisticsService } from '../services/statistics.service';
 
@@ -31,7 +31,7 @@ import { DashboardRoutingModule } from '../dashboard/dashboard-routing.module';
   ],
   declarations: [
     DashboardComponent,
-    
+    AuthorizeComponent,
     ReadBookComponent,
     SearchBorrowerComponent,
     StatisticsComponent

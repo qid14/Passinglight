@@ -47,7 +47,7 @@ export class ReadersService {
 		console.log('get reader data service!');
 		try {
 			// debugger
-			return this.http.get('http://localhost:3002/readers/username/'+username)
+			return this.http.get('http://localhost:3002/readers/username/' + username)
 				.map((responseData) => {
 					console.log('Get user data from mysql:', responseData);
 
@@ -56,13 +56,44 @@ export class ReadersService {
 				});
 		}
 		catch (error) {
-			debugger
+			// debugger
 			console.log('No12:', error);
 			return error;
 			// this.router.navigate(['/home']);
 		}
 
 	}
+
+	GetAllReaders() {
+		// debugger;
+		// return an observable
+		// let username = localStorage.getItem('username');
+		// // let body = JSON.stringify(Values);
+		// // let headers = new Headers({ 'Content-Type': 'application/json' });
+		// // let options = new RequestOptions({ headers: headers });
+
+		console.log('get all reader data service!');
+		debugger;
+		try {
+			// debugger
+			return this.http.get('http://localhost:3002/readers')
+				.map((responseData) => {
+					console.log('Get all user data from mysql:', responseData);
+
+					
+					return responseData.json();
+				});
+		}
+		catch (error) {
+			// debugger
+			console.log('No13:', error);
+			return error;
+			// this.router.navigate(['/home']);
+		}
+
+	}
+
+
 
 
 	//Update profile of reader

@@ -38,6 +38,12 @@ import { MessageService } from '../services/message.service';
       <i class="fa fa-book"></i>
         Record
     </a>
+
+     <a [routerLink]=" ['authorize'] "
+      routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+      <i class="fa fa-book"></i>
+        Authorize
+    </a>
    
   </nav>
   <router-outlet></router-outlet>

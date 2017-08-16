@@ -159,6 +159,8 @@ export class StatisticsComponent {
 		this.readBookService.SearchBorrows()
 			.subscribe(
 			data => {
+				// if(data)
+				debugger
 				for (let i = 0; i < data.length; i++) {
 					this.sumofduration += +data[i].duration
 				}

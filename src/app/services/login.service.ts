@@ -40,6 +40,7 @@ export class LoginService {
         this.loggedIn = true;
         // debugger
         localStorage.setItem('username', data.username);
+        localStorage.setItem('readerid', data.readerid);
         localStorage.setItem('token', data.token);
         console.log('token content',
           this.jwtHelper.decodeToken(data.token),

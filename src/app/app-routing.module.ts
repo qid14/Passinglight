@@ -21,7 +21,7 @@ export const ROUTES: Routes = [
   // { path: 'home', loadChildren: './home/home.module#HomeModule' },
 
 
- { path: 'homepage', component: HomepageComponent },
+  { path: 'homepage', component: HomepageComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: ReaderRegisterComponent },
   { path: 'readbook/:isbn', component: BookDetailsComponent },

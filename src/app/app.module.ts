@@ -58,7 +58,7 @@ import { DataService } from './services/data.service';
 import { EqualValidator } from './shared/equalvalidator';
 import { DashboardModule } from './dashboard/dashboard.module';
 
-import { InitiatorModule } from './initiator/initiator.module';
+// import { InitiatorModule } from './initiator/initiator.module';
 
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import '../styles/styles.scss';

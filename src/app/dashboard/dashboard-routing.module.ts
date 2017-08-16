@@ -6,6 +6,7 @@ import { ReadBookComponent } from '../ReadBookComponent/readbook.component';
 import { DashboardComponent } from './dashboard.component';
 import { SearchBorrowerComponent } from '../SearchBorrowerComponent/searchborrower.component';
 import { StatisticsComponent } from '../StatisticsComponent/statistics.component';
+import { AuthorizeComponent} from '../authorize/authorize.component';
 
 const dashboardRoutes: Routes = [
 	// { path: '', component: DashboardComponent },
@@ -15,6 +16,7 @@ const dashboardRoutes: Routes = [
 			{ path: 'books', component: ReadBookComponent},
 			{ path: 'record', component: SearchBorrowerComponent},
 			{ path: 'statistics', component: StatisticsComponent },
+			{ path: 'authorize',component: AuthorizeComponent },
 			{ path: '', redirectTo: '/dashboard/statistics', pathMatch: 'full' }
 		]
 	}

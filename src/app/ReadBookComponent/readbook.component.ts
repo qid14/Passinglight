@@ -101,7 +101,7 @@ export class ReadBookComponent {
 		this.readBookService.getBooksData()
 		.subscribe(
 			data => {
-				// debugger;
+				debugger;
 				// var tempArray =[];
 				// tempArray.push(data);
 				// this.getBooksList=tempArray;

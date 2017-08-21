@@ -72,8 +72,8 @@ export class ReadersService {
 		// // let headers = new Headers({ 'Content-Type': 'application/json' });
 		// // let options = new RequestOptions({ headers: headers });
 
-		console.log('get all reader data service!');
-		debugger;
+		// console.log('get all reader data service!');
+		// debugger;
 		try {
 			// debugger
 			return this.http.get('http://localhost:3002/readers')
@@ -118,6 +118,42 @@ export class ReadersService {
 		catch (error) {
 			debugger
 			console.log('No14:', error);
+			return error;
+			// this.router.navigate(['/home']);
+		}
+
+	}
+
+	//update role
+	UpdateRoles(readerid: string, isInitiator:boolean) {
+		// debugger;
+		// return an observable
+		let role= 'null'
+		if (isInitiator) {
+			role = 'initiator'
+		}
+		else {
+			role = 'null'
+		}
+		let body = JSON.stringify({'readerid':readerid,'role':role});
+		console.log('---15---update role body:',body);
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({ headers: headers });
+
+		console.log('update role service!');
+		try {
+			// debugger
+			return this.http.put('http://localhost:3002/readers/authorize', body, options)
+				.map((responseData) => {
+					console.log('update role for reader:', responseData);
+
+					// .json());
+					return responseData;
+				});
+		}
+		catch (error) {
+			debugger
+			console.log('No15:', error);
 			return error;
 			// this.router.navigate(['/home']);
 		}

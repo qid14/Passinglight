@@ -46,7 +46,9 @@ import { MessageService } from '../services/message.service';
     </a>
    
   </nav>
+  <hr />
   <router-outlet></router-outlet>
+  <hr />
 </div>
      
 

@@ -16,16 +16,35 @@ import { ReadBookService } from '../services/readbook.service';
 
 	template: `
 	<div class="row" style="margin-left:20px;margin-top:20px;">
-	<div class="col-md-10">
+	<button  class='btn btn-info' (click)="addbook()" style="margin-right:20px;">Add New Book</button>
+	<button  class='btn' style="margin-right:20px;" [disabled]="!isValid" [ngClass]='{isdisabled: isValid}' (click)="deletebook()">Delete the Book</button>
+	
+
+	<div class="col-md-12" style="margin-top:10px;">
    <ngx-datatable
    		class="material"
          [rows]="rows"
         [columns]="columns"
          [columnMode]="'force'"
 		[rowHeight]="'auto'"
-        [footerHeight]="50"        
+        [footerHeight]="50" 
+        [headerHeight]="60" 
+         [selected]="selected"
+          [selectionType]="'checkbox'"
+          (activate)="onActivate($event)"
+          (select)='onSelect($event)'      
 
         [limit]="10">
+		
+		<ngx-datatable-column
+            [width]="30"
+            [sortable]="false"
+            [canAutoResize]="false"
+            [draggable]="false"
+            [resizeable]="false"
+            [headerCheckboxable]="true"
+            [checkboxable]="true">
+          </ngx-datatable-column>
 
          <ngx-datatable-column name="Bookid" [width]="100">
           <ng-template let-value="value" ngx-datatable-cell-template>
@@ -77,7 +96,9 @@ import { ReadBookService } from '../services/readbook.service';
 
 export class ReadBookComponent {
 	public getBooksList;
+	isValid: boolean = false;
 	rows = [];
+	selected = [];
 	columns=[{prop:"bookid"},
 	{name:"bookname"},
 	{name:"author"},{
@@ -115,5 +136,51 @@ export class ReadBookComponent {
 
 	}
 
+	onSelect({ selected }) {
+		console.log('Select Event', selected, this.selected);
 
+		this.selected.splice(0, this.selected.length);
+		this.selected.push(...selected);
+		console.log('SELECTED 001:', this.selected)
+		if (selected.length > 0) {
+			this.isValid = true;
+		}
+		else {
+			this.isValid = false;
+		}
+	}
+	// onSelect({ selected }) {
+	// 	console.log('Select Event', selected, this.selected);
+
+	// 	this.selected.splice(0, this.selected.length);
+	// 	this.selected.push(...selected);
+	// }
+
+	onActivate(event) {
+		// console.log('Activate Event', event);
+	}
+
+	addbook(){
+		console.log('Add a new book')
+	}
+
+
+	deletebook(){
+		console.log('Delete these books!');
+		for (let i of this.selected) {
+
+			if (i.bookid != null) {
+				console.log('bookid is', i.bookid);
+				this.readBookService.deleteBooks(i.bookid).subscribe((res) => {
+					console.log(res);
+				})
+
+			}
+			else {
+				console.log('No book selected');
+
+			}
+		}
+		// location.reload();
+	}
 };

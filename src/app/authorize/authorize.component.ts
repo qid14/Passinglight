@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
+import { Component,ChangeDetectorRef,DoCheck,OnInit} from '@angular/core';
 import { LoginService } from '../services/login.service';
 import { GetQuestionsService } from '../services/questionaire.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { DataService } from '../services/data.service';
 import { ReadersService } from '../services/readers.service';
 import { Reader } from '../shared/reader';
-import {Observable } from 'rxjs/Observable';
-
+import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 // import { ReadersService } from '../services/readers.service';
 
 @Component({
@@ -33,13 +33,13 @@ import {Observable } from 'rxjs/Observable';
          [rows]="rows"
         [columns]="columns"
          [columnMode]="'force'"
-		[rowHeight]="'au7o'"
+		[rowHeight]="'auto'"
 		[headerHeight]="50"
         [footerHeight]="50"  
         [selected]="selected"
           [selectionType]="'checkbox'"
           (activate)="onActivate($event)"
-          (select)='onSelect($event)'>      
+          (select)='onSelect($event)'     
 
         [limit]="10">
 
@@ -141,13 +141,14 @@ import {Observable } from 'rxjs/Observable';
 
 
 
-export class AuthorizeComponent {
+export class AuthorizeComponent implements OnInit {
 	// readerid: number = 1;
 	isValid: boolean = false;
 	editing = {};
 	_readerservice: ReadersService;
 	rows = [];
-	 // Observable<any[]>;
+	// olddata = [];
+	// rows: Observable<any[]>;
 	selected = [];
 	columns = [{ prop: "username" },
 	{ name: "firstname" },
@@ -182,9 +183,12 @@ export class AuthorizeComponent {
 			);
 	}
 
-	constructor(private fb: FormBuilder, readerservice: ReadersService) {
+	constructor(private fb: FormBuilder, readerservice: ReadersService,private cd: ChangeDetectorRef,private router:Router) {
 		this._readerservice = readerservice;
+
+		
 	}
+
 
 	ngOnInit() {
 		this.getAllReaders();
@@ -232,19 +236,41 @@ export class AuthorizeComponent {
 
 			if (i.role == null) {
 				console.log('role is', i.role, i.readerid);
-				this._readerservice.UpdateRoles(i.readerid,true).subscribe((res) => {
+				this._readerservice.UpdateRoles(i.readerid, true).subscribe((res) => {
 					console.log(res);
 				})
 
 			}
 			else {
 				console.log('rol is Not null', i.role, i.readerid);
-				this._readerservice.UpdateRoles(i.readerid,false).subscribe((res) => {
+				this._readerservice.UpdateRoles(i.readerid, false).subscribe((res) => {
 					console.log(res);
 				})
 			}
 		}
-		this.getAllReaders();
+		location.reload();
+		 // this.router.navigate(['/dashboard/authorize']);
+
+		// this.cd.markForCheck(); 
+		
 	}
 
+	// fetch(cb) {
+	// 	const req = new XMLHttpRequest();
+	// 	req.open('GET', `http://localhost:3002/readers`);
+
+	// 	req.onload = () => {
+	// 		cb(JSON.parse(req.response));
+	// 	};
+
+	// 	req.send();
+	// }
+	// ngDoCheck(){
+	// 	if (this.olddata != this.rows) {
+	// 		this.rows = [];
+	// 		this.getAllReaders();
+	// 		this.rows = [...this.rows];
+	// 		// this.
+	// 	}
+	// }
 }

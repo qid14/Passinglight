@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http,Headers,RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -16,6 +16,32 @@ export class ReadBookService {
 				// console.log('get books from mysql:', responseData.json());
 				return responseData.json()
 			});
+
+	}
+
+	deleteBooks(bookid:string){
+		let body = JSON.stringify({'bookid':bookid});
+		console.log('---15---delete book:',body);
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({ headers: headers,body:body });
+
+		console.log('update role service!');
+		try {
+			// debugger
+			return this.http.delete('http://localhost:3002/books', options)
+				.map((responseData) => {
+					console.log('update role for reader:', responseData);
+
+					// .json());
+					return responseData;
+				});
+		}
+		catch (error) {
+			debugger
+			console.log('No1:', error);
+			return error;
+			// this.router.navigate(['/home']);
+		}
 
 	}
 

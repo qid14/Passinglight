@@ -7,7 +7,7 @@ import { ReadersService } from '../services/readers.service';
 import { matchOtherValidator } from '../shared/match-other-validators';
 // import { forbiddenNameValidator } from '../shared/forbidden-name.directive';
 import { MessageService } from '../services/message.service';
-
+import { Validator,AbstractControl,NG_VALIDATORS  } from '@angular/forms';
 @Component({
 
   selector: 'reader-form',
@@ -26,6 +26,21 @@ import { MessageService } from '../services/message.service';
         <div *ngIf="formErrors.username" class="alert alert-danger">
           {{ formErrors.username }}
         </div>
+      </div>
+
+  <div class="form-group">
+        <label for="email">Email</label>
+
+        <input class="form-control" 
+               type="email"
+               formControlName="email" 
+               name="email" 
+               placeholder="email@example.com"
+               >
+        <div *ngIf="formErrors.email" class="alert alert-danger">
+          {{ formErrors.email }}
+        </div>
+
       </div>
 
       <div class="form-group">
@@ -86,7 +101,7 @@ export class ReaderRegisterComponent implements OnInit {
   formErrors1: string = "";
   messageService:MessageService;
   // powers = ['Really Smart', 'Super Flexible', 'Weather Changer'];
-
+ 
   reader = new Reader();
   // ('400002', 'Dr. WhatIsHisName', 'Dr. What','test@gmail.com');//for test
 
@@ -140,7 +155,9 @@ export class ReaderRegisterComponent implements OnInit {
     let msg= localStorage.getItem('username');
     this.messageService.sendMessage(msg);
   }
+
   buildForm(): void {
+    let  emailRegex = '^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$';
     this.readerForm = this.fb.group({
       'username': [this.reader.username, [
         Validators.required,
@@ -148,6 +165,15 @@ export class ReaderRegisterComponent implements OnInit {
         Validators.maxLength(20)
       ]
       ],
+     // 'email':[ '', [<any>Validators.required, <any>Validators.email]],
+     'email': ['', [<any>Validators.required,  <any>Validators.pattern(emailRegex) ]],
+      // 'email': [this.reader.email
+      // , [
+        // Validators.required,
+        // Validators.email(email)
+        
+      // ]
+      // ],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
 
@@ -197,7 +223,9 @@ export class ReaderRegisterComponent implements OnInit {
 
   formErrors = {
     'username': '',
+    'email':'',
     'password': '',
+
     'confirmPassword': ''
   };
 
@@ -207,6 +235,13 @@ export class ReaderRegisterComponent implements OnInit {
       'minlength': 'User name must be at least 2 characters long.',
       'maxlength': 'User Name cannot be more than 20 characters long.',
       'duplicateName': 'Someone has already register this named, Please choose another one.'
+    },
+     'email': {
+      'required': 'Email is required.',
+      'pattern': 'Email format is invalid.'
+      // 'minlength': 'email must be at least 6 characters long.',
+      // 'maxlength': 'Password cannot be more than 20 characters long.',
+      // 'forbiddenName': 'Someone named "Bob" cannot be a hero.'
     },
     'password': {
       'required': 'Password is required.',

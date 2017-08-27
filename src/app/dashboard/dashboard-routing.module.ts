@@ -11,12 +11,12 @@ import { AuthorizeComponent} from '../authorize/authorize.component';
 const dashboardRoutes: Routes = [
 	// { path: '', component: DashboardComponent },
 	{
-		path: 'dashboard', component: DashboardComponent,
+		path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard],
 		children: [
-			{ path: 'books', component: ReadBookComponent},
-			{ path: 'record', component: SearchBorrowerComponent},
-			{ path: 'statistics', component: StatisticsComponent },
-			{ path: 'authorize',component: AuthorizeComponent },
+			{ path: 'books', component: ReadBookComponent ,canActivate: [AuthGuard]},
+			{ path: 'record', component: SearchBorrowerComponent ,canActivate: [AuthGuard]},
+			{ path: 'statistics', component: StatisticsComponent ,canActivate: [AuthGuard] },
+			{ path: 'authorize',component: AuthorizeComponent ,canActivate: [AuthGuard] },
 			{ path: '', redirectTo: '/dashboard/statistics', pathMatch: 'full' }
 		]
 	}

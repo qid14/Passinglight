@@ -16,7 +16,7 @@ const InitiatorRoutes: Routes = [
 		// path: 'initiator', component: InitiatorComponent,
 		children: [
 		
-			{ path: 'record', component: QuerySequenceComponent },
+			{ path: 'record', component: QuerySequenceComponent,canActivate: [AuthGuard] },
 			{ path: 'password', component: PasswordComponent},
 			{ path: 'updateprofile', component: UpdateProfileComponent },
 			{ path: 'passbook', component: PassbookComponent},

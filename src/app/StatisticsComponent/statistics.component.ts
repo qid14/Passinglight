@@ -160,7 +160,7 @@ export class StatisticsComponent {
 			.subscribe(
 			data => {
 				// if(data)
-				debugger
+				// debugger
 				for (let i = 0; i < data.length; i++) {
 					this.sumofduration += +data[i].duration
 				}

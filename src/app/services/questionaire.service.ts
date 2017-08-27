@@ -22,8 +22,9 @@ export class GetQuestionsService {
 	sendAnswers(formValues:Object) {
 		// debugger;
 		// return an observable
+		console.log('SAVE ANSWER SERVICE BEGINES..........IIIIIIIIIIIIIIII')
 		let body= JSON.stringify(formValues);
-		console.log('body:',body);
+		console.log('Question answers to backend, form body:',body);
 		// let rid = 
 
 
@@ -33,7 +34,7 @@ export class GetQuestionsService {
 		console.log('post reader data service!');
 		return this.http.post('http://localhost:3002/questions',body,options )
 			.map((responseData) => {
-				console.log('post question answers to mysql:', responseData);
+				console.log('Response when posted question answers to mysql:', responseData);
 					// .json());
 				// return responseData.json()
 			});

@@ -1,29 +1,33 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { ReadBookComponent } from '../ReadBookComponent/readbook.component';
 
 import { ReadBookService } from '../services/readbook.service';
-import { AuthorizeComponent} from '../authorize/authorize.component';
+import { AuthorizeComponent } from '../authorize/authorize.component';
 import { StatisticsComponent } from '../StatisticsComponent/statistics.component';
 import { StatisticsService } from '../services/statistics.service';
 
 import { DashboardService } from '../services/dashboard.service';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import {NgxChartsModule} from '@swimlane/ngx-charts';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { SearchBorrowerComponent } from '../SearchBorrowerComponent/searchborrower.component';
 // import { HeroDetailComponent }  from './hero-detail.component';
-
+import { UpdateProfileComponent } from '../home/updateprofile';
 // import { HeroService } from './hero.service';
-
+import { PasswordComponent } from '../PasswordComponent/password.component';
 import { DashboardRoutingModule } from '../dashboard/dashboard-routing.module';
+import { CommentComponent } from '../home/comment';
+import { PassbookComponent } from '../PassbookComponent/passbook.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     DashboardRoutingModule,
     NgxChartsModule,
     NgbModule,
@@ -34,12 +38,24 @@ import { DashboardRoutingModule } from '../dashboard/dashboard-routing.module';
     AuthorizeComponent,
     ReadBookComponent,
     SearchBorrowerComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    UpdateProfileComponent,
+    PasswordComponent,
+    CommentComponent,
+    PassbookComponent
   ],
   providers: [
     ReadBookService,
     DashboardService,
 
+  ],
+  exports: [
+    DashboardComponent,
+    AuthorizeComponent,
+    ReadBookComponent,
+    SearchBorrowerComponent,
+    StatisticsComponent,
+    UpdateProfileComponent
   ]
 })
 export class SharedModule { }

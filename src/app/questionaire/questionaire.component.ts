@@ -4,7 +4,7 @@ import { GetQuestionsService } from '../services/questionaire.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { DataService } from '../services/data.service';
 import { ReadersService } from '../services/readers.service';
-
+import { Router } from '@angular/router';
 interface QuestionInterface {
 	questionid: number;
 	questiontext: string;
@@ -90,42 +90,41 @@ export class getQuestionsComponent {
 	questionsForm: FormGroup;
 	_readerservice: ReadersService;
 
-	// Print() {
-	// 	console.log('ssds:', this.responses)
-	// }
+//save answer of questionaire
 	save() {
 		// debugger
-		// let questionans[]:RespInterface[]=[];
-
+		
 		this.dataService.getSecretQuote().subscribe((d) =>
-			console.log('zzzzzzz', d),
+			console.log('Get token', d),
 			err => console.log(err),
-			() => console.log('Completed!'));
+			() => console.log('Completed getting token!'));
 
 		this.questionanses = [];
-		console.log('save : and this.readerid:', this.questionsForm, this.readerid);
+		console.log('Save answers. This.readerid:', this.questionsForm, this.readerid);
 
-		for (let db in this.questionsForm.controls) {
+		for (let questionid in this.questionsForm.controls) {
 
-			if (this.questionsForm.controls[db].value) {
+			if (this.questionsForm.controls[questionid].value) {
 				// debugger
 				// console.log(db,this.questionsForm.controls[db].value);
 
 				// this.questionans.questionid=+db;
 				// this.questionans.readerid=4000001;
 				// this.questionans.answer=this.questionsForm.controls[db].value;
-				this.questionans = [+db, this.readerid, this.questionsForm.controls[db].value];
+				this.questionans = [+questionid, this.readerid, this.questionsForm.controls[questionid].value];
 				this.questionanses.push(this.questionans);
 				this.questionans = [];
 
 			}
 		}
-		console.log('questionanses:    ', this.questionanses);
+		console.log('question answeres:    ', this.questionanses);
 		this.questionsService.sendAnswers(this.questionanses).subscribe((res) => {
-			console.log('res', res);
+			console.log('Save answers to Backend:', res);
+			this.router.navigate(['/home/passbook'])
 		});
+		
 	}
-	constructor(readerservice: ReadersService, private questionsService: GetQuestionsService, private fb: FormBuilder, private dataService: DataService) {
+	constructor( private router: Router,readerservice: ReadersService, private questionsService: GetQuestionsService, private fb: FormBuilder, private dataService: DataService) {
 		this._readerservice = readerservice;
 	}
 
@@ -139,11 +138,12 @@ export class getQuestionsComponent {
 			console.log('reader in questions:--', userinfo[0]);
 			let result = userinfo[0];
 			if (result.readerid) {
-				console.log('Already finished questions', result.readerid);
+				console.log('The user exists.', result.readerid);
 				this.readerid = +result.readerid;
+				
 			}
 			else {
-				console.log('bad')
+				console.log('Cannot find such reader.')
 			}
 		})
 

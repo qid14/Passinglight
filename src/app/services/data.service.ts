@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpModule, Http, Headers, RequestOptions } from '@angular/http';
+import 'rxjs/add/operator/map';
 import { AuthHttp } from 'angular2-jwt';
 import { Observable } from 'rxjs/Observable';
-// import './rxjs-operators';
+// import './rxjs-operators'
 
 @Injectable()
 export class DataService {
@@ -11,6 +12,7 @@ export class DataService {
     console.log('aaaaaa', authHttp);
   }
 
+//Get authorized by sending data to backend, verify token
   getSecretQuote(): Observable<string> {
 
     let authHeader = new Headers({
@@ -19,11 +21,11 @@ export class DataService {
     });
     let options = new RequestOptions({ headers: authHeader });
     console.log('bbbbb',options);
-
+    
     return this.authHttp
       .get('http://localhost:3002/readers/check-state',options)
       .map(res => res.json())
-      .catch(this.handleError);
+      // .catch(this.handleError);
   }
 
   private handleError(error) {

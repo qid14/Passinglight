@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
-
+import { Observable } from 'rxjs/Observable';
+import { Reader } from '../shared/reader';
+// import { of }         from 'rxjs/observable/of';
 @Injectable()
 export class ReadersService {
 	constructor(public http: Http, private router: Router) { }
@@ -36,7 +38,7 @@ export class ReadersService {
 	}
 
 	//get reader information form backend
-	GetReaders(values?: Object) {
+	GetReaders(values?: Object):Observable<Reader[]> {
 		// debugger;
 		// return an observable
 		let username = localStorage.getItem('username');
@@ -49,15 +51,14 @@ export class ReadersService {
 			// debugger
 			return this.http.get('http://localhost:3002/readers/username/' + username)
 				.map((responseData) => {
-					console.log('Get user data from mysql:', responseData);
+					console.log('Get user data from mysql:', responseData.json());
 
-					// .json());
-					return responseData;
+					return responseData.json();
 				});
 		}
 		catch (error) {
 			// debugger
-			console.log('No12:', error);
+			console.log('No12:', error)
 			return error;
 			// this.router.navigate(['/home']);
 		}

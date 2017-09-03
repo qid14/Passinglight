@@ -1,4 +1,5 @@
 export class Reader {
+    public readerid:string;
     public username: string;
     public password:string;
     public firstname: string;
@@ -9,6 +10,7 @@ export class Reader {
     public church: string;
     public groups: string;
     public memo: string;
+    public finishquestion:string;
     // public gender:boolean,
     // public birth:string,
     // public createdate: string;
@@ -24,7 +26,8 @@ export class Reader {
             this.email = data.email || '',
             this.phonenumber = data.phonenumber || '',
             this.church = data.church || '',
-            this.memo = data.memo || ''
+            this.memo = data.memo || '',
+            this.finishquestion = data.finishquestion || '';
 
 
 

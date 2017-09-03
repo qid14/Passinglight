@@ -132,9 +132,9 @@ export class getQuestionsComponent {
 		this.buildForm();
 		this.getQuestions();
 		console.log('get questions------ ')
-		this._readerservice.GetReaders().subscribe((res) => {
+		this._readerservice.GetReaders().subscribe((res):any => {
 			console.log('reader service in questions:', res);
-			let userinfo = res.json();
+			let userinfo = res;
 			console.log('reader in questions:--', userinfo[0]);
 			let result = userinfo[0];
 			if (result.readerid) {

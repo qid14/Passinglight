@@ -46,7 +46,7 @@ export const ROUTES: Routes = [
       ROUTES, {
         useHash: true,
 
-        enableTracing: true
+        // enableTracing: true
         // , // <-- debugging purposes only
         // preloadingStrategy: SelectivePreloadingStrategy,
 

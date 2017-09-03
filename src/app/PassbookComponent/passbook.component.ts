@@ -78,7 +78,7 @@ export class PassbookComponent implements OnInit {
 	public successMsg: boolean = true;
 	public submitting: boolean = false;
 	public errorMsg = '';
-	public readerid =1;
+	public readerid = '666666';
 	bookreadersrecord:any={};
 
 
@@ -116,9 +116,9 @@ export class PassbookComponent implements OnInit {
 		this.selectToday();
 		let un = localStorage.getItem('username');
 		let usernameObj = { username: un };
-		this._readerservice.GetReaders(usernameObj).subscribe((res) => {
+		this._readerservice.GetReaders(usernameObj).subscribe((res):any => {
 			// console.log(res);
-			let result = res.json();
+			let result = res;
 			console.log('result:   ..................', result)
 
 			if (result.length > 0) {

@@ -22,7 +22,9 @@ import { PasswordComponent } from '../PasswordComponent/password.component';
 import { DashboardRoutingModule } from '../dashboard/dashboard-routing.module';
 import { CommentComponent } from '../home/comment';
 import { PassbookComponent } from '../PassbookComponent/passbook.component';
-
+import { LoginService } from '../services/login.service';
+// import { AuthService } from '../services/auth.service';
+import { AuthGuard } from '../services/authguard';
 @NgModule({
   imports: [
     CommonModule,
@@ -47,6 +49,9 @@ import { PassbookComponent } from '../PassbookComponent/passbook.component';
   providers: [
     ReadBookService,
     DashboardService,
+    // AuthService,
+    LoginService,
+    AuthGuard
 
   ],
   exports: [

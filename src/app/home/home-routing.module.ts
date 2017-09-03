@@ -12,10 +12,10 @@ const HomeRoutes: Routes = [
 		path: '', component: HomeComponent,
 		// { path: 'home', component: HomeComponent },
 		children: [
-			{ path: 'password', component: PasswordComponent},
-			{ path: 'updateprofile', component: UpdateProfileComponent },
-			{ path: 'passbook', component: PassbookComponent},
-			{ path: 'comment', component: CommentComponent},
+			{ path: 'password', component: PasswordComponent,canActivate: [AuthGuard]},
+			{ path: 'updateprofile', component: UpdateProfileComponent ,canActivate: [AuthGuard]},
+			{ path: 'passbook', component: PassbookComponent,canActivate: [AuthGuard]},
+			{ path: 'comment', component: CommentComponent,canActivate: [AuthGuard]},
 			{ path: '',  redirectTo: '/home/updateprofile', pathMatch: 'full'}
 		]
 	}

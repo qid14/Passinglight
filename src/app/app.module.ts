@@ -1,10 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, Http, RequestOptions } from '@angular/http';
-// import { HomeModule } from './home/home.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-// import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import {
   NgModule,
@@ -23,7 +21,7 @@ import { Router } from '@angular/router';
 import { HomepageComponent } from './homepage/homepage.component';
 
 import { SharedModule } from './shared/shared.module';
-// import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+
 
 /*
  * Platform and Environment providers/directives/pipes
@@ -44,7 +42,6 @@ import { LoginComponent } from './LoginComponent/login.component';
 import { BookDetailsComponent } from './BookDetailsComponent/bookdetails.component';
 import { ReaderRegisterComponent } from './register/register.component';
 import { GetQuestionsService } from './services/questionaire.service';
-import { LoginService } from './services/login.service';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { Ng2CompleterModule } from "ng2-completer";
 import { getQuestionsComponent } from './questionaire/questionaire.component';
@@ -52,13 +49,9 @@ import { MessageService } from './services/message.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdButtonModule, MdCheckboxModule, MdRadioModule } from '@angular/material'
 import { ReadersService } from './services/readers.service';
-import { AuthService } from './services/auth.service';
-import { AuthGuard } from './services/authguard';
 import { DataService } from './services/data.service';
 import { EqualValidator } from './shared/equalvalidator';
 import { DashboardModule } from './dashboard/dashboard.module';
-
-// import { InitiatorModule } from './initiator/initiator.module';
 import 'rxjs/add/operator/map'
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import '../styles/styles.scss';
@@ -100,7 +93,6 @@ type StoreType = {
    * Import Angular's modules.
    */
   imports: [
-    // HomepageModule,
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
@@ -110,12 +102,9 @@ type StoreType = {
     MdButtonModule,
     MdRadioModule,
     DashboardModule,
-    // InitiatorModule,
     SharedModule,
-
     NgbModule.forRoot(),
     AppRoutingModule
-    // CarouselModule.forRoot(),
     // RouterModule.forRoot(ROUTES, { useHash: true, 
     // enableTracing: true,//debug use only
     // preloadingStrategy: PreloadAllModules })
@@ -126,33 +115,15 @@ type StoreType = {
   providers: [
     ENV_PROVIDERS,
     APP_PROVIDERS,
-    // ReadBookService,
-    LoginService,
     GetQuestionsService,
     ReadersService,
-    AuthService,
-    AuthGuard,
     DataService,
     MessageService,
-    // NgbCarouselConfig,
-
-    // provide(AuthHttp, {
-    //         useFactory: (http) => {
-    //             return new AuthHttp(new AuthConfig({
-    //                 tokenName: "jwtTokenID",
-    //             }), http);
-    //         },
-    //         deps: [Http]
-    //     })
-
-
     {
       provide: AuthConfig,
       useFactory: (http) => {
         return new AuthConfig({
           tokenName: 'token',
-          //   tokenGetter: (() => localStorage.getItem('token')),
-          //   globalHeaders: [{ 'Content-Type': 'application/json' }],
         });
       },
       deps: [Http]

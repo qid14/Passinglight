@@ -7,11 +7,11 @@ import { ReadersService } from '../services/readers.service';
 import { matchOtherValidator } from '../shared/match-other-validators';
 // import { forbiddenNameValidator } from '../shared/forbidden-name.directive';
 import { MessageService } from '../services/message.service';
-import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 @Component({
 
   selector: 'home-page',
-  providers:[NgbCarouselConfig],
+  providers: [NgbCarouselConfig],
   template: `
   <div class="container">
    <div style="margin-top: 20px;">
@@ -19,24 +19,22 @@ import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
       <div class = "col col-md-7">
         <ngb-carousel>
   <ng-template ngbSlide>
-    <img src="https://lorempixel.com/900/500?r=1" alt="Random first slide">
+    <img src="../../assets/img/p1.png" alt="Random first slide">
     <div class="carousel-caption">
-      <h3>First slide label</h3>
-      <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+      
     </div>
   </ng-template>
   <ng-template ngbSlide>
-    <img src="https://lorempixel.com/900/500?r=2" alt="Random second slide">
+    <img src="../../assets/img/p2.jpg" alt="Random second slide">
     <div class="carousel-caption">
-      <h3>Second slide label</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+     
     </div>
   </ng-template>
   <ng-template ngbSlide>
-    <img src="https://lorempixel.com/900/500?r=3" alt="Random third slide">
+    <img src="../../assets/img/p3.jpg" alt="Random third slide">
     <div class="carousel-caption">
-      <h3>Third slide label</h3>
-      <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+      <h3> </h3>
+      <p></p>
     </div>
   </ng-template>
 </ngb-carousel>
@@ -56,13 +54,17 @@ export class HomepageComponent implements OnInit {
 
   ngOnInit(): void {
     // this.buildForm();
+    localStorage.removeItem('username');
+    localStorage.removeItem('token');
+    localStorage.removeItem('readerid');
+
   }
-   constructor(config: NgbCarouselConfig){
-     console.log('Homepage init begins:....')
-         config.interval = 1000;
+  constructor(config: NgbCarouselConfig) {
+    console.log('Homepage init begins:....')
+    config.interval = 10000;
     config.wrap = true;
     config.keyboard = true;
-   }
+  }
 }
 
 

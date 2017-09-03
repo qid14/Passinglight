@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router, Route,CanActivate, CanActivateChild, CanLoad, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
-import { AuthService } from './auth.service';
+import { LoginService } from './login.service';
+
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     jwtHelper: JwtHelper = new JwtHelper();
-    constructor(private router: Router, private authService: AuthService) { }
+    constructor(private router: Router, private loginService: LoginService) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         let url: string = state.url;
@@ -26,10 +27,12 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     }
 
     checkLogin(url: string): boolean {
-        if (this.authService.isLoggedIn) { return true; }
+        // debugger
+        // if (this.loginService.login()) {return true;}
+        if (this.loginService.isLoggedIn) { return true; }
 
         // Store the attempted URL for redirecting
-        this.authService.redirectUrl = url;
+        this.loginService.redirectUrl = url;
 
         // Create a dummy session id
         // let sessionId = 123456789;

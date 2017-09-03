@@ -29,7 +29,7 @@ import { MessageService } from '../services/message.service';
         <input type="text" id="firstname" class="form-control"
                formControlName="firstname" required >
 
-        <div *ngIf="formErrors.name" class="alert alert-danger">
+        <div *ngIf="formErrors.firstname" class="alert alert-danger">
           {{ formErrors.firstname }}
         </div>
       </div>

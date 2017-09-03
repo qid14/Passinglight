@@ -4,19 +4,24 @@ import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Router } from '@angular/router';
 import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
+import { Observable } from 'rxjs/Observable';
+// import { AuthService } from './auth.service';
 // import { MessageService } from './message.service';
 @Injectable()
 
 export class LoginService {
   // messageService: MessageService;
-  private loggedIn = false;
+  public isLoggedIn = false;
+  redirectUrl: string;
   jwtHelper: JwtHelper = new JwtHelper();
-  constructor(private http: Http, private router: Router) {
+  constructor(private http: Http, private router: Router
+    // , private authService: AuthService
+    ) {
     console.log('xxxxxx', !!localStorage.getItem('username'))
-    this.loggedIn = !!localStorage.getItem('username');
+    this.isLoggedIn = !!localStorage.getItem('username');
   }
 
-  login(username, password) {
+  login(username, password) :Observable<any> {
 
     var postData = { "username": username, "password": password };
 
@@ -31,54 +36,23 @@ export class LoginService {
       { headers }
     )
       .map(responseData => {
-        console.log('response:', responseData.json())
+        console.log('response:', responseData.json()) 
+        this.isLoggedIn = true
         return responseData.json()
       })
-      .subscribe(
-      data => {
-        console.log('data:', data);
-        this.loggedIn = true;
-        // debugger
-        localStorage.setItem('username', data.username);
-        localStorage.setItem('readerid', data.readerid);
-        localStorage.setItem('token', data.token);
-        console.log('token content',
-          this.jwtHelper.decodeToken(data.token),
-          // this.jwtHelper.getTokenExpirationDate(data.token),
-          // this.jwtHelper.isTokenExpired(data.token)
-        );
 
-        // alert(msg)
-        let role = this.jwtHelper.decodeToken(data.token).role;
-        console.log('mmmmmmmmmm', role, typeof role);
-        //默认role 为 null
-        if (role == 'admin') {
-          this.router.navigate(['/dashboard']);
-        }
-        else if (role == 'initiator') {
-          this.router.navigate(['/initiator']);
-        } else {
-          this.router.navigate(['/home']);
-        }
 
-      },
-      err => {
-        this.loggedIn = false;
-        localStorage.removeItem('username');
-        localStorage.removeItem('token');
-      },
-      () => { }
-      );
   }
 
   logout() {
     localStorage.removeItem('username');
     localStorage.removeItem('token');
-    this.loggedIn = false;
+    this.isLoggedIn = false;
     this.router.navigate(['/homepage']);
   }
 
-  isLoggedIn() {
-    return this.loggedIn;
+  isLoggedInfunc() {
+    debugger
+    return this.isLoggedIn;
   }
 }

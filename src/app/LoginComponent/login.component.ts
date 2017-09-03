@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 // import { NgForm }  from '@angular/Form';
 import { FormsModule, Validator, FormControl, FormBuilder, FormGroup, FormArray } from '@angular/forms'
 import { LoginService } from '../services/login.service';
-
+// import { LoginService } from './login.service';
 import { Router } from '@angular/router';
-
+import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
 import { MessageService } from '../services/message.service';
 // <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
 //        <div class="form-group">
@@ -41,11 +41,9 @@ import { MessageService } from '../services/message.service';
                         <label for="password">Password</label>
                     </div>
                 </div>
-                        <div *ngIf="isLogin" class="alert alert-danger">
-                            {{ errorMsg }}
-                        </div>
+
                  <div class="row justify-content-center">
-                    <button (click)="onSubmit()" 
+                    <button (click)="logintest()" 
                     class="btn waves-effect waves-light" 
                     type="submit" name="action">Login</button>
                  </div>
@@ -58,30 +56,147 @@ import { MessageService } from '../services/message.service';
   ]
 })
 
+// <div *ngIf="authService.isLoggedIn" class="alert alert-danger">
+//     {{ errorMsg }}
+// </div>
+
 export class LoginComponent {
 	public username: string;
 	public password: string;
 	public postData: string;
+  jwtHelper: JwtHelper = new JwtHelper();
 	// public userName: string;
 	public errorTitle: string;
 	public errorDesc: string;
-	public isLogin: boolean = false;
+  // authService: AuthService;
+	// public isLogin: boolean = false;
 	// public errorMsg: boolean = true;
-	public submitting: boolean = false;
+	// public isSubmitted: boolean = false;
   messageService: MessageService;
 
 	constructor(private loginService: LoginService, private router: Router,
-    _messageService: MessageService) {
+    _messageService: MessageService
+    // ,private _authService: AuthService
+  ) {
+    // debugger
     this.messageService = _messageService;
+    // this.authService=_authService;
   }
+
+  logintest() {
+    this.loginService.login(this.username, this.password).subscribe((data) => {
+      debugger
+      console.log('respone data of login:', data)
+      this.loginService.isLoggedIn = true;
+      //     this.loginService.login(this.username, this.password).subscribe(
+      // data => {
+      //   console.log('data:', data);
+
+      localStorage.setItem('username', data.username);
+      localStorage.setItem('readerid', data.readerid);
+      localStorage.setItem('token', data.token);
+      console.log('token content',
+        this.jwtHelper.decodeToken(data.token),
+        // this.jwtHelper.getTokenExpirationDate(data.token),
+        //     // this.jwtHelper.isTokenExpired(data.token)
+      );
+      //   // this.isLoggedIn = true;
+      //   console.log('this logged in is:',this.isLoggedIn);
+      //   debugger
+      //   // alert(msg)
+      let role = this.jwtHelper.decodeToken(data.token).role;
+      console.log('mmmmmmmmmm', role, typeof role);
+      //默认role 为 null
+      if (role == 'admin') {
+        this.router.navigate(['/dashboard']);
+      }
+      else if (role == 'initiator') {
+        this.router.navigate(['/initiator']);
+      } else {
+        this.router.navigate(['/home']);
+      }
+      let msg = localStorage.getItem("username") || this.username;
+      this.messageService.sendMessage(msg);
+      // if (this.loginService.isLoggedIn) {
+      //   // Get the redirect URL from our auth service
+      //   // If no redirect has been set, use the default
+      //   let redirect = this.loginService.redirectUrl ? this.loginService.redirectUrl : '/admin';
+
+      // Set our navigation extras object
+      // that passes on our global query params and fragment
+      // let navigationExtras: NavigationExtras = {
+      //   queryParamsHandling: 'preserve',
+      //   preserveFragment: true
+      // };
+
+      // Redirect the user
+      // this.router.navigate([redirect], navigationExtras);
+      // }
+    },
+      err => {
+        console.log('loging err:', err)
+        this.loginService.isLoggedIn = false;
+      },
+      () => {
+        console.log('End of post')
+      }
+    );
+
+  }
+  login() {
+    //     this.loginService.login(this.username, this.password).subscribe(
+    // data => {
+    //   console.log('data:', data);
+
+    //   localStorage.setItem('username', data.username);
+    //   localStorage.setItem('readerid', data.readerid);
+    //   localStorage.setItem('token', data.token);
+    //   console.log('token content',
+    //     this.jwtHelper.decodeToken(data.token),
+    //     // this.jwtHelper.getTokenExpirationDate(data.token),
+    //     // this.jwtHelper.isTokenExpired(data.token)
+    //   );
+    //   // this.isLoggedIn = true;
+    //   console.log('this logged in is:',this.isLoggedIn);
+    //   debugger
+    //   // alert(msg)
+    //   let role = this.jwtHelper.decodeToken(data.token).role;
+    //   console.log('mmmmmmmmmm', role, typeof role);
+    //   //默认role 为 null
+    //   if (role == 'admin') {
+    //     this.router.navigate(['/dashboard']);
+    //   }
+    //   else if (role == 'initiator') {
+    //     this.router.navigate(['/initiator']);
+    //   } else {
+    //     this.router.navigate(['/home']);
+    //   }
+
+    // },
+    // err => {
+    //   debugger
+    //   // this.isLoggedIn = false;
+    //   localStorage.removeItem('username');
+    //   localStorage.removeItem('token');
+    //   localStorage.removeItem('readerid');
+
+    // },
+    // () => { }
+    // );
+  }
+
 	onSubmit() {
+    // debugger
     if (!this.loginService.login(this.username, this.password)) {
       this.errorMsg = 'Failed to login';
-      this.isLogin = false
+      // this.isLogin = false
+      this.loginService.isLoggedIn = false;
 
     }
     // debugger
-    this.isLogin = true;
+    // this.isLogin = true;
+    this.loginService.isLoggedIn = true;
+    // this.isSubmitted = true;
     let msg = localStorage.getItem("username") || this.username;
     this.messageService.sendMessage(msg);
 

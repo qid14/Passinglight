@@ -25,7 +25,10 @@ import { MessageService } from './services/message.service';
     <aside class="before-header">
       <nav class="nav-secondary">
         <ul class="genesis-nav-menu">
-          <li class="menu-item menu-item-type-custom menu-item-object-custom">
+        <li class="menu-item menu-item-type-custom menu-item-object-custom">
+        <a href="https://www.afcinc.org">Buy the book</a>
+        </li>
+          <li *ngIf="!message" class="menu-item menu-item-type-custom menu-item-object-custom">
             <a [routerLink]="['./login'] "
               routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
                <i class="fa fa-user-o"></i>
@@ -33,7 +36,7 @@ import { MessageService } from './services/message.service';
             </a>
             
           </li>
-          <li class="menu-item menu-item-type-custom menu-item-object-custom">
+          <li *ngIf="!message" class="menu-item menu-item-type-custom menu-item-object-custom">
            <a [routerLink]="['./register'] "
               routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
               REGISTER
@@ -70,7 +73,7 @@ import { MessageService } from './services/message.service';
     <footer style="margin-top:20px;">
 
       <span>Passing light@http://www.theservantheart.org/</span>
-   
+       
     </footer>
   `
 })

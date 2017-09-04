@@ -3,16 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Reader } from '../shared/reader';
-// import { ReadersService } from '../services/readers.service';
-// import { matchOtherValidator } from '../shared/match-other-validators';
-// import { forbiddenNameValidator } from '../shared/forbidden-name.directive';
 import { MessageService } from '../services/message.service';
-// import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap'; 
+
 @Component({
 
   selector: 'dashboard',
   providers:[
-  // NgbCarouselConfig
+
   ],
   template: `
   <div >
@@ -30,7 +27,13 @@ import { MessageService } from '../services/message.service';
     <a [routerLink]=" ['books'] "
       routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
       <i class="fa fa-book"></i>
-        Books
+        Delete Books
+    </a>
+
+    <a [routerLink]=" ['addbook'] "
+      routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+      <i class="fa fa-book"></i>
+        Add new Book(s)
     </a>
 
     <a [routerLink]=" ['record'] "
@@ -58,47 +61,11 @@ import { MessageService } from '../services/message.service';
  
   `
 })
-// <pre>{{readerForm.value | json}}</pre>
-
-
-// res.send('Insert new user ok!');
-//  <div class="form-group">
-//   <label for="gender">Gender</label>
-
-//   <input type="text" id="gender" class="form-control"
-//          formControlName="gender"  >
-
-// </div>
-
-//  <div class="form-group">
-//   <label for="birth">Birthday</label>
-
-//   <input type="text" id="birth" class="form-control"
-//          formControlName="birth"  >
-
-// </div>
 
 export class DashboardComponent implements OnInit {
 
-//  single= [
-//   {
-//     "name": "Germany",
-//     "value": 8940000
-//   },
-//   {
-//     "name": "USA",
-//     "value": 5000000
-//   },
-//   {
-//     "name": "France",
-//     "value": 7200000
-//   }
-// ];
-  
-
-
   ngOnInit(): void {
-    // this.buildForm();
+
   }
    constructor(){
    }

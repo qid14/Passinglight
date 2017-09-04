@@ -10,7 +10,7 @@ import { ReadBookService } from '../services/readbook.service';
 import { AuthorizeComponent } from '../authorize/authorize.component';
 import { StatisticsComponent } from '../StatisticsComponent/statistics.component';
 import { StatisticsService } from '../services/statistics.service';
-
+import { AddNewBookComponent } from '../BookDetailsComponent/addnewbook.component';
 import { DashboardService } from '../services/dashboard.service';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -44,6 +44,7 @@ import { AuthGuard } from '../services/authguard';
     UpdateProfileComponent,
     PasswordComponent,
     CommentComponent,
+    AddNewBookComponent,
     PassbookComponent
   ],
   providers: [
@@ -60,6 +61,7 @@ import { AuthGuard } from '../services/authguard';
     ReadBookComponent,
     SearchBorrowerComponent,
     StatisticsComponent,
+    AddNewBookComponent,
     UpdateProfileComponent
   ]
 })

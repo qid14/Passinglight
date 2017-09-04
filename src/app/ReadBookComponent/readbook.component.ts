@@ -16,7 +16,7 @@ import { ReadBookService } from '../services/readbook.service';
 
 	template: `
 	<div class="row" style="margin-left:20px;margin-top:20px;">
-	<button  class='btn btn-info' (click)="addbook()" style="margin-right:20px;">Add New Book</button>
+	
 	<button  class='btn' style="margin-right:20px;" [disabled]="!isValid" [ngClass]='{isdisabled: isValid}' (click)="deletebook()">Delete the Book</button>
 	
 
@@ -110,15 +110,13 @@ export class ReadBookComponent {
 
 	ngOnInit() {
 		this.getBooks();
-		// console.log('getbooks------ ')
+		
 	}
 
 
 	// Get Books
 	getBooks() {
-		// now it's a simple subscription to the observable
-		// console.log('getbooks',this.readBookService);
-		// debugger
+
 		this.readBookService.getBooksData()
 		.subscribe(
 			data => {
@@ -149,19 +147,9 @@ export class ReadBookComponent {
 			this.isValid = false;
 		}
 	}
-	// onSelect({ selected }) {
-	// 	console.log('Select Event', selected, this.selected);
-
-	// 	this.selected.splice(0, this.selected.length);
-	// 	this.selected.push(...selected);
-	// }
 
 	onActivate(event) {
 		// console.log('Activate Event', event);
-	}
-
-	addbook(){
-		console.log('Add a new book')
 	}
 
 

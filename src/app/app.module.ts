@@ -39,7 +39,7 @@ import { XLargeDirective } from './home/x-large';
 
 
 import { LoginComponent } from './LoginComponent/login.component';
-import { BookDetailsComponent } from './BookDetailsComponent/bookdetails.component';
+// import { BookDetailsComponent } from './BookDetailsComponent/bookdetails.component';
 import { ReaderRegisterComponent } from './register/register.component';
 import { GetQuestionsService } from './services/questionaire.service';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -82,7 +82,7 @@ type StoreType = {
     XLargeDirective,
 
     LoginComponent,
-    BookDetailsComponent,
+    // BookDetailsComponent,
 
     ReaderRegisterComponent,
     getQuestionsComponent,

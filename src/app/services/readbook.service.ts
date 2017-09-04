@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http,Headers,RequestOptions } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
-
+import { Book } from '../shared/book';
+import * as _ from 'underscore';
 @Injectable()
 export class ReadBookService {
 	constructor(public http: Http) { }
@@ -19,11 +20,11 @@ export class ReadBookService {
 
 	}
 
-	deleteBooks(bookid:string){
-		let body = JSON.stringify({'bookid':bookid});
-		console.log('---15---delete book:',body);
+	deleteBooks(bookid: string) {
+		let body = JSON.stringify({ 'bookid': bookid });
+		console.log('---15---delete book:', body);
 		let headers = new Headers({ 'Content-Type': 'application/json' });
-		let options = new RequestOptions({ headers: headers,body:body });
+		let options = new RequestOptions({ headers: headers, body: body });
 
 		console.log('update role service!');
 		try {
@@ -44,6 +45,32 @@ export class ReadBookService {
 		}
 
 	}
+	addBook(formvalues: any) {
+		console.log('formvalues:', formvalues);
+		// let xxx = <Book>formvalues;
+		// let body = JSON.stringify(formvalues);
+		// 
+		let te =_.omit(formvalues,'qty')
+		console.log('body:',te);
+		let body = JSON.stringify(te);
+		let headers = new Headers({ 'Content-Type': 'application/json' });
+		let options = new RequestOptions({ headers: headers, body: body });
+		if (formvalues.qty == 1) {
+			try {
+				return this.http.post('http://localhost:3002/books', body, options)
+					.map((res) => {
+						return res;
+					})
+			}
+			catch (err) {
+				return err;
+			}
+		} else {
+			console.log('many values')
+		}
+	}
+
+
 
 	SearchBorrows(condition?: string) {
 		// debugger;

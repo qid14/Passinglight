@@ -4,6 +4,10 @@
 logs
 *.log
 
+# Map file
+map
+*.map
+
 # Runtime data
 pids
 *.pid

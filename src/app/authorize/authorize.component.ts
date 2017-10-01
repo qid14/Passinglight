@@ -1,5 +1,5 @@
 import { Component,ChangeDetectorRef,DoCheck,OnInit} from '@angular/core';
-import { LoginService } from '../services/login.service';
+
 import { GetQuestionsService } from '../services/questionaire.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { DataService } from '../services/data.service';
@@ -8,17 +8,13 @@ import { Reader } from '../shared/reader';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 // import { ReadersService } from '../services/readers.service';
-
+import { Subscription } from 'rxjs/Subscription';
 @Component({
 	providers: [
 		ReadersService
-		// GetQuestionsService, DataService
+		
 	],
-	// moduleId:module.id,
-	// templateUrl: 'app/modules/ReadBookComponent/readbook.component.html',
 
-	// styleUrls: ['app/modules/ReadBookComponent/readbook.component.css'],
-	// class="btn btn-primary"
 	template: `
 	
 	
@@ -147,6 +143,7 @@ export class AuthorizeComponent implements OnInit {
 	editing = {};
 	_readerservice: ReadersService;
 	rows = [];
+	subscription:Subscription;
 	// olddata = [];
 	// rows: Observable<any[]>;
 	selected = [];
@@ -167,7 +164,7 @@ export class AuthorizeComponent implements OnInit {
 
 	getAllReaders() {
 		// debugger;
-		this._readerservice.GetAllReaders()
+		this.subscription=this._readerservice.GetAllReaders()
 			.subscribe(
 			data => {
 				// debugger;
@@ -273,4 +270,7 @@ export class AuthorizeComponent implements OnInit {
 	// 		// this.
 	// 	}
 	// }
+	ngOnDestory(){
+		this.subscription.unsubscribe();
+	}
 }

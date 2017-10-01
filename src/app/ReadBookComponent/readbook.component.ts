@@ -1,19 +1,8 @@
 import { Component } from '@angular/core';
-// import { ROUTER_DIRECTIVES} from '@angular/router';
-import { LoginService } from '../services/login.service';
 import { ReadBookService } from '../services/readbook.service';
-// import angular2-data-table
-// import '../src/components/datatable.scss';
-// import '../src/themes/material.scss';
-
 
 @Component({
 	providers: [ReadBookService],
-	// moduleId:module.id,
-	// templateUrl: 'app/modules/ReadBookComponent/readbook.component.html',
-
-	// styleUrls: ['app/modules/ReadBookComponent/readbook.component.css'],
-
 	template: `
 	<div class="row" style="margin-left:20px;margin-top:20px;">
 	
@@ -121,10 +110,6 @@ export class ReadBookComponent {
 		.subscribe(
 			data => {
 				// debugger;
-				// var tempArray =[];
-				// tempArray.push(data);
-				// this.getBooksList=tempArray;
-				// console.log('temparray:',data)
 			 this.rows = data;
 		},
 			err => alert(err),

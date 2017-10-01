@@ -4,6 +4,9 @@ import { HttpModule, Http, RequestOptions } from '@angular/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
+import { LoginRoutingModule } from './LoginComponent/login-routing.module';
+import { LoginService } from './services/login.service';
+import { AuthGuard } from './services/authguard';
 import {
   NgModule,
   ApplicationRef
@@ -103,6 +106,7 @@ type StoreType = {
     MdRadioModule,
     DashboardModule,
     SharedModule,
+    LoginRoutingModule,
     NgbModule.forRoot(),
     AppRoutingModule
     // RouterModule.forRoot(ROUTES, { useHash: true, 
@@ -118,6 +122,8 @@ type StoreType = {
     GetQuestionsService,
     ReadersService,
     DataService,
+    LoginService,
+    AuthGuard,
     MessageService,
     {
       provide: AuthConfig,

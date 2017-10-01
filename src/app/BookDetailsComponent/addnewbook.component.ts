@@ -1,16 +1,12 @@
 
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-
 import { Book } from '../shared/book';
 import { ReadBookService } from '../services/readbook.service';
 import { Router } from '@angular/router';
-// import { Reader } from '../shared/reader';
-// import { ReadersService } from '../services/readers.service';
-// import { matchOtherValidator } from '../shared/match-other-validators';
 import { SubmittedComponent } from '../shared/submitted.component';
-// import { forbiddenNameValidator } from '../shared/forbidden-name.directive';
-import { MessageService } from '../services/message.service';
+// import { MessageService } from '../services/message.service';
+import { Subscription } from 'rxjs/Subscription';
 @Component({
   selector: 'addnewbook',
   providers: [ReadBookService],
@@ -92,7 +88,7 @@ import { MessageService } from '../services/message.service';
 
 export class AddNewBookComponent implements OnInit {
   _readbookservice: ReadBookService;
-  // username = localStorage.getItem('username');
+  subscription:Subscription;
   bookname = "Queen of the Dark Chamber";
   book = new Book();
 
@@ -109,7 +105,7 @@ export class AddNewBookComponent implements OnInit {
     this.submitted = true;
 
     debugger
-    this._readbookservice.addBook(this.bookForm.value).subscribe((res) => {
+    this.subscription=this._readbookservice.addBook(this.bookForm.value).subscribe((res) => {
 
       console.log('response from new book service:',res);
     })
@@ -130,6 +126,9 @@ export class AddNewBookComponent implements OnInit {
     this.buildForm();
   }
 
+  ngOnDestory(){
+    this.subscription.unsubscribe();
+  }
   buildForm(): void {
     this.bookForm = this.fb.group({
       'bookname': [this.bookname, [

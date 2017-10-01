@@ -1,13 +1,6 @@
 import { Component } from '@angular/core';
-// import { ROUTER_DIRECTIVES} from '@angular/router';
-// import { LoginService } from '../services/login.service';
 import { DashboardService } from '../services/dashboard.service';
 import { ReadBookService } from '../services/readbook.service';
-
-// import angular2-data-table
-// import '../src/components/datatable.scss';
-// import '../src/themes/material.scss';
-
 
 @Component({
 	providers: [DashboardService, ReadBookService],
@@ -27,7 +20,7 @@ import { ReadBookService } from '../services/readbook.service';
       [results]="single"
 
       [gradient]="gradient"
-      (select)="onSelect($event)">
+      >
     </ngx-charts-advanced-pie-chart>
 </div>
 <div style="border-style:groove;">
@@ -43,7 +36,7 @@ import { ReadBookService } from '../services/readbook.service';
       [showYAxisLabel]="showYAxisLabel2"
       [xAxisLabel]="xAxisLabel2"
       [yAxisLabel]="yAxisLabel2"
-      (select)="onSelect($event)">
+     >
     </ngx-charts-bar-horizontal>
 </div>
 </div>
@@ -61,14 +54,13 @@ import { ReadBookService } from '../services/readbook.service';
       [showYAxisLabel]="showYAxisLabel"
       [xAxisLabel]="xAxisLabel"
       [yAxisLabel]="yAxisLabel"
-      (select)="onSelect($event)">
+      >
     </ngx-charts-bar-vertical-stacked>
        </div>
        </div>
 
   `,
-	// styleUrls: ['./readbook.component.css'],
-	// directives: [ROUTER_DIRECTIVES]
+
 })
 
 

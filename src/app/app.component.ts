@@ -49,9 +49,9 @@ import { MessageService } from './services/message.service';
           <h5>Welcome,{{message.text}}</h5>
          
           </li>
-           <li  *ngIf="message" class="menu-item menu-item-type-custom menu-item-object-custom">
-          <a (click)="logout()">Logout</a>
-          </li>
+            <li  *ngIf="message" class="menu-item menu-item-type-custom menu-item-object-custom">
+               <a (click)="logout()">Logout</a>
+           </li>
 
         </ul>
       </nav>
@@ -78,22 +78,27 @@ import { MessageService } from './services/message.service';
   `
 })
    // <button (click)="logout()">Logout</button>
+
+          //    </li>
+          //  <li  *ngIf="message" class="menu-item menu-item-type-custom menu-item-object-custom">
+          // <a (click)="logout()">Logout</a>
+          // </li>
 export class AppComponent implements OnInit {
   public angularclassLogo = 'assets/img/angularclass-avatar.png';
   public name = 'Passing light';
   public myVar = false;
   public username = localStorage.getItem("username");
-  loginService: LoginService;
+  // loginService: LoginService;
   message: any;
   subscription: Subscription;
   // public url = 'https://twitter.com/AngularClass';
 
   constructor(
     public appState: AppState,
-    _loginService: LoginService,
+    private loginService: LoginService,
     private messageService: MessageService
   ) {
-    this.loginService = _loginService;
+    // this.loginService = loginService;
     // debugger
     this.subscription = this.messageService.getMessage().subscribe(message => { this.message = message; });
   }
@@ -102,7 +107,9 @@ export class AppComponent implements OnInit {
     console.log('Initial App State', this.appState.state);
   }
   public logout() {
+    debugger
     this.loginService.logout();
+    
     this.message=null;
   }
   ngOnDestroy() {

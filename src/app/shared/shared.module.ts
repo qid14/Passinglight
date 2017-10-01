@@ -15,16 +15,14 @@ import { DashboardService } from '../services/dashboard.service';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { SearchBorrowerComponent } from '../SearchBorrowerComponent/searchborrower.component';
-// import { HeroDetailComponent }  from './hero-detail.component';
 import { UpdateProfileComponent } from '../home/updateprofile';
-// import { HeroService } from './hero.service';
 import { PasswordComponent } from '../PasswordComponent/password.component';
 import { DashboardRoutingModule } from '../dashboard/dashboard-routing.module';
 import { CommentComponent } from '../home/comment';
 import { PassbookComponent } from '../PassbookComponent/passbook.component';
-import { LoginService } from '../services/login.service';
-// import { AuthService } from '../services/auth.service';
-import { AuthGuard } from '../services/authguard';
+
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -50,9 +48,7 @@ import { AuthGuard } from '../services/authguard';
   providers: [
     ReadBookService,
     DashboardService,
-    // AuthService,
-    LoginService,
-    AuthGuard
+
 
   ],
   exports: [

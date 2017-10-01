@@ -12,16 +12,18 @@ import { Observable } from 'rxjs/Observable';
 export class LoginService {
   // messageService: MessageService;
   public isLoggedIn = false;
+
   redirectUrl: string;
   jwtHelper: JwtHelper = new JwtHelper();
   constructor(private http: Http, private router: Router
     // , private authService: AuthService
-    ) {
-    console.log('xxxxxx', !!localStorage.getItem('username'))
-    this.isLoggedIn = !!localStorage.getItem('username');
+
+  ) {
+    // debugger
+    console.log('lgoinservice constructor!!!');   
   }
 
-  login(username, password) :Observable<any> {
+  login(username, password): Observable<any> {
 
     var postData = { "username": username, "password": password };
 
@@ -36,7 +38,7 @@ export class LoginService {
       { headers }
     )
       .map(responseData => {
-        console.log('response:', responseData.json()) 
+        console.log('response:', responseData.json())
         this.isLoggedIn = true
         return responseData.json()
       })
@@ -44,15 +46,17 @@ export class LoginService {
 
   }
 
-  logout() {
+  logout():void {
     localStorage.removeItem('username');
     localStorage.removeItem('token');
+    localStorage.removeItem('readerid');
     this.isLoggedIn = false;
+    
     this.router.navigate(['/homepage']);
   }
 
   isLoggedInfunc() {
-    debugger
+    // debugger
     return this.isLoggedIn;
   }
 }

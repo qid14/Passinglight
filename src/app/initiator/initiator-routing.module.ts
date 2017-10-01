@@ -13,14 +13,15 @@ import { QuerySequenceComponent } from './querysequence';
 
 const InitiatorRoutes: Routes = [
 	{ path: '', component: InitiatorComponent ,
+	canActivateChild: [AuthGuard],
 		// path: 'initiator', component: InitiatorComponent,
 		children: [
 		
-			{ path: 'record', component: QuerySequenceComponent,canActivate: [AuthGuard] },
+			{ path: 'record', component: QuerySequenceComponent},
 			{ path: 'password', component: PasswordComponent},
 			{ path: 'updateprofile', component: UpdateProfileComponent },
 			{ path: 'passbook', component: PassbookComponent},
-			{ path: 'comment', component: CommentComponent},
+			{ path: 'comment', component: CommentComponent },
 			{ path: '',  redirectTo: '/initiator/updateprofile', pathMatch: 'full'}
 			]
 		

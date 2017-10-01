@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { Reader } from '../shared/reader';
 import { ReadersService } from '../services/readers.service';
 import { matchOtherValidator } from '../shared/match-other-validators';
-// import { forbiddenNameValidator } from '../shared/forbidden-name.directive';
 
 import { MessageService } from '../services/message.service';
 import { BookReaderService} from '../services/passbook.service';
@@ -99,8 +98,7 @@ export class PassbookComponent implements OnInit {
 	}
 
 		onSubmit() {
-		// if(!this.loginService.login(this.username, this.password)){
-		//       this.errorMsg = 'Failed to login';
+		
 		let startdate= this.model.month+'/'+this.model.day+'/'+this.model.year;
 		console.log('startdate:',startdate)
 		this.bookreadersrecord=Object.assign({"bookid":this.bookid,"username":this.username,"email":this.email},{"startdate":startdate});

@@ -13,6 +13,7 @@ const dashboardRoutes: Routes = [
 	// { path: '', component: DashboardComponent },
 	{
 		path: 'dashboard', component: DashboardComponent,
+		canActivateChild: [AuthGuard],
 		children: [
 			{ path: 'books', component: ReadBookComponent },
 			{ path: 'addbook', component: AddNewBookComponent },

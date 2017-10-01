@@ -1,27 +1,13 @@
 import { Component } from '@angular/core';
-// import { NgForm }  from '@angular/Form';
 import { FormsModule, Validator, FormControl, FormBuilder, FormGroup, FormArray } from '@angular/forms'
 import { LoginService } from '../services/login.service';
-// import { LoginService } from './login.service';
+import { Subscription } from 'rxjs/Subscription';
 import { Router } from '@angular/router';
 import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
 import { MessageService } from '../services/message.service';
-// <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-//        <div class="form-group">
-//            <label for="username">Username</label>
-//            <input class="form-control" id="username" name ="username" required [(ngModel)]="username" #username="ngModel">
 
-//        </div>
-//        <div class="form-group">
-//            <label for="password">Password</label>
-//            <input type="password" class="form-control" id="password" name="password" required [(ngModel)]="password" #password="ngModel">
-
-//        </div>
-//        <button type="submit" class="btn btn-default" >Login</button>
-//    </form>
 @Component({
-  // moduleId: module.id,   
-  providers: [LoginService],
+
   template:
   `
  <div class="container"  style="margin-left:20px;margin-top:20px;">
@@ -47,6 +33,7 @@ import { MessageService } from '../services/message.service';
                     class="btn waves-effect waves-light" 
                     type="submit" name="action">Login</button>
                  </div>
+                 <button (click)="logout()" *ngIf="loginService.isLoggedIn">Logout</button>
             </div>
         </div>
 
@@ -61,20 +48,22 @@ import { MessageService } from '../services/message.service';
 // </div>
 
 export class LoginComponent {
-	public username: string;
-	public password: string;
-	public postData: string;
+  subscription: Subscription;
+  public username: string;
+  public password: string;
+  public postData: string;
+
   jwtHelper: JwtHelper = new JwtHelper();
-	// public userName: string;
-	public errorTitle: string;
-	public errorDesc: string;
+  // public userName: string;
+  public errorTitle: string;
+  public errorDesc: string;
   // authService: AuthService;
-	// public isLogin: boolean = false;
-	// public errorMsg: boolean = true;
-	// public isSubmitted: boolean = false;
+  // public isLogin: boolean = false;
+  // public errorMsg: boolean = true;
+  // public isSubmitted: boolean = false;
   messageService: MessageService;
 
-	constructor(private loginService: LoginService, private router: Router,
+  constructor(private loginService: LoginService, private router: Router,
     _messageService: MessageService
     // ,private _authService: AuthService
   ) {
@@ -82,32 +71,67 @@ export class LoginComponent {
     this.messageService = _messageService;
     // this.authService=_authService;
   }
-
+  ngOnDestory() {
+    this.subscription.unsubscribe();
+  }
   logintest() {
-    this.loginService.login(this.username, this.password).subscribe((data) => {
+    // debugger
+    this.subscription = this.loginService.login(this.username, this.password).subscribe((data) => {
       debugger
+      console.log('msg is :',this.loginService.isLoggedIn);
+      let msg = localStorage.getItem("username") || this.username;
+      this.messageService.sendMessage(msg);
+
+
+      // let data = localStorage.getItem('token');
+      // if (data) {
+      //   let xrole = this.jwtHelper.decodeToken(data);
+      //   console.log('xrole:', xrole.role)
+      //   if (xrole.role == null) {
+      //     console.log('xxxxxx', !!localStorage.getItem('username'))
+      //     this.isLoggedIn = !!localStorage.getItem('username');
+      //     this.isInitiator = false;
+      //     this.isAdmin = false;
+      //   }
+      //   else if (xrole.role == 'admin') {
+      //     if (localStorage.getItem('username') == 'admin') {
+      //       this.isLoggedIn = true;
+      //       this.isAdmin = true;
+      //       this.isInitiator = false;
+      //     }
+      //     else {
+      //       this.isLoggedIn = false;
+      //       // this.isInitiator = false;
+      //     }
+      //   }
+      //   else if (xrole.role = 'initiator') {
+      //     this.isLoggedIn = !!localStorage.getItem('username');
+      //     this.isInitiator = true;
+      //     this.isAdmin = false;
+      //     ////
+      //   }
+      // }
+      // else {
+      //   this.isLoggedIn = false;
+      // }
+
+
       console.log('respone data of login:', data)
-      this.loginService.isLoggedIn = true;
-      //     this.loginService.login(this.username, this.password).subscribe(
-      // data => {
-      //   console.log('data:', data);
+      // this.loginService.isLoggedIn = true;
 
       localStorage.setItem('username', data.username);
       localStorage.setItem('readerid', data.readerid);
       localStorage.setItem('token', data.token);
-      console.log('token content',
-        this.jwtHelper.decodeToken(data.token),
-        // this.jwtHelper.getTokenExpirationDate(data.token),
-        //     // this.jwtHelper.isTokenExpired(data.token)
-      );
-      //   // this.isLoggedIn = true;
-      //   console.log('this logged in is:',this.isLoggedIn);
-      //   debugger
-      //   // alert(msg)
+      // console.log('token content',
+      //   this.jwtHelper.decodeToken(data.token),
+
+      // );
+
       let role = this.jwtHelper.decodeToken(data.token).role;
-      console.log('mmmmmmmmmm', role, typeof role);
+      console.log('role is mmmmmmmmmm', role, typeof role);
       //默认role 为 null
       if (role == 'admin') {
+
         this.router.navigate(['/dashboard']);
       }
       else if (role == 'initiator') {
@@ -115,31 +139,15 @@ export class LoginComponent {
       } else {
         this.router.navigate(['/home']);
       }
-      let msg = localStorage.getItem("username") || this.username;
-      this.messageService.sendMessage(msg);
-      // if (this.loginService.isLoggedIn) {
-      //   // Get the redirect URL from our auth service
-      //   // If no redirect has been set, use the default
-      //   let redirect = this.loginService.redirectUrl ? this.loginService.redirectUrl : '/admin';
 
-      // Set our navigation extras object
-      // that passes on our global query params and fragment
-      // let navigationExtras: NavigationExtras = {
-      //   queryParamsHandling: 'preserve',
-      //   preserveFragment: true
-      // };
-
-      // Redirect the user
-      // this.router.navigate([redirect], navigationExtras);
-      // }
-    },
-      err => {
-        console.log('loging err:', err)
-        this.loginService.isLoggedIn = false;
-      },
-      () => {
-        console.log('End of post')
-      }
+    }
+      //   ,err => {
+      //     console.log('loging err:', err)
+      //     this.loginService.isLoggedIn = false;
+      //   },
+      //   () => {
+      //     console.log('End of login')
+      //   }
     );
 
   }
@@ -185,7 +193,7 @@ export class LoginComponent {
     // );
   }
 
-	onSubmit() {
+  onSubmit() {
     // debugger
     if (!this.loginService.login(this.username, this.password)) {
       this.errorMsg = 'Failed to login';
@@ -214,4 +222,10 @@ export class LoginComponent {
   //         this.errorMsg = 'Failed to login';
   //     }
   // }
+  logout() {
+    this.loginService.logout();
+    this.subscription.unsubscribe();
+    this.messageService.sendMessage("");
+    // this.setMessage();
+  }
 }

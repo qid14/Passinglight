@@ -12,14 +12,14 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 
     }
     OnDestroy() {
-        
+
         this.role = null;
     }
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        
+
         let url: string = state.url;
         return this.checkLogin(url);
-        
+
     }
 
     canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
@@ -51,8 +51,8 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
                     return true;
                 }
             }
-            else if (this.role == 'initiator'){
-                if (url.includes('dashboard')|| url.includes('home')) {
+            else if (this.role == 'initiator') {
+                if (url.includes('dashboard') || url.includes('home')) {
                     return false
                 }
                 else {
@@ -61,7 +61,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
             }
 
             else if (this.role == 'admin') {
-                if (url.includes('initiator')|| url.includes('home')) {
+                if (url.includes('initiator') || url.includes('home')) {
                     return false;
                 }
                 else {
@@ -69,9 +69,10 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
                 }
             }
 
-            this.router.navigate(['/login']);
-            
-            return false;
+
         }
+        this.router.navigate(['/login']);
+
+        return false;
     }
 }

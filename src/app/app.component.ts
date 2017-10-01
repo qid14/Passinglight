@@ -2,13 +2,16 @@ import {
   Component,
   OnInit,
   ViewEncapsulation,
-  OnDestroy
+  OnDestroy,
+  DoCheck
 } from '@angular/core';
 import { AppState } from './app.service';
 import { LoginService } from './services/login.service';
+import {AuthGuard} from './services/authguard';
 import { Subscription } from 'rxjs/Subscription';
-
+// import { Router, Route, RouterStateSnapshot,ActivatedRoute } from '@angular/router';
 import { MessageService } from './services/message.service';
+import { Location } from '@angular/common';
 
 /**
  * App Component
@@ -28,7 +31,7 @@ import { MessageService } from './services/message.service';
         <li class="menu-item menu-item-type-custom menu-item-object-custom">
         <a href="https://www.afcinc.org">Buy the book</a>
         </li>
-          <li *ngIf="!message" class="menu-item menu-item-type-custom menu-item-object-custom">
+          <li *ngIf="!isLogged" class="menu-item menu-item-type-custom menu-item-object-custom">
             <a [routerLink]="['./login'] "
               routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
                <i class="fa fa-user-o"></i>
@@ -36,7 +39,7 @@ import { MessageService } from './services/message.service';
             </a>
             
           </li>
-          <li *ngIf="!message" class="menu-item menu-item-type-custom menu-item-object-custom">
+          <li *ngIf="!isLogged" class="menu-item menu-item-type-custom menu-item-object-custom">
            <a [routerLink]="['./register'] "
               routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
               REGISTER
@@ -46,10 +49,10 @@ import { MessageService } from './services/message.service';
       
 
           <li  *ngIf="message" class="menu-item menu-item-type-custom menu-item-object-custom">
-          <h5>Welcome,{{message.text}}</h5>
+          <h5>Welcome,{{message.text||'friend'}}</h5>
          
           </li>
-            <li  *ngIf="message" class="menu-item menu-item-type-custom menu-item-object-custom">
+            <li  *ngIf="isLogged" class="menu-item menu-item-type-custom menu-item-object-custom">
                <a (click)="logout()">Logout</a>
            </li>
 
@@ -83,46 +86,66 @@ import { MessageService } from './services/message.service';
           //  <li  *ngIf="message" class="menu-item menu-item-type-custom menu-item-object-custom">
           // <a (click)="logout()">Logout</a>
           // </li>
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit,DoCheck,OnDestroy {
   public angularclassLogo = 'assets/img/angularclass-avatar.png';
   public name = 'Passing light';
   public myVar = false;
   public username = localStorage.getItem("username");
   // loginService: LoginService;
+  isLogged:boolean=false;
   message: any;
   subscription: Subscription;
   // public url = 'https://twitter.com/AngularClass';
-
+  pathString:string = "";
   constructor(
+
+    private location: Location,
     public appState: AppState,
     private loginService: LoginService,
+    private authguard:AuthGuard,
     private messageService: MessageService
   ) {
     // this.loginService = loginService;
     // debugger
-    this.subscription = this.messageService.getMessage().subscribe(message => { this.message = message; });
+    // console.log('this route path:',this.router.url)
+    // console.log('activated url    :',activatedRoute.url);
+     this.pathString = location.path();
+  
+        this.subscription = this.messageService.getMessage().subscribe(message => { 
+          this.message = message; 
+          // console.log('Msg:',message);
+        });
+
   }
 
+  public ngDoCheck(){
+    this.isLogged = this.loginService.isLoggedIn;
+  }
   public ngOnInit() {
     console.log('Initial App State', this.appState.state);
+    // debugger
+    this.isLogged = this.authguard.checkLogin(this.pathString);
+    this.loginService.isLoggedIn = this.isLogged;
+
+    console.log('is logged?:',this.isLogged);
+
+        if (this.isLogged){
+           this.messageService.sendMessage(localStorage.getItem('username'));
+          // this.message.text =  localStorage.getItem('username');
+        }
   }
   public logout() {
-    debugger
+    // debugger
     this.loginService.logout();
-    
+    this.isLogged = false;
     this.message=null;
   }
   ngOnDestroy() {
+    debugger
     // unsubscribe to ensure no memory leaks
     this.subscription.unsubscribe();
+    this.isLogged = false;
   }
 
 }
 
-/**
- * Please review the https://github.com/AngularClass/angular2-examples/ repo for
- * more angular app examples that you may copy/paste
- * (The examples may not be updated as quickly. Please open an issue on github for us to update it)
- * For help or questions please contact us at @AngularClass on twitter
- * or our chat on Slack at https://AngularClass.com/slack-join
- */

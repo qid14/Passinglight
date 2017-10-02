@@ -143,7 +143,9 @@ export class AppModule {
     public appRef: ApplicationRef,
     public appState: AppState,
     router: Router
-  ) { console.log("routes:", JSON.stringify(router.config, undefined, 2)) }
+  ) { 
+    // console.log("routes:", JSON.stringify(router.config, undefined, 2)) 
+  }
 
   public hmrOnInit(store: StoreType) {
     if (!store || !store.state) {

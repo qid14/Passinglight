@@ -12,7 +12,7 @@ import { MessageService } from '../services/message.service';
 @Component({
 	selector: 'password',
 	template: `
-<div class="container">
+<div class="container"  style="margin-top: 10px;">
   <div [hidden]="submitted">
     <h1>Change Password</h1>
     <form [formGroup]="readerForm"  *ngIf="active"  (ngSubmit)="onSubmit()">

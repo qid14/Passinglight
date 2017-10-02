@@ -141,7 +141,7 @@ export class AppComponent implements OnInit,DoCheck,OnDestroy {
     this.message=null;
   }
   ngOnDestroy() {
-    debugger
+    // debugger
     // unsubscribe to ensure no memory leaks
     this.subscription.unsubscribe();
     this.isLogged = false;

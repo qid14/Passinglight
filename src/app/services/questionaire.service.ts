@@ -11,7 +11,7 @@ export class GetQuestionsService {
 		// debugger;
 		// return an observable
 		// console.log('get question data service!');
-		return this.http.get('/api/questions')
+		return this.http.get('/questions')
 			.map((responseData) => {
 				console.log('get questions from mysql:', responseData.json());
 				return responseData.json()
@@ -32,7 +32,7 @@ export class GetQuestionsService {
 		let options = new RequestOptions({headers:headers});
 
 		// console.log('post reader data service!');
-		return this.http.post('/api/questions',body,options )
+		return this.http.post('/questions',body,options )
 			.map((responseData) => {
 				console.log('Response when posted question answers to mysql:', responseData);
 					// .json());

@@ -1,4 +1,4 @@
-import { Component,ChangeDetectorRef,DoCheck,OnInit} from '@angular/core';
+import { Component,ChangeDetectorRef,DoCheck,OnInit,ViewChild} from '@angular/core';
 
 import { GetQuestionsService } from '../services/questionaire.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
@@ -9,22 +9,31 @@ import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 // import { ReadersService } from '../services/readers.service';
 import { Subscription } from 'rxjs/Subscription';
+import {DatatableComponent} from '@swimlane/ngx-datatable';
 @Component({
 	providers: [
 		ReadersService
 		
 	],
-
+	// <button  class='btn' (click)="searchreader()">Search Reader</button>
 	template: `
-	
+
 	
 <div class="row" style="margin-left:20px;margin-top:20px;">
+<button  class='btn' [disabled]="!isValid" [ngClass]='{isdisabled: isValid}' (click)="changerole()">Change Roles</button>
+
+	<input
+        type='text'
+        style='padding:8px;margin:15px auto;width:30%;'
+        placeholder='Type to filter the username column...'
+        (keyup)='updateFilter($event)'
+      />
 	
-	<button  class='btn' [disabled]="!isValid" [ngClass]='{isdisabled: isValid}' (click)="changerole()">Change Roles</button>
+	
 
 
 	<div class="col-md-12" style="margin-top:10px;" >
-   <ngx-datatable
+   <ngx-datatable #table
    		class="material"
          [rows]="rows"
         [columns]="columns"
@@ -138,11 +147,13 @@ import { Subscription } from 'rxjs/Subscription';
 
 
 export class AuthorizeComponent implements OnInit {
-	// readerid: number = 1;
+	
+	 @ViewChild(DatatableComponent) table: DatatableComponent;
 	isValid: boolean = false;
 	editing = {};
 	_readerservice: ReadersService;
 	rows = [];
+	 temp = [];
 	subscription:Subscription;
 	// olddata = [];
 	// rows: Observable<any[]>;
@@ -169,6 +180,7 @@ export class AuthorizeComponent implements OnInit {
 			data => {
 				
 				this.rows = data;
+				this.temp = data;
 				// console.log('this rows:      ', this.rows)
 			},
 			err => alert(err),
@@ -247,7 +259,23 @@ export class AuthorizeComponent implements OnInit {
 		// this.cd.markForCheck(); 
 		
 	}
+	searchreader(){
 
+	}
+
+  updateFilter(event) {
+    const val = event.target.value.toLowerCase();
+
+    // filter our data
+    const temp = this.temp.filter(function(d) {
+      return d.username.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+
+    // update the rows
+    this.rows = temp;
+    // Whenever the filter changes, always go back to the first page
+    this.table.offset = 0;
+  }
 
 	ngOnDestory(){
 		this.subscription.unsubscribe();

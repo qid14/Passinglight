@@ -32,8 +32,7 @@ export class LoginService {
 
     });
     // console.log('post data when login:', postData);
-    return this.http.post(
-      '/api/readers/login',
+    return this.http.post( '/readers/login',
       postData,
       { headers }
     )

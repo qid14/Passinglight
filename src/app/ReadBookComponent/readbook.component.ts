@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild  } from '@angular/core';
 import { ReadBookService } from '../services/readbook.service';
+import 'jquery';
+import 'bootstrap';
+import { BsModalComponent  } from 'ng2-bs3-modal';
 
 @Component({
 	providers: [ReadBookService],
@@ -7,7 +10,27 @@ import { ReadBookService } from '../services/readbook.service';
 	<div class="row" style="margin-left:20px;margin-top:20px;">
 	
 	<button  class='btn' style="margin-right:20px;" [disabled]="!isValid" [ngClass]='{isdisabled: isValid}' (click)="deletebook()">Delete the Book</button>
-	
+	<button  class='btn' style="margin-right:20px;" [disabled]="!isValid" [ngClass]='{isdisabled: isValid}' (click)="open()">Add/Change An Initiator</button>
+
+
+	<bs-modal #validationModal>
+     <form #modalForm="ngForm">
+        <bs-modal-header [showDismiss]="true">
+            <h3 class="modal-title">Choose an initiator</h3>
+        </bs-modal-header>
+        <bs-modal-body>
+            <div class="form-group">
+                <label for="readerid">ReaderID</label>
+                <input type="text" class="form-control" required [(ngModel)]="readerid" name="readerid" id="readerid">
+            </div>
+            
+        </bs-modal-body>
+        <bs-modal-footer>
+            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="validationModal.dismiss()">Cancel</button>
+            <button type="button" class="btn btn-primary" [disabled]="!modalForm.valid" (click)="close()">Save</button>
+        </bs-modal-footer>
+    </form>
+</bs-modal>
 
 	<div class="col-md-12" style="margin-top:10px;">
    <ngx-datatable
@@ -65,17 +88,13 @@ import { ReadBookService } from '../services/readbook.service';
           </ng-template>
           </ngx-datatable-column>
 
-        <ngx-datatable-column name="Location" [width]="100">
-          <ng-template let-value="value" ngx-datatable-cell-template>
+
+		 <ngx-datatable-column name="Initiatorid" [width]="100">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
             {{value}}
           </ng-template>
         </ngx-datatable-column>
-		
-		<ngx-datatable-column name="Initiator" [width]="80">
-          <ng-template let-value="value" ngx-datatable-cell-template>
-            {{value}}
-          </ng-template>
-        </ngx-datatable-column>
+
 
        </ngx-datatable>
        </div>
@@ -86,7 +105,17 @@ import { ReadBookService } from '../services/readbook.service';
 	// directives: [ROUTER_DIRECTIVES]
 })
 
+        // <ngx-datatable-column name="Location" [width]="100">
+        //   <ng-template let-value="value" ngx-datatable-cell-template>
+        //     {{value}}
+        //   </ng-template>
+        // </ngx-datatable-column>
 
+        // 		<ngx-datatable-column name="InitiatorId" [width]="80">
+        //   <ng-template let-value="value" ngx-datatable-cell-template>
+        //     {{value}}
+        //   </ng-template>
+        // </ngx-datatable-column>
 
 export class ReadBookComponent {
 	public getBooksList;
@@ -95,12 +124,20 @@ export class ReadBookComponent {
 	selected = [];
 	columns=[{prop:"bookid"},
 	{name:"bookname"},
-	{name:"author"},{
-	 name:"version"},
+	{name:"author"},
+	{name:"version"},
 	 {name:"price"},
-	 {name:"location"},
+	 // {name:"location"},
 	 {name:"initiatorid"}
-	 ]
+
+	 ];
+	 readerid="";
+
+
+	 @ViewChild('validationModal')
+    modal: BsModalComponent;
+
+
 
 	constructor(private readBookService: ReadBookService) { }
 
@@ -109,6 +146,31 @@ export class ReadBookComponent {
 		
 	}
 
+    close() {
+    	console.log('readerid:',this.readerid);
+    	for (let i of this.selected) {
+
+			if (i.bookid != null) {
+				// console.log('bookid is', i.bookid);
+				this.readBookService.addInitiator(i.bookid,this.readerid).subscribe((res)=>{
+				// .deleteBooks(i.bookid).subscribe((res) => {
+					console.log(res);
+				})
+
+			}
+			else {
+				console.log('No book selected');
+
+			}
+		}
+
+        this.modal.close();
+        // location.reload();
+    }
+    
+    open() {
+        this.modal.open();
+    }
 
 	// Get Books
 	getBooks() {
@@ -118,6 +180,7 @@ export class ReadBookComponent {
 			data => {
 				// debugger;
 			 this.rows = data;
+			 // console.log('rows:',this.rows);
 		},
 			err => alert(err),
 			() => { }
@@ -144,6 +207,9 @@ export class ReadBookComponent {
 		// console.log('Activate Event', event);
 	}
 
+	// addInitiator(){
+	// 	modal.open();
+	// }
 
 	deletebook(){
 		// console.log('Delete these books!');

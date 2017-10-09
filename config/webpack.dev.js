@@ -231,11 +231,12 @@ module.exports = function(options) {
 
       proxy: {
         // "/api": "http://localhost:3002"
-        "/api/**": {
+        "**": {
           target: "http://localhost:3002",
           changeOrigin: true,
-          secure: false,
-          pathRewrite: { "^/api": "" }
+          secure: false
+          // ,
+          // pathRewrite: { "^/api": "" }
         }
       },
       historyApiFallback: true,

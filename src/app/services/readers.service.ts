@@ -20,7 +20,7 @@ export class ReadersService {
 		// console.log('post reader data service!');
 		try {
 			// debugger
-			return this.http.post('/api/readers', body, options)
+			return this.http.post('/readers', body, options)
 				.map((responseData) => {
 					// console.log('post new user to mysql:', responseData);
 
@@ -49,7 +49,7 @@ export class ReadersService {
 		// console.log('get reader data service!');
 		try {
 			// debugger
-			return this.http.get('/api/readers/username/' + username)
+			return this.http.get('/readers/username/' + username)
 				.map((responseData) => {
 					// console.log('Get user data from mysql:', responseData.json());
 
@@ -69,7 +69,7 @@ export class ReadersService {
 
 		try {
 			// debugger
-			return this.http.get('/api/readers')
+			return this.http.get('/readers')
 				.map((responseData) => {
 					// console.log('Get all user data from mysql:', responseData);
 
@@ -100,7 +100,7 @@ export class ReadersService {
 		// console.log('update reader data service!');
 		try {
 			// debugger
-			return this.http.put('/api/readers', body, options)
+			return this.http.put('/readers', body, options)
 				.map((responseData) => {
 					// console.log('post new user to mysql:', responseData);
 
@@ -136,7 +136,7 @@ export class ReadersService {
 		// console.log('update role service!');
 		try {
 			// debugger
-			return this.http.put('/api/readers/authorize', body, options)
+			return this.http.put('/readers/authorize', body, options)
 				.map((responseData) => {
 					// console.log('update role for reader:', responseData);
 

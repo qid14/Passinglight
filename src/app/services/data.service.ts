@@ -23,7 +23,7 @@ export class DataService {
     
     
     return this.authHttp
-      .get('/api/readers/check-state',options)
+      .get('/readers/check-state',options)
       .map(res => res.json())
       // .catch(this.handleError);
   }

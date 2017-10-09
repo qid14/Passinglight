@@ -27,7 +27,7 @@ import { MessageService } from '../services/message.service';
     <a [routerLink]=" ['books'] "
       routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
       <i class="fa fa-book"></i>
-        Delete Books
+        Manage Books
     </a>
 
     <a [routerLink]=" ['addbook'] "

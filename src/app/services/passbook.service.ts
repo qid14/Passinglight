@@ -11,7 +11,7 @@ export class BookReaderService {
 		// debugger;
 		// return an observable
 		// console.log('get bookreaders data service!');
-		return this.http.get('/api/bookreaders')
+		return this.http.get('/bookreaders')
 			.map((responseData) => {
 				// console.log('get bookreaders from mysql:', responseData.json());
 				return responseData.json()
@@ -23,7 +23,7 @@ export class BookReaderService {
 		// debugger;
 		// return an observable
 		// console.log('get bookreaders data service!');
-		return this.http.get('/api/bookreaders/'+readerid)
+		return this.http.get('/bookreaders/'+readerid)
 			.map((responseData) => {
 				// console.log('get bookreader from mysql:', responseData.json());
 				return responseData.json()
@@ -43,7 +43,7 @@ export class BookReaderService {
 		let options = new RequestOptions({headers:headers});
 
 		// console.log('post bookreaders data service!');
-		return this.http.post('/api/bookreaders',body,options )
+		return this.http.post('/bookreaders',body,options )
 			.map((responseData) => {
 				// console.log('post bookreaders to mysql:', responseData);
 					// .json());

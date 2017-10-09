@@ -22,7 +22,7 @@ const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
 const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const ngcWebpack = require('ngc-webpack');
-
+const ProvidePlugin = require('webpack/lib/ProvidePlugin');
 /**
  * Webpack Constants
  */
@@ -220,6 +220,11 @@ module.exports = function (options) {
         prettyPrint: true
       }),
 
+
+      new ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery'
+        }),
       /**
        * Plugin: ForkCheckerPlugin
        * Description: Do type checking in a separate process, so webpack don't need to wait.

@@ -14,7 +14,7 @@ export class AuthorizeService {
 		let options = new RequestOptions({ headers: headers });
 
 		// console.log('Authorize somebody to a initiator')
-		return this.http.put('/api/readers/authorize', body, options)
+		return this.http.put('/readers/authorize', body, options)
 
 			// console.log('get questionaire answers from mysql:', responseData.json());
 			.map((responseData) => {

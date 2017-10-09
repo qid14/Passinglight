@@ -20,7 +20,7 @@ import { PasswordComponent } from '../PasswordComponent/password.component';
 import { DashboardRoutingModule } from '../dashboard/dashboard-routing.module';
 import { CommentComponent } from '../home/comment';
 import { PassbookComponent } from '../PassbookComponent/passbook.component';
-
+import { BsModalModule } from 'ng2-bs3-modal';
 
 
 @NgModule({
@@ -31,6 +31,7 @@ import { PassbookComponent } from '../PassbookComponent/passbook.component';
     DashboardRoutingModule,
     NgxChartsModule,
     NgbModule,
+    BsModalModule,
     NgxDatatableModule
   ],
   declarations: [

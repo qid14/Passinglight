@@ -75,14 +75,14 @@ export class PasswordComponent implements OnInit {
 		this.submitted = true;
 		let username = localStorage.getItem('username');
 		let un = { "username": username };
-		console.log("this.readerForm.value:", this.readerForm.value, un);
+		// console.log("this.readerForm.value:", this.readerForm.value, un);
 		let rr = Object.assign(un, this.readerForm.value);
-		console.log('reader:', rr);
+		// console.log('reader:', rr);
 		this.reader = rr;
 		// this.reader = this.readerForm.value;
 		this._readerservice.UpdateReaders(this.reader).subscribe(
 			(res) => {
-				console.log('response from backend', res);
+				// console.log('response from backend', res);
 				if (res.status == 500) {
 					this.formErrors1 = "Old password is not match our record!";
 					this.router.navigate(['/homepage']);
@@ -90,25 +90,16 @@ export class PasswordComponent implements OnInit {
 			},
 
 			(err) => {
-				console.log(err);
+				// console.log(err);
 				this.router.navigate(['/register']);
 			}
 		)
 		// )
 	}
 
-	// Reset the form with a new hero AND restore 'pristine' class state
-	// by toggling 'active' flag which causes the form
-	// to be removed/re-added in a tick via NgIf
-	// TODO: Workaround until NgForm has a reset method (#6822)
-	active = true;
-	// addReader() {
-	// 	this.reader = new Reader();
-	// 	this.buildForm();
 
-	// 	this.active = false;
-	// 	setTimeout(() => this.active = true, 0);
-	// }
+	active = true;
+
 
 	readerForm: FormGroup;
 	constructor(private fb: FormBuilder, readerservice: ReadersService, private router: Router,
@@ -120,11 +111,7 @@ export class PasswordComponent implements OnInit {
 	ngOnInit(): void {
 		this.buildForm();
 	}
-	// sendMessage(): void {
-	// 	// send message to subscribers via observable subject
-	// 	let msg = localStorage.getItem('username');
-	// 	this.messageService.sendMessage(msg);
-	// }
+
 	buildForm(): void {
 		this.readerForm = this.fb.group({
 			oldpassword: ['', Validators.required],

@@ -60,12 +60,7 @@ import { Location } from '@angular/common';
       </nav>
     </aside>
     
-  </div>
-
-
-
-
-   
+  </div>   
 
     <main>
       <router-outlet></router-outlet>
@@ -80,12 +75,7 @@ import { Location } from '@angular/common';
     </footer>
   `
 })
-   // <button (click)="logout()">Logout</button>
 
-          //    </li>
-          //  <li  *ngIf="message" class="menu-item menu-item-type-custom menu-item-object-custom">
-          // <a (click)="logout()">Logout</a>
-          // </li>
 export class AppComponent implements OnInit,DoCheck,OnDestroy {
   public angularclassLogo = 'assets/img/angularclass-avatar.png';
   public name = 'Passing light';
@@ -105,10 +95,7 @@ export class AppComponent implements OnInit,DoCheck,OnDestroy {
     private authguard:AuthGuard,
     private messageService: MessageService
   ) {
-    // this.loginService = loginService;
-    // debugger
-    // console.log('this route path:',this.router.url)
-    // console.log('activated url    :',activatedRoute.url);
+
      this.pathString = location.path();
   
         this.subscription = this.messageService.getMessage().subscribe(message => { 
@@ -122,16 +109,14 @@ export class AppComponent implements OnInit,DoCheck,OnDestroy {
     this.isLogged = this.loginService.isLoggedIn;
   }
   public ngOnInit() {
-    console.log('Initial App State', this.appState.state);
-    // debugger
     this.isLogged = this.authguard.checkLogin(this.pathString);
     this.loginService.isLoggedIn = this.isLogged;
 
-    console.log('is logged?:',this.isLogged);
+    // console.log('is logged?:',this.isLogged);
 
         if (this.isLogged){
            this.messageService.sendMessage(localStorage.getItem('username'));
-          // this.message.text =  localStorage.getItem('username');
+          
         }
   }
   public logout() {
@@ -141,7 +126,6 @@ export class AppComponent implements OnInit,DoCheck,OnDestroy {
     this.message=null;
   }
   ngOnDestroy() {
-    // debugger
     // unsubscribe to ensure no memory leaks
     this.subscription.unsubscribe();
     this.isLogged = false;

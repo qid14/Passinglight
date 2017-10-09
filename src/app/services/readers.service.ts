@@ -17,20 +17,20 @@ export class ReadersService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers });
 
-		console.log('post reader data service!');
+		// console.log('post reader data service!');
 		try {
 			// debugger
-			return this.http.post('http://localhost:3002/readers', body, options)
+			return this.http.post('/api/readers', body, options)
 				.map((responseData) => {
-					console.log('post new user to mysql:', responseData);
+					// console.log('post new user to mysql:', responseData);
 
 					// .json());
 					return responseData;
 				});
 		}
 		catch (error) {
-			debugger
-			console.log('No13:', error);
+			// debugger
+			// console.log('No13:', error);
 			return error;
 			// this.router.navigate(['/home']);
 		}
@@ -46,19 +46,19 @@ export class ReadersService {
 		// let headers = new Headers({ 'Content-Type': 'application/json' });
 		// let options = new RequestOptions({ headers: headers });
 
-		console.log('get reader data service!');
+		// console.log('get reader data service!');
 		try {
 			// debugger
-			return this.http.get('http://localhost:3002/readers/username/' + username)
+			return this.http.get('/api/readers/username/' + username)
 				.map((responseData) => {
-					console.log('Get user data from mysql:', responseData.json());
+					// console.log('Get user data from mysql:', responseData.json());
 
 					return responseData.json();
 				});
 		}
 		catch (error) {
 			// debugger
-			console.log('No12:', error)
+			// console.log('No12:', error)
 			return error;
 			// this.router.navigate(['/home']);
 		}
@@ -66,30 +66,22 @@ export class ReadersService {
 	}
 
 	GetAllReaders() {
-		// debugger;
-		// return an observable
-		// let username = localStorage.getItem('username');
-		// // let body = JSON.stringify(Values);
-		// // let headers = new Headers({ 'Content-Type': 'application/json' });
-		// // let options = new RequestOptions({ headers: headers });
 
-		// console.log('get all reader data service!');
-		// debugger;
 		try {
 			// debugger
-			return this.http.get('http://localhost:3002/readers')
+			return this.http.get('/api/readers')
 				.map((responseData) => {
-					console.log('Get all user data from mysql:', responseData);
+					// console.log('Get all user data from mysql:', responseData);
 
 					
 					return responseData.json();
 				});
 		}
 		catch (error) {
-			// debugger
-			console.log('No13:', error);
+
+			// console.log('No13:', error);
 			return error;
-			// this.router.navigate(['/home']);
+
 		}
 
 	}
@@ -105,20 +97,20 @@ export class ReadersService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers });
 
-		console.log('update reader data service!');
+		// console.log('update reader data service!');
 		try {
 			// debugger
-			return this.http.put('http://localhost:3002/readers', body, options)
+			return this.http.put('/api/readers', body, options)
 				.map((responseData) => {
-					console.log('post new user to mysql:', responseData);
+					// console.log('post new user to mysql:', responseData);
 
 					// .json());
 					return responseData;
 				});
 		}
 		catch (error) {
-			debugger
-			console.log('No14:', error);
+			// debugger
+			// console.log('No14:', error);
 			return error;
 			// this.router.navigate(['/home']);
 		}
@@ -137,24 +129,24 @@ export class ReadersService {
 			role = 'null'
 		}
 		let body = JSON.stringify({'readerid':readerid,'role':role});
-		console.log('---15---update role body:',body);
+		// console.log('---15---update role body:',body);
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers });
 
-		console.log('update role service!');
+		// console.log('update role service!');
 		try {
 			// debugger
-			return this.http.put('http://localhost:3002/readers/authorize', body, options)
+			return this.http.put('/api/readers/authorize', body, options)
 				.map((responseData) => {
-					console.log('update role for reader:', responseData);
+					// console.log('update role for reader:', responseData);
 
 					// .json());
 					return responseData;
 				});
 		}
 		catch (error) {
-			debugger
-			console.log('No15:', error);
+			// debugger
+			// console.log('No15:', error);
 			return error;
 			// this.router.navigate(['/home']);
 		}

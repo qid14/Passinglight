@@ -10,10 +10,22 @@ export class BookReaderService {
 	getBookreaders() {
 		// debugger;
 		// return an observable
-		console.log('get bookreaders data service!');
-		return this.http.get('http://localhost:3002/bookreaders')
+		// console.log('get bookreaders data service!');
+		return this.http.get('/api/bookreaders')
 			.map((responseData) => {
-				console.log('get bookreaders from mysql:', responseData.json());
+				// console.log('get bookreaders from mysql:', responseData.json());
+				return responseData.json()
+			});
+
+	}
+
+	getBookreader(readerid:string) {
+		// debugger;
+		// return an observable
+		// console.log('get bookreaders data service!');
+		return this.http.get('/api/bookreaders/'+readerid)
+			.map((responseData) => {
+				// console.log('get bookreader from mysql:', responseData.json());
 				return responseData.json()
 			});
 
@@ -23,17 +35,17 @@ export class BookReaderService {
 		// debugger;
 		// return an observable
 		let body= JSON.stringify(formValues);
-		console.log('body:',body);
+		// console.log('body:',body);
 		// let rid = 
 
 
 		let headers= new Headers({'Content-Type':'application/json'});
 		let options = new RequestOptions({headers:headers});
 
-		console.log('post bookreaders data service!');
-		return this.http.post('http://localhost:3002/bookreaders',body,options )
+		// console.log('post bookreaders data service!');
+		return this.http.post('/api/bookreaders',body,options )
 			.map((responseData) => {
-				console.log('post bookreaders to mysql:', responseData);
+				// console.log('post bookreaders to mysql:', responseData);
 					// .json());
 				return responseData;
 			});

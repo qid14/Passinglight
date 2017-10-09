@@ -167,13 +167,9 @@ export class AuthorizeComponent implements OnInit {
 		this.subscription=this._readerservice.GetAllReaders()
 			.subscribe(
 			data => {
-				// debugger;
-				// var tempArray =[];
-				// tempArray.push(data);
-				// // this.getBooksList=tempArray;
-				// console.log('temparray:',data)
+				
 				this.rows = data;
-				console.log('this rows:      ', this.rows)
+				// console.log('this rows:      ', this.rows)
 			},
 			err => alert(err),
 			() => { }
@@ -199,11 +195,11 @@ export class AuthorizeComponent implements OnInit {
 	}
 
 	onSelect({ selected }) {
-		console.log('Select Event', selected, this.selected);
+		// console.log('Select Event', selected, this.selected);
 
 		this.selected.splice(0, this.selected.length);
 		this.selected.push(...selected);
-		console.log('SELECTED 001:', this.selected)
+		// console.log('SELECTED 001:', this.selected)
 		if (selected.length > 0) {
 			this.isValid = true;
 		}
@@ -223,25 +219,25 @@ export class AuthorizeComponent implements OnInit {
 	}
 
 	send(row: any) {
-		console.log('send')
+		// console.log('send')
 	}
 	changerole() {
 		// alert('change role!')
-		console.log('Roles: xxxxxx xxxxxx', this.selected);
+		// console.log('Roles: xxxxxx xxxxxx', this.selected);
 		// this.selected.forEach()
 		for (let i of this.selected) {
 
 			if (i.role == null) {
-				console.log('role is', i.role, i.readerid);
+				// console.log('role is', i.role, i.readerid);
 				this._readerservice.UpdateRoles(i.readerid, true).subscribe((res) => {
-					console.log(res);
+					// console.log(res);
 				})
 
 			}
 			else {
-				console.log('rol is Not null', i.role, i.readerid);
+				// console.log('rol is Not null', i.role, i.readerid);
 				this._readerservice.UpdateRoles(i.readerid, false).subscribe((res) => {
-					console.log(res);
+					// console.log(res);
 				})
 			}
 		}
@@ -252,24 +248,7 @@ export class AuthorizeComponent implements OnInit {
 		
 	}
 
-	// fetch(cb) {
-	// 	const req = new XMLHttpRequest();
-	// 	req.open('GET', `http://localhost:3002/readers`);
 
-	// 	req.onload = () => {
-	// 		cb(JSON.parse(req.response));
-	// 	};
-
-	// 	req.send();
-	// }
-	// ngDoCheck(){
-	// 	if (this.olddata != this.rows) {
-	// 		this.rows = [];
-	// 		this.getAllReaders();
-	// 		this.rows = [...this.rows];
-	// 		// this.
-	// 	}
-	// }
 	ngOnDestory(){
 		this.subscription.unsubscribe();
 	}

@@ -8,7 +8,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     jwtHelper: JwtHelper = new JwtHelper();
     role: any;
     constructor(private router: Router, private loginService: LoginService) {
-        console.log('AUTHGAUARD constructor');
+        // console.log('AUTHGAUARD constructor');
 
     }
     OnDestroy() {
@@ -41,7 +41,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
             let xrole = this.jwtHelper.decodeToken(data);
 
             this.role = xrole.role;
-            console.log('xrole:', this.role)
+            // console.log('xrole:', this.role)
 
             if (this.role == null) {
                 if (url.includes('initiator') || url.includes('dashboard')) {

@@ -110,9 +110,9 @@ export class SearchBorrowerComponent {
 
   ngOnInit() {
     this.getBorrows();
-    console.log(moment.now());
+    // console.log(moment.now());
     let xx = moment.now();
-    console.log('getbooks------ ', moment().format('YYYY-MM-DD'));
+    // console.log('getbooks------ ', moment().format('YYYY-MM-DD'));
   }
 
 
@@ -131,7 +131,7 @@ export class SearchBorrowerComponent {
           //   let ed= moment(data[i].enddate);
           //   console.log('tt',ed.diff(sd,'days'));
           //   data[i].duration = ed.diff(sd,'days');
-          console.log('search borrower 1:', data[i])
+          // console.log('search borrower 1:', data[i])
 
           data[i].startdate = moment(data[i].startdate).format('YYYY-MM-DD');
           if (data[i].enddate != null) {

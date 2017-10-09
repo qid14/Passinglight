@@ -12,7 +12,7 @@ export class DashboardService {
 		// debugger;
 		// return an observable
 		// console.log('get questionaire answers service!');
-		return this.http.get('http://localhost:3002/statistics/response')
+		return this.http.get('/api/statistics/response')
 			.map((responseData) => {
 				// console.log('get questionaire answers from mysql:', responseData.json());
 				return responseData.json()
@@ -21,7 +21,7 @@ export class DashboardService {
 	}
 
 	getCountAllNum() {
-		return this.http.get('http://localhost:3002/bookreaders/countall')
+		return this.http.get('/api/bookreaders/countall')
 			.map((responseData) => {
 				// console.log('get count number of readers:', responseData);
 				return responseData
@@ -29,7 +29,7 @@ export class DashboardService {
 	}
 
 	getCountReadingNum() {
-		return this.http.get('http://localhost:3002/bookreaders/countreading')
+		return this.http.get('/api/bookreaders/countreading')
 			.map((responseData) => {
 				// console.log('get count number of readers are reading:', responseData);
 				return responseData

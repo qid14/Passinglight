@@ -19,7 +19,7 @@ export class QuerySequenceService {
 			'Content-Type': 'application/json'
 
 		});
-		let url = 'http://localhost:3002/bookreaders/sequence';
+		let url = '/bookreaders/sequence';
 		return this.http.post(url, postData, { headers })
 			.map((responseData) => {
 				// console.log('get books from mysql:', responseData.json());

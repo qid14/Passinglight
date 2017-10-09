@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Observable';
 export class DataService {
 
   constructor(private authHttp: AuthHttp) {
-    console.log('aaaaaa', authHttp);
+
   }
 
 //Get authorized by sending data to backend, verify token
@@ -20,10 +20,10 @@ export class DataService {
       "Authorization":localStorage.getItem('token')
     });
     let options = new RequestOptions({ headers: authHeader });
-    console.log('bbbbb',options);
+    
     
     return this.authHttp
-      .get('http://localhost:3002/readers/check-state',options)
+      .get('/api/readers/check-state',options)
       .map(res => res.json())
       // .catch(this.handleError);
   }
@@ -33,7 +33,7 @@ export class DataService {
     // We'd also dig deeper into the error to get a better message
     let errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    console.error(errMsg); // log to console instead
+    // console.error(errMsg); // log to console instead
     return Observable.throw(errMsg);
   }
 }

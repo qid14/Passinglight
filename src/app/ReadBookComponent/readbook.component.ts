@@ -70,7 +70,12 @@ import { ReadBookService } from '../services/readbook.service';
             {{value}}
           </ng-template>
         </ngx-datatable-column>
-
+		
+		<ngx-datatable-column name="Initiator" [width]="80">
+          <ng-template let-value="value" ngx-datatable-cell-template>
+            {{value}}
+          </ng-template>
+        </ngx-datatable-column>
 
        </ngx-datatable>
        </div>
@@ -93,7 +98,9 @@ export class ReadBookComponent {
 	{name:"author"},{
 	 name:"version"},
 	 {name:"price"},
-	 {name:"location"}]
+	 {name:"location"},
+	 {name:"initiatorid"}
+	 ]
 
 	constructor(private readBookService: ReadBookService) { }
 
@@ -120,11 +127,11 @@ export class ReadBookComponent {
 	}
 
 	onSelect({ selected }) {
-		console.log('Select Event', selected, this.selected);
+		// console.log('Select Event', selected, this.selected);
 
 		this.selected.splice(0, this.selected.length);
 		this.selected.push(...selected);
-		console.log('SELECTED 001:', this.selected)
+		// console.log('SELECTED 001:', this.selected)
 		if (selected.length > 0) {
 			this.isValid = true;
 		}
@@ -139,13 +146,13 @@ export class ReadBookComponent {
 
 
 	deletebook(){
-		console.log('Delete these books!');
+		// console.log('Delete these books!');
 		for (let i of this.selected) {
 
 			if (i.bookid != null) {
-				console.log('bookid is', i.bookid);
+				// console.log('bookid is', i.bookid);
 				this.readBookService.deleteBooks(i.bookid).subscribe((res) => {
-					console.log(res);
+					// console.log(res);
 				})
 
 			}

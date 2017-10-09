@@ -71,7 +71,18 @@ type StoreType = {
   restoreInputValues: () => void,
   disposeOldHosts: () => void
 };
+export function authFactory(http: Http, options: RequestOptions) {
+  return new AuthHttp(new AuthConfig({
+    // Config options if you want
+  }), http, options);
+};
 
+// Include this in your ngModule providers
+export const authProvider = {
+  provide: AuthHttp,
+  deps: [Http, RequestOptions],
+  useFactory: authFactory
+};
 /**
  * `AppModule` is the main entry point into Angular2's bootstraping process
  */
@@ -125,15 +136,17 @@ type StoreType = {
     LoginService,
     AuthGuard,
     MessageService,
-    {
-      provide: AuthConfig,
-      useFactory: (http) => {
-        return new AuthConfig({
-          tokenName: 'token',
-        });
-      },
-      deps: [Http]
-    },
+    authProvider,
+    //only work in JIT not for AOT
+    // {
+    //   provide: AuthConfig,
+    //   useFactory: (http) => {
+    //     return new AuthConfig({
+    //       tokenName: 'token',
+    //     });
+    //   },
+    //   deps: [Http]
+    // },
     AuthHttp
   ]
 })

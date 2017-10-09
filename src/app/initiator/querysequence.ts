@@ -54,9 +54,9 @@ export class QuerySequenceComponent {
 
   ngOnInit() {
     this.getSequence();
-    console.log(moment.now());
+    // console.log(moment.now());
     let xx = moment.now();
-    console.log('getbooks------ ', moment().format('YYYY-MM-DD'));
+    // console.log('getbooks------ ', moment().format('YYYY-MM-DD'));
   }
 
 

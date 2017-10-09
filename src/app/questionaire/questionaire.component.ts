@@ -73,12 +73,12 @@ export class getQuestionsComponent {
 		// debugger
 		
 		this.dataService.getSecretQuote().subscribe((d) =>
-			console.log('Get token', d),
+			// console.log('Get token', d),
 			err => console.log(err),
 			() => console.log('Completed getting token!'));
 
 		this.questionanses = [];
-		console.log('Save answers. This.readerid:', this.questionsForm, this.readerid);
+		// console.log('Save answers. This.readerid:', this.questionsForm, this.readerid);
 
 		for (let questionid in this.questionsForm.controls) {
 
@@ -91,9 +91,9 @@ export class getQuestionsComponent {
 
 			}
 		}
-		console.log('question answeres:    ', this.questionanses);
+		// console.log('question answeres:    ', this.questionanses);
 		this.questionsService.sendAnswers(this.questionanses).subscribe((res) => {
-			console.log('Save answers to Backend:', res);
+			// console.log('Save answers to Backend:', res);
 			this.router.navigate(['/home/passbook'])
 		});
 		
@@ -105,14 +105,14 @@ export class getQuestionsComponent {
 	ngOnInit() {
 		this.buildForm();
 		this.getQuestions();
-		console.log('get questions------ ')
+		// console.log('get questions------ ')
 		this._readerservice.GetReaders().subscribe((res):any => {
-			console.log('reader service in questions:', res);
+			// console.log('reader service in questions:', res);
 			let userinfo = res;
-			console.log('reader in questions:--', userinfo[0]);
+			// console.log('reader in questions:--', userinfo[0]);
 			let result = userinfo[0];
 			if (result.readerid) {
-				console.log('The user exists.', result.readerid);
+				// console.log('The user exists.', result.readerid);
 				this.readerid = +result.readerid;
 				
 			}

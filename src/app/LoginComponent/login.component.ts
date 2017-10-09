@@ -63,7 +63,7 @@ export class LoginComponent {
   public isSubmitted: boolean = false;
   messageService: MessageService;
 
-  constructor(private loginService: LoginService, private router: Router,
+  constructor(public loginService: LoginService, public router: Router,
     _messageService: MessageService
 
   ) {
@@ -86,7 +86,7 @@ export class LoginComponent {
       localStorage.setItem('readerid', data.readerid);
       localStorage.setItem('token', data.token);
       let role = this.jwtHelper.decodeToken(data.token).role;
-      console.log('role is mmmmmmmmmm', role, typeof role);
+      // console.log('role is mmmmmmmmmm', role, typeof role);
       //默认role 为 null
       if (role == 'admin') {
 

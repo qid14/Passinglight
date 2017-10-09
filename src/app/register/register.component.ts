@@ -112,7 +112,7 @@ export class ReaderRegisterComponent implements OnInit {
     this.reader = this.readerForm.value;
     this._readerservice.RegisterReaders(this.reader).subscribe(
       (res) => {
-        console.log('response from backend', res);
+        // console.log('response from backend', res);
         if (res.status == 500) {
           this.formErrors1 = "Duplicate username";
           this.router.navigate(['/home']);

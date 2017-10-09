@@ -11,7 +11,7 @@ export class Title {
   ) {}
 
   public getData() {
-    console.log('Title#getData(): Get Data');
+    // console.log('Title#getData(): Get Data');
     /**
      * return this.http.get('/assets/data.json')
      * .map(res => res.json());

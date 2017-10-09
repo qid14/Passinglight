@@ -35,7 +35,7 @@ import { ReadBookService } from '../services/readbook.service';
       [showXAxisLabel]="showXAxisLabel"
       [showYAxisLabel]="showYAxisLabel2"
       [xAxisLabel]="xAxisLabel2"
-      [yAxisLabel]="yAxisLabel2"
+      [yAxisLabel]="yAxisLabel"
      >
     </ngx-charts-bar-horizontal>
 </div>
@@ -158,14 +158,14 @@ export class StatisticsComponent {
 				}
 				
 				let avgDur=this.sumofduration/ data.length;
-				console.log('SUM OF DURATION', data.length, avgDur)
+				// console.log('SUM OF DURATION', data.length, avgDur)
 
 				this.dura=[{
 				 "name": "AVG Duration",
 				 "value":avgDur
 				}
 				]
-				console.log('Dura:', this.dura)
+				// console.log('Dura:', this.dura)
 			// 	,
 			// err => { console.log('sum of duration err:', err) },
 			// () => {

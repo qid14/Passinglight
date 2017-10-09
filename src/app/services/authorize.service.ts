@@ -13,12 +13,12 @@ export class AuthorizeService {
 		let headers = new Headers({ 'Content-Type': 'application/json' });
 		let options = new RequestOptions({ headers: headers });
 
-		console.log('Authorize somebody to a initiator')
-		return this.http.put('http://localhost:3002/readers/authorize', body, options)
+		// console.log('Authorize somebody to a initiator')
+		return this.http.put('/api/readers/authorize', body, options)
 
 			// console.log('get questionaire answers from mysql:', responseData.json());
 			.map((responseData) => {
-				console.log('post new user to mysql:', responseData);
+				// console.log('post new user to mysql:', responseData);
 
 				// .json());
 				return responseData;

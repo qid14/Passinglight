@@ -20,7 +20,7 @@ export class LoginService {
 
   ) {
     // debugger
-    console.log('lgoinservice constructor!!!');   
+    
   }
 
   login(username, password): Observable<any> {
@@ -31,14 +31,14 @@ export class LoginService {
       'Content-Type': 'application/json'
 
     });
-    console.log('post data when login:', postData);
+    // console.log('post data when login:', postData);
     return this.http.post(
-      'http://localhost:3002/readers/login',
+      '/api/readers/login',
       postData,
       { headers }
     )
       .map(responseData => {
-        console.log('response:', responseData.json())
+        // console.log('response:', responseData.json())
         this.isLoggedIn = true
         return responseData.json()
       })

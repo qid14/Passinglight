@@ -84,7 +84,7 @@ export class PassbookComponent implements OnInit {
 	_readerservice: ReadersService;
 	_brservice:BookReaderService
 	bookname: string = "Queen of Dark Chamber"
-	bookid = 100002;
+	bookid = 100003;
 	model: NgbDateStruct;
 	date: { year: number, month: number };
 	reader = new Reader();
@@ -94,17 +94,17 @@ export class PassbookComponent implements OnInit {
 	}
 	selectToday() {
 		this.model = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
-		console.log('date model:',this.model);
+		// console.log('date model:',this.model);
 	}
 
 		onSubmit() {
 		
 		let startdate= this.model.month+'/'+this.model.day+'/'+this.model.year;
-		console.log('startdate:',startdate)
+		// console.log('startdate:',startdate)
 		this.bookreadersrecord=Object.assign({"bookid":this.bookid,"username":this.username,"email":this.email},{"startdate":startdate});
-		console.log('No.99 :bookreaderrecord',this.bookreadersrecord);
+		// console.log('No.99 :bookreaderrecord',this.bookreadersrecord);
 		this._brservice.postBookreaders(this.bookreadersrecord).subscribe((res) => {
-			console.log('bookreader record:', res);
+			// console.log('bookreader record:', res);
 			alert('Pass book successfully!')
 			this.router.navigate(['/home/comment']);
 		});
@@ -113,16 +113,25 @@ export class PassbookComponent implements OnInit {
 	ngOnInit() {
 		this.selectToday();
 		let un = localStorage.getItem('username');
+		let readerid = localStorage.getItem('readerid');
 		let usernameObj = { username: un };
+
+		this._brservice.getBookreader(readerid).subscribe((resp):any=>{
+			// console.log('resp++++',resp);
+			this.bookid = resp[0].bookid;
+			// console.log('New bookid:',this.bookid);
+
+		});
+
 		this._readerservice.GetReaders(usernameObj).subscribe((res):any => {
 			// console.log(res);
 			let result = res;
-			console.log('result:   ..................', result)
+			// console.log('result:   ..................', result)
 
 			if (result.length > 0) {
 				this.readerid = result[0].readerid;
 				if (result[0].finishquestion) {
-					console.log('readerid is .....INIT:',this.readerid);
+					// console.log('readerid is .....INIT:',this.readerid);
 					// this.bookid = "true";
 				}
 				else {

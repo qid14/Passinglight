@@ -104,10 +104,10 @@ export class AddNewBookComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    debugger
+    // debugger
     this.subscription=this._readbookservice.addBook(this.bookForm.value).subscribe((res) => {
 
-      console.log('response from new book service:',res);
+      // console.log('response from new book service:',res);
     })
   }
 

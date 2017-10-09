@@ -11,9 +11,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 export const ROUTES: Routes = [
 
 
-  // { path: 'home', loadChildren: './home/home.module#HomeModule' },
-
-  { path: 'homepage', component: HomepageComponent },
+   { path: 'homepage', component: HomepageComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: ReaderRegisterComponent },
   { path: 'questions', component: getQuestionsComponent },

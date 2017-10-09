@@ -60,7 +60,7 @@ export class HomepageComponent implements OnInit {
 
   }
   constructor(config: NgbCarouselConfig) {
-    console.log('Homepage init begins:....')
+    // console.log('Homepage init begins:....')
     config.interval = 10000;
     config.wrap = true;
     config.keyboard = true;

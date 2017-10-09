@@ -58,12 +58,12 @@ export class CommentComponent implements OnInit {
 
     let username = localStorage.getItem('username');
     let un = { "username": username };
-    console.log("this.readerForm.value:", this.readerForm.value, un);
+    // console.log("this.readerForm.value:", this.readerForm.value, un);
     let rr = Object.assign(un, this.readerForm.value);
-    console.log('reader:', rr);
+    // console.log('reader:', rr);
     this.reader = rr;
     this._readerservice.UpdateReaders(this.reader).subscribe((res) => {
-      console.log(res);
+      // console.log(res);
       alert('Thank you for your feedback! You will see your comment shown on the website.')
       this.router.navigate(['/homepage']);
     })
@@ -97,56 +97,40 @@ export class CommentComponent implements OnInit {
       'memo': [this.reader.memo]
     });
 
-    this.readerForm.valueChanges
-      .subscribe(data => this.onValueChanged(data));
+    // this.readerForm.valueChanges
+    //   .subscribe(data => this.onValueChanged(data));
 
-    this.onValueChanged(); // (re)set validation messages now
+    // this.onValueChanged(); // (re)set validation messages now
   }
 
 
-  onValueChanged(data?: any) {
-    if (!this.readerForm) { return; }
-    const form = this.readerForm;
+  // onValueChanged(data?: any) {
+  //   if (!this.readerForm) { return; }
+  //   const form = this.readerForm;
 
-    for (const field in this.formErrors) {
-      // clear previous error message (if any)
-      this.formErrors[field] = '';
-      const control = form.get(field);
+  //   for (const field in this.formErrors) {
+  //     // clear previous error message (if any)
+  //     this.formErrors[field] = '';
+  //     const control = form.get(field);
 
-      if (control && control.dirty && !control.valid) {
-        const messages = this.validationMessages[field];
-        for (const key in control.errors) {
-          this.formErrors[field] += messages[key] + ' ';
-        }
-      }
-    }
-  }
+  //     if (control && control.dirty && !control.valid) {
+  //       const messages = this.validationMessages[field];
+  //       for (const key in control.errors) {
+  //         this.formErrors[field] += messages[key] + ' ';
+  //       }
+  //     }
+  //   }
+  // }
 
-  formErrors = {
-    // 'firstname': '',
-    // 'lastname': '',
-    // 'email':''
-  };
+  // formErrors = {
+  //   // 'firstname': '',
+  //   // 'lastname': '',
+  //   // 'email':''
+  // };
 
-  validationMessages = {
-    // 'firstname': {
-    //   'required':      'First name is required.',
-    //   'minlength':     'First name must be at least 2 characters long.',
-    //   'maxlength':     'First Name cannot be more than 20 characters long.',
-    //   // 'forbiddenName': 'Someone named "Bob" cannot be a hero.'
-    // },
-    // 'lastname': {
-    //   'required':      'Last name is required.',
-    //   'minlength':     'Last name must be at least 2 characters long.',
-    //   'maxlength':     'Last Name cannot be more than 20 characters long.',
-    //   // 'forbiddenName': 'Someone named "Bob" cannot be a hero.'
-    // },
-    // 'email': {
-    //   'required': 'Email is required.',
-    //   'minlength': 'Email must be at least 5 characters long.',
-    //   'pattern': 'Invalid Email format'
-    // }
-  };
+  // validationMessages = {
+
+  // };
 }
 
 

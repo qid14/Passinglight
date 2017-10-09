@@ -4,7 +4,7 @@
 
 const helpers = require('./helpers');
 const webpackMerge = require('webpack-merge'); // used to merge webpack configs
-const webpackMergeDll = webpackMerge.strategy({plugins: 'replace'});
+const webpackMergeDll = webpackMerge.strategy({ plugins: 'replace' });
 const commonConfig = require('./webpack.common.js'); // the settings that are common to prod and dev
 
 /**
@@ -22,7 +22,7 @@ const ENV = process.env.ENV = process.env.NODE_ENV = 'development';
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 3000;
 const HMR = helpers.hasProcessFlag('hot');
-const METADATA = webpackMerge(commonConfig({env: ENV}).metadata, {
+const METADATA = webpackMerge(commonConfig({ env: ENV }).metadata, {
   host: HOST,
   port: PORT,
   ENV: ENV,
@@ -37,8 +37,8 @@ const DllBundlesPlugin = require('webpack-dll-bundles-plugin').DllBundlesPlugin;
  *
  * See: http://webpack.github.io/docs/configuration.html#cli
  */
-module.exports = function (options) {
-  return webpackMerge(commonConfig({env: ENV}), {
+module.exports = function(options) {
+  return webpackMerge(commonConfig({ env: ENV }), {
 
     /**
      * Developer tool to enhance debugging
@@ -171,7 +171,7 @@ module.exports = function (options) {
           ]
         },
         dllDir: helpers.root('dll'),
-        webpackConfig: webpackMergeDll(commonConfig({env: ENV}), {
+        webpackConfig: webpackMergeDll(commonConfig({ env: ENV }), {
           devtool: 'source-map',
           // devtool: 'source-map',
           plugins: []
@@ -187,12 +187,12 @@ module.exports = function (options) {
        * See: https://github.com/SimenB/add-asset-html-webpack-plugin
        */
       new AddAssetHtmlPlugin([
-        { filepath: helpers.root(`dll/${DllBundlesPlugin.resolveFile('polyfills')}`) },
-        { filepath: helpers.root(`dll/${DllBundlesPlugin.resolveFile('vendor')}`) },
+          { filepath: helpers.root(`dll/${DllBundlesPlugin.resolveFile('polyfills')}`) },
+          { filepath: helpers.root(`dll/${DllBundlesPlugin.resolveFile('vendor')}`) },
 
-      ]
-      // ,
-      // { includeSourcemap: true}
+        ]
+        // ,
+        // { includeSourcemap: true}
       ),
 
       /**
@@ -228,13 +228,23 @@ module.exports = function (options) {
     devServer: {
       port: METADATA.port,
       host: METADATA.host,
+
+      proxy: {
+        // "/api": "http://localhost:3002"
+        "/api/**": {
+          target: "http://localhost:3002",
+          changeOrigin: true,
+          secure: false,
+          pathRewrite: { "^/api": "" }
+        }
+      },
       historyApiFallback: true,
       watchOptions: {
         // if you're using Docker you may need this
         // aggregateTimeout: 300,
         // poll: 1000,
         ignored: /node_modules/
-      }
+      },
     },
 
     /**
